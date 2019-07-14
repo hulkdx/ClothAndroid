@@ -1,0 +1,3 @@
+include ':main', ':domain', ':core:core-android',
+        ':features:home',
+        ':data:data-remote', ':data:data-database', ':data:data-cache'

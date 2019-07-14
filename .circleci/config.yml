@@ -1,0 +1,25 @@
+version: 2.1
+
+# TODO add deploying here...
+
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+    steps:
+      - checkout
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - run:
+          name: Build
+          command: ./gradlew lint test check assemble assembleAndroidTest
+      - store_artifacts:
+          path: presentation/build/reports
+          destination: reports
+      - store_test_results:
+          path: presentation/build/test-results
