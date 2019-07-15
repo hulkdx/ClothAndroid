@@ -1,46 +1,55 @@
 package hulkdx.com.features.home.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.MainApplication
+import androidx.recyclerview.widget.LinearLayoutManager
 import hulkdx.com.core.android.applicationComponent
-import hulkdx.com.core.android.util.ViewModelFactory
+import hulkdx.com.core.android.ui.base.BaseFragment
 import hulkdx.com.features.home.R
 import hulkdx.com.features.home.di.DaggerHomeComponent
-import javax.inject.Inject
+import hulkdx.com.features.home.ui.adapter.ClothAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 
-class HomeFragment: Fragment() {
+class HomeFragment: BaseFragment<HomeViewModel>() {
 
-    // region Lifecycle ----------------------------------------------------------------------------
-    @Inject lateinit var mViewModelFactory: ViewModelFactory
+    // region SetupUI ------------------------------------------------------------------------------
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        inject()
+    override fun setupUI() {
+        setupRecyclerView()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(context)
+        clothRecyclerView.layoutManager = layoutManager
+        clothRecyclerView.adapter = ClothAdapter()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        ViewModelProviders.of(requireActivity(), mViewModelFactory).get(HomeViewModel::class.java)
+    // endregion SetupUI ---------------------------------------------------------------------------
+
+    override fun setupViewModel() {
     }
 
-    // endregion Lifecycle -------------------------------------------------------------------------
+    // region Extra functions ----------------------------------------------------------------------
 
-    private fun inject() {
+    override fun inject(context: Context) {
         DaggerHomeComponent.builder()
-                .applicationComponent(applicationComponent(requireContext()))
+                .context(context)
+                .applicationComponent(applicationComponent(context))
                 .build()
+                .inject(this)
     }
+
+    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
+
+    override fun fragmentLayout(): Int  = R.layout.fragment_home
+
+    // endregion Extra functions -------------------------------------------------------------------
+
 }
