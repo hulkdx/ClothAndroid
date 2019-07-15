@@ -6,6 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
-class ClothViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+internal class ClothViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 }

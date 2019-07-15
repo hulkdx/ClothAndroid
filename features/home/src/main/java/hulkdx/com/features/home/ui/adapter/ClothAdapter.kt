@@ -8,7 +8,7 @@ import hulkdx.com.features.home.R
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
-class ClothAdapter: RecyclerView.Adapter<ClothViewHolder>() {
+internal class ClothAdapter: RecyclerView.Adapter<ClothViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClothViewHolder {
         val itemView = LayoutInflater.from(parent.context)
