@@ -3,8 +3,7 @@ package hulkdx.com.features.home.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hulkdx.com.domain.interactor.LoadClothUseCase
-import hulkdx.com.features.home.ui.adapter.ClothViewHolderModel
+import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import hulkdx.com.features.home.ui.viewmodel.results.ClothesViewModelResults
 import javax.inject.Inject
 
@@ -30,7 +29,9 @@ class HomeViewModel @Inject constructor(
     // region Clothes ------------------------------------------------------------------------------
 
     private fun loadClothes() {
-        mLoadClothUseCase.execute()
+        mLoadClothUseCase.loadAsync {
+
+        }
     }
 
     // endregion Clothes ---------------------------------------------------------------------------

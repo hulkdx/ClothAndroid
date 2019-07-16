@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
-import hulkdx.com.domain.util.CustomThreadExecutor
+import hulkdx.com.domain.executor.CustomThreadExecutor
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
  * Created by Mohammad Jafarzadeh Rezvan on 09/11/2018.
  */
 @Module
-object ApplicationModule {
+object SchedulerModule {
 
     @JvmStatic
     @UiScheduler

@@ -8,6 +8,7 @@ import hulkdx.com.data.database.di.DatabaseModule
 import hulkdx.com.data.remote.di.NetworkModule
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.RepositoryModule
+import hulkdx.com.domain.di.UseCaseModule
 import javax.inject.Singleton
 
 /**
@@ -15,8 +16,9 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = [
-    ApplicationModule::class,
+    SchedulerModule::class,
     RepositoryModule::class,
+    UseCaseModule::class,
     DatabaseModule::class,
     CacheModule::class,
     NetworkModule::class
