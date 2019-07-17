@@ -47,26 +47,26 @@ class LoadClothUseCaseImplTest {
         verify(mClothApiManager).getCloths()
     }
 
-    @Test
-    fun loadAsync_success_resultSuccess() {
-        success()
-        var result: LoadClothesCallBack<List<Cloth>>? = null
-        SUT.loadAsync {
-            result = it
-        }
-        assertThat(result?.status, `is`(STATUS_SUCCESS))
-        assertThat(result?.data, `is`(TEST_CLOTHES))
-    }
-
-    @Test
-    fun loadAsync_ioException_networkError() {
-        ioException()
-        var result: LoadClothesCallBack<List<Cloth>>? = null
-        SUT.loadAsync {
-            result = it
-        }
-        assertThat(result?.status, `is`(STATUS_NETWORK_ERROR))
-    }
+//    @Test
+//    fun loadAsync_success_resultSuccess() {
+//        success()
+//        var result: LoadClothesCallBack<List<Cloth>>? = null
+//        SUT.loadAsync {
+//            result = it
+//        }
+//        assertThat(result?.status, `is`(STATUS_SUCCESS))
+//        assertThat(result?.data, `is`(TEST_CLOTHES))
+//    }
+//
+//    @Test
+//    fun loadAsync_ioException_networkError() {
+//        ioException()
+//        var result: LoadClothesCallBack<List<Cloth>>? = null
+//        SUT.loadAsync {
+//            result = it
+//        }
+//        assertThat(result?.status, `is`(STATUS_NETWORK_ERROR))
+//    }
 
     // region helper methods -----------------------------------------------------------------------
 

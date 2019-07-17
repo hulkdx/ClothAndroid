@@ -1,10 +1,11 @@
-package hulkdx.com.features.home.ui.viewmodel
+package hulkdx.com.features.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
-import hulkdx.com.features.home.ui.viewmodel.results.ClothesViewModelResults
+import hulkdx.com.features.home.mapper.ClothModelViewHolderMapper
+import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
 import javax.inject.Inject
 
 /**
@@ -12,10 +13,11 @@ import javax.inject.Inject
  */
 
 class HomeViewModel @Inject constructor(
-        private val mLoadClothUseCase: LoadClothUseCase
+        private val mLoadClothUseCase: LoadClothUseCase,
+        private val mClothMapper:      ClothModelViewHolderMapper
 ): ViewModel() {
 
-    private val clothes = MutableLiveData<ClothesViewModelResults>()
+    private val mClothesLiveData = MutableLiveData<ClothesViewModelResults>()
 
     init {
         loadClothes()
@@ -23,15 +25,21 @@ class HomeViewModel @Inject constructor(
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-    fun getClothes(): LiveData<ClothesViewModelResults> = clothes
+    fun getClothes(): LiveData<ClothesViewModelResults> = mClothesLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
     // region Clothes ------------------------------------------------------------------------------
 
     private fun loadClothes() {
-        mLoadClothUseCase.loadAsync {
-
-        }
+        mLoadClothUseCase.loadAsync(onSuccess = {
+            mClothesLiveData.value = ClothesViewModelResults.Success(mClothMapper.mapListClothes(it))
+        }, onAuthError = {
+            mClothesLiveData.value = ClothesViewModelResults.AuthError
+        }, onGeneralError = {
+            mClothesLiveData.value = ClothesViewModelResults.GeneralError
+        }, onNetworkError = {
+            mClothesLiveData.value = ClothesViewModelResults.NetworkError
+        })
     }
 
     // endregion Clothes ---------------------------------------------------------------------------

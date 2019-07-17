@@ -5,7 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import hulkdx.com.core.android.di.ApplicationComponent
 import hulkdx.com.core.android.di.MainActivityScope
-import hulkdx.com.features.home.ui.HomeFragment
+import hulkdx.com.features.home.HomeFragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hulkdx.cloth.R
 import hulkdx.com.core.android.applicationComponent
 import com.hulkdx.cloth.di.DaggerMainActivityComponent
-import hulkdx.com.features.home.ui.HomeFragment
+import hulkdx.com.features.home.HomeFragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.

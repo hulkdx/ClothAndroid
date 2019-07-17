@@ -3,11 +3,13 @@ package hulkdx.com.domain.interactor.cloth.load
 import hulkdx.com.domain.data.remote.ClothApiManager
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
+import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.model.Cloth
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import java.io.IOException
 import javax.inject.Inject
 
@@ -22,34 +24,28 @@ class LoadClothUseCaseImpl @Inject constructor(
 
     private var mDisposable: Disposable? = null
 
-    override fun loadAsync(onComplete: (UseCaseResult<List<Cloth>>) -> Unit) {
+    override fun loadAsync(onSuccess:      (List<Cloth>) -> Unit,
+                           onGeneralError: (Throwable)   -> Unit,
+                           onNetworkError: (Throwable)   -> Unit,
+                           onAuthError:    (Throwable)   -> Unit) {
 
-        Single.fromCallable { loadSync() }
+        mDisposable = Single.fromCallable { loadSync() }
                 .subscribeOn(mBackgroundScheduler)
                 .observeOn(mUiScheduler)
-                .subscribe(object: SingleObserver<List<Cloth>> {
-
-                    override fun onSuccess(clothes: List<Cloth>) {
-                        //onComplete(UseCaseResult(status = STATUS_SUCCESS, data = clothes))
-                    }
-
-                    override fun onError(throwable: Throwable) {
-                        when (throwable) {
-                            is IOException -> {
-                                // Network Errors
-                                //onComplete(UseCaseResult(status = STATUS_NETWORK_ERROR))
-                            }
-                            else -> {
-                                // General Errors
-                                //onComplete(UseCaseResult(status = STATUS_GENERAL_ERROR))
-                            }
+                .subscribe({
+                    onSuccess(it)
+                }, { throwable ->
+                    when (throwable) {
+                        is IOException -> {
+                            onNetworkError(throwable)
+                        }
+                        is AuthException -> {
+                            onAuthError(throwable)
+                        }
+                        else -> {
+                            onGeneralError(throwable)
                         }
                     }
-
-                    override fun onSubscribe(disposable: Disposable) {
-                        mDisposable = disposable
-                    }
-
                 })
     }
 

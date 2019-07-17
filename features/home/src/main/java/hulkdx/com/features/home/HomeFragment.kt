@@ -1,13 +1,12 @@
-package hulkdx.com.features.home.ui
+package hulkdx.com.features.home
 
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.ui.base.BaseFragment
-import hulkdx.com.features.home.R
 import hulkdx.com.features.home.di.DaggerHomeComponent
-import hulkdx.com.features.home.ui.adapter.ClothAdapter
-import hulkdx.com.features.home.ui.viewmodel.HomeViewModel
+import hulkdx.com.features.home.adapter.ClothAdapter
+import hulkdx.com.features.home.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**

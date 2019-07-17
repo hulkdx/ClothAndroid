@@ -1,4 +1,4 @@
-package hulkdx.com.features.home.ui.adapter
+package hulkdx.com.features.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

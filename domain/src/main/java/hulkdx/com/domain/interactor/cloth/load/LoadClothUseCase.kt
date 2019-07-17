@@ -8,7 +8,11 @@ import hulkdx.com.domain.model.Cloth
  */
 interface LoadClothUseCase {
 
-    fun loadAsync(onComplete: (UseCaseResult<List<Cloth>>) -> Unit)
+    fun loadAsync(onSuccess:      (List<Cloth>) -> Unit,
+                  onGeneralError: (Throwable)   -> Unit,
+                  onNetworkError: (Throwable)   -> Unit,
+                  onAuthError:    (Throwable)   -> Unit
+    )
 
     fun dispose()
 }
