@@ -7,5 +7,5 @@ data class User (
         val firstName:          String,
         val lastName:           String,
         val emailAddress:       String,
-        val avatarImageUrl:     String
+        val avatarImageUrl:     String?
 )
