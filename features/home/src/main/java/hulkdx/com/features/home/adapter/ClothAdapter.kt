@@ -5,11 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hulkdx.com.features.home.R
 import hulkdx.com.features.home.model.Cloth
+import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
-internal class ClothAdapter: RecyclerView.Adapter<ClothViewHolder>() {
+internal class ClothAdapter @Inject constructor(): RecyclerView.Adapter<ClothViewHolder>() {
 
     private var mClothes = listOf<Cloth>()
 

@@ -21,6 +21,7 @@ class ClothApiManagerImpl @Inject constructor(
             "        \"id\": 1,\n" +
             "        \"image_url\": \"https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg\",\n" +
             "        \"price\": 400,\n" +
+            "        \"currency\": \"Euro\",\n" +
             "        \"user\": {\n" +
             "            \"id\": 1,\n" +
             "            \"first_name\": \"Saba\",\n" +
@@ -46,7 +47,7 @@ class ClothApiManagerImpl @Inject constructor(
                         avatarImageUrl
                 )
             }
-            return@map ClothEntity(it.id, it.imageUrl, it.price, user)
+            return@map ClothEntity(it.id, it.imageUrl, it.price, it.currency, user)
         }
     }
 

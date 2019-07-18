@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
-import hulkdx.com.features.home.mapper.ClothModelViewHolderMapper
+import hulkdx.com.features.home.mapper.ClothMapper
 import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
         private val mLoadClothUseCase: LoadClothUseCase,
-        private val mClothMapper:      ClothModelViewHolderMapper
+        private val mClothMapper:      ClothMapper
 ): ViewModel() {
 
     private val mClothesLiveData = MutableLiveData<ClothesViewModelResults>()

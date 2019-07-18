@@ -11,6 +11,7 @@ import hulkdx.com.features.home.model.Cloth
 import hulkdx.com.features.home.viewmodel.HomeViewModel
 import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
 import kotlinx.android.synthetic.main.fragment_home.*
+import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: BaseFragment<HomeViewModel>() {
 
-    private lateinit var mClothAdapter: ClothAdapter
+    @Inject internal lateinit var mClothAdapter: ClothAdapter
 
     // region SetupUI ------------------------------------------------------------------------------
 
@@ -29,7 +30,6 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
     private fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(context)
         clothRecyclerView.layoutManager = layoutManager
-        mClothAdapter = ClothAdapter()
         clothRecyclerView.adapter = mClothAdapter
     }
 

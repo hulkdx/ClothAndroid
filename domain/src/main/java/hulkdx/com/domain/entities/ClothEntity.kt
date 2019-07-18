@@ -8,5 +8,6 @@ data class ClothEntity (
         val id:         Long,
         val imageUrl:   String,
         val price:      Float,
+        val currency:   String,
         val user:       UserEntity
 )

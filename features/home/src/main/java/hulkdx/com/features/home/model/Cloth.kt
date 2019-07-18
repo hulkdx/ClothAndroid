@@ -5,5 +5,6 @@ package hulkdx.com.features.home.model
  */
 
 data class Cloth (
-        val todo: String
+        val imageUrl: String,
+        val price: String
 )

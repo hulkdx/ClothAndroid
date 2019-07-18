@@ -7,8 +7,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 internal data class ClothApiModel (
-        @SerializedName("id")       val id:                 Long,
+        @SerializedName("id")        val id:         Long,
         @SerializedName("image_url") val imageUrl:   String,
-        @SerializedName("price")    val price:      Float,
-        @SerializedName("user")     val user:       UserApiModel
+        @SerializedName("price")     val price:      Float,
+        @SerializedName("currency")  val currency:   String,
+        @SerializedName("user")      val user:       UserApiModel
 )

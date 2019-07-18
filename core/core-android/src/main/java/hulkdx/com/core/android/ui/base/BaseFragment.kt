@@ -21,6 +21,11 @@ abstract class BaseFragment<VM: ViewModel>: Fragment() {
     lateinit var mViewModelFactory: ViewModelFactory
     lateinit var mViewModel: VM
 
+    override fun onAttach(context: Context?) {
+        inject(requireContext())
+        super.onAttach(context)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(fragmentLayout(), container, false)
     }
@@ -32,7 +37,6 @@ abstract class BaseFragment<VM: ViewModel>: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        inject(requireContext())
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(getViewModelClass())
         setupViewModel()
     }

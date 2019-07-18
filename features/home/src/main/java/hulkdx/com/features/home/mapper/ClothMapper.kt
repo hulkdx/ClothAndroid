@@ -8,7 +8,7 @@ import javax.inject.Inject
  * Created by Mohammad Jafarzadeh Rezvan on 17/07/2019.
  */
 
-class ClothModelViewHolderMapper @Inject constructor() {
+class ClothMapper @Inject constructor() {
 
     fun mapListClothes(clothes: List<ClothEntity>): List<Cloth> {
         return clothes.map {
@@ -17,7 +17,13 @@ class ClothModelViewHolderMapper @Inject constructor() {
     }
 
     private fun mapCloth(cloth: ClothEntity): Cloth {
-        // TODO
-        return Cloth("")
+        return cloth.run {
+            return@run Cloth(imageUrl, formatPrice(price, currency))
+        }
     }
+
+    private fun formatPrice(price: Float, currency: String): String {
+        return String.format("%.2f %s", price, currency)
+    }
+
 }
