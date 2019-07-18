@@ -5,7 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import hulkdx.com.core.android.di.ApplicationComponent
 import hulkdx.com.core.android.di.MainActivityScope
-import hulkdx.com.features.home.HomeFragment
+import hulkdx.com.features.home.ExploreFragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
@@ -14,16 +14,16 @@ import hulkdx.com.features.home.HomeFragment
 @Component(modules = [
     ViewModelModule::class
 ], dependencies = [ApplicationComponent::class])
-interface HomeComponent {
+interface ExploreComponent {
 
     @Component.Builder
     interface Builder {
         @BindsInstance
         fun context(context: Context): Builder
         fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        fun build(): HomeComponent
+        fun build(): ExploreComponent
     }
 
-    fun inject(homeFragment: HomeFragment)
+    fun inject(homeFragment: ExploreFragment)
 
 }

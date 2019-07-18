@@ -12,7 +12,7 @@ import javax.inject.Inject
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 
-class HomeViewModel @Inject constructor(
+class ExploreViewModel @Inject constructor(
         private val mLoadClothUseCase: LoadClothUseCase,
         private val mClothMapper:      ClothMapper
 ): ViewModel() {
@@ -43,6 +43,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        mLoadClothUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------

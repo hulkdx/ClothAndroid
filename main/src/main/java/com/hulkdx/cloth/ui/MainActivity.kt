@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hulkdx.cloth.R
 import hulkdx.com.core.android.applicationComponent
 import com.hulkdx.cloth.di.DaggerMainActivityComponent
-import hulkdx.com.features.home.HomeFragment
+import hulkdx.com.features.home.ExploreFragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
@@ -29,7 +29,7 @@ class MainActivity: AppCompatActivity() {
     private fun configureFragments(isFirstTime: Boolean) {
         if (isFirstTime) {
             supportFragmentManager.beginTransaction()
-                    .add(R.id.container, HomeFragment())
+                    .add(R.id.container, ExploreFragment())
                     .commit()
         }
     }

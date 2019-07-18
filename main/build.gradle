@@ -27,7 +27,7 @@ android {
 
 dependencies {
 
-    implementation project(':features:home')
+    implementation project(':features:features-explore')
     implementation project(':core:core-android')
 
     kapt                daggerCompiler

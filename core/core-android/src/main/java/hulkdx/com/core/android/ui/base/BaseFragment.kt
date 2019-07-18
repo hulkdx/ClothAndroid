@@ -8,18 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.ViewModelFactory
+import hulkdx.com.core.android.viewmodel.AuthViewModel
+import hulkdx.com.core.android.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 15/07/2019.
  */
 
-abstract class BaseFragment<VM: ViewModel>: Fragment() {
+abstract class BaseFragment: Fragment() {
 
     @Inject
     lateinit var mViewModelFactory: ViewModelFactory
-    lateinit var mViewModel: VM
 
     override fun onAttach(context: Context?) {
         inject(requireContext())
@@ -37,12 +37,10 @@ abstract class BaseFragment<VM: ViewModel>: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(getViewModelClass())
         setupViewModel()
     }
 
     protected abstract fun inject(context: Context)
-    protected abstract fun getViewModelClass(): Class<VM>
     protected abstract fun fragmentLayout(): Int
     protected abstract fun setupUI()
     protected abstract fun setupViewModel()

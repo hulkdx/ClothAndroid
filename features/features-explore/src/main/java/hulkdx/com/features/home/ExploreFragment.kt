@@ -2,24 +2,29 @@ package hulkdx.com.features.home
 
 import android.content.Context
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.ui.base.BaseFragment
-import hulkdx.com.features.home.di.DaggerHomeComponent
+import hulkdx.com.core.android.viewmodel.AuthViewModel
 import hulkdx.com.features.home.adapter.ClothAdapter
+import hulkdx.com.features.home.di.DaggerExploreComponent
 import hulkdx.com.features.home.model.Cloth
-import hulkdx.com.features.home.viewmodel.HomeViewModel
+import hulkdx.com.features.home.viewmodel.ExploreViewModel
 import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_explore.*
 import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 
-class HomeFragment: BaseFragment<HomeViewModel>() {
+class ExploreFragment: BaseFragment() {
 
     @Inject internal lateinit var mClothAdapter: ClothAdapter
+
+    private lateinit var mAuthViewModel: AuthViewModel
+    private lateinit var mExploreViewModel: ExploreViewModel
 
     // region SetupUI ------------------------------------------------------------------------------
 
@@ -36,8 +41,11 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
-        mViewModel.loadClothes()
-        mViewModel.getClothes().observe(this, Observer {
+        mExploreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ExploreViewModel::class.java)
+        mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
+
+        mExploreViewModel.loadClothes()
+        mExploreViewModel.getClothes().observe(this, Observer {
             when (it) {
                 is ClothesViewModelResults.Success      -> loadClothesSuccess(it.clothes)
                 is ClothesViewModelResults.NetworkError -> loadClothesNetworkError()
@@ -66,19 +74,17 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
-        DaggerHomeComponent.builder()
+        DaggerExploreComponent.builder()
                 .context(context)
                 .applicationComponent(applicationComponent(context))
                 .build()
                 .inject(this)
     }
 
-    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
-
-    override fun fragmentLayout(): Int  = R.layout.fragment_home
+    override fun fragmentLayout(): Int  = R.layout.fragment_explore
 
     private fun authError() {
-        // TODO logout
+        mAuthViewModel.logout()
     }
 
     // endregion Extra functions -------------------------------------------------------------------
