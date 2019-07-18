@@ -12,6 +12,7 @@ dependencies {
     implementation      kotlinStd
     implementation      rxJava
     implementation      okhttpLogIntercept
+    implementation      gson
 
     testImplementation  jUnit
     testImplementation  mockito

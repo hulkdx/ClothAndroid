@@ -2,6 +2,7 @@ package hulkdx.com.domain.interactor.cloth.load
 
 import hulkdx.com.domain.TEST_CLOTHES
 import hulkdx.com.domain.data.remote.ClothApiManager
+import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.model.Cloth
 import org.junit.Before
 import org.junit.Rule
@@ -43,30 +44,64 @@ class LoadClothUseCaseImplTest {
 
     @Test
     fun loadAsync_callApi() {
-        SUT.loadAsync {}
+        // Arrange
+        // Act
+        SUT.loadAsync({}, {}, {}, {})
+        // Assert
         verify(mClothApiManager).getCloths()
     }
 
-//    @Test
-//    fun loadAsync_success_resultSuccess() {
-//        success()
-//        var result: LoadClothesCallBack<List<Cloth>>? = null
-//        SUT.loadAsync {
-//            result = it
-//        }
-//        assertThat(result?.status, `is`(STATUS_SUCCESS))
-//        assertThat(result?.data, `is`(TEST_CLOTHES))
-//    }
-//
-//    @Test
-//    fun loadAsync_ioException_networkError() {
-//        ioException()
-//        var result: LoadClothesCallBack<List<Cloth>>? = null
-//        SUT.loadAsync {
-//            result = it
-//        }
-//        assertThat(result?.status, `is`(STATUS_NETWORK_ERROR))
-//    }
+    @Test
+    fun loadAsync_success_resultSuccess() {
+        // Arrange
+        success()
+        var result: List<Cloth>? = null
+        // Act
+        SUT.loadAsync({
+            result = it
+        }, {}, {}, {})
+        // Assert
+        assertThat(result, `is`(TEST_CLOTHES))
+    }
+
+    @Test
+    fun loadAsync_ioException_resultNetworkError() {
+        // Arrange
+        ioException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {
+            result = true
+        }, onGeneralError = {}, onAuthError = {})
+        // Assert
+        assertThat(result, `is`(true))
+    }
+
+    @Test
+    fun loadAsync_generalException_resultGeneralException() {
+        // Arrange
+        generalException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {
+            result = true
+        }, onAuthError = {})
+        // Assert
+        assertThat(result, `is`(true))
+    }
+
+    @Test
+    fun loadAsync_authException_resultGeneralException() {
+        // Arrange
+        authException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {}, onAuthError = {
+            result = true
+        })
+        // Assert
+        assertThat(result, `is`(true))
+    }
 
     // region helper methods -----------------------------------------------------------------------
 
@@ -76,6 +111,14 @@ class LoadClothUseCaseImplTest {
 
     private fun ioException() {
         `when`(mClothApiManager.getCloths()).thenThrow(IOException(""))
+    }
+
+    private fun generalException() {
+        `when`(mClothApiManager.getCloths()).thenThrow(Exception(""))
+    }
+
+    private fun authException() {
+        `when`(mClothApiManager.getCloths()).thenThrow(AuthException())
     }
 
     // endregion helper methods --------------------------------------------------------------------

@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hulkdx.com.features.home.R
+import hulkdx.com.features.home.model.ClothModelViewHolder
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 internal class ClothAdapter: RecyclerView.Adapter<ClothViewHolder>() {
+
+    private var mClothes = listOf<ClothModelViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClothViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -16,9 +19,19 @@ internal class ClothAdapter: RecyclerView.Adapter<ClothViewHolder>() {
         return ClothViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int = 1
+    override fun getItemCount(): Int = mClothes.size
 
     override fun onBindViewHolder(holder: ClothViewHolder, position: Int) {
+        val model = mClothes[position]
+        holder.bind(model)
     }
+
+    // region Data ---------------------------------------------------------------------------------
+
+    fun updateClothes(clothes: List<ClothModelViewHolder>) {
+        mClothes = clothes
+    }
+
+    // endregion Data ------------------------------------------------------------------------------
 
 }

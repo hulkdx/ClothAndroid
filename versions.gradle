@@ -25,4 +25,5 @@ allprojects {
     ext.liveDataAnnotation      = "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
     ext.okhttpLogIntercept      = "com.squareup.okhttp3:logging-interceptor:3.10.0"
     ext.cardView                = "androidx.cardview:cardview:1.0.0"
+    ext.gson                    = "com.google.code.gson:gson:2.8.5"
 }

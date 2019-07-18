@@ -8,8 +8,10 @@ import hulkdx.com.features.home.viewmodel.HomeViewModel
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 @Module
-object HomeModule {
-    @JvmStatic
+abstract class ViewModelModule {
+
     @Provides
-    fun providesViewModel(clothViewModel: HomeViewModel): ViewModel = clothViewModel
+    @Binds
+    abstract fun providesViewModel(clothViewModel: HomeViewModel): ViewModel
+
 }

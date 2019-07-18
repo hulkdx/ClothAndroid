@@ -5,6 +5,7 @@ package hulkdx.com.domain.model
  */
 
 data class Cloth (
+        val id:         Long,
         val imageUrl:   String,
         val price:      Float,
         val user:       User

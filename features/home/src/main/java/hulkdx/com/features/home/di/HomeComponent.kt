@@ -12,7 +12,7 @@ import hulkdx.com.features.home.HomeFragment
  */
 @MainActivityScope
 @Component(modules = [
-    HomeModule::class
+    ViewModelModule::class
 ], dependencies = [ApplicationComponent::class])
 interface HomeComponent {
 
