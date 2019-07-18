@@ -36,6 +36,7 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
+        mViewModel.loadClothes()
         mViewModel.getClothes().observe(this, Observer {
             when (it) {
                 is ClothesViewModelResults.Success      -> loadClothesSuccess(it.clothes)

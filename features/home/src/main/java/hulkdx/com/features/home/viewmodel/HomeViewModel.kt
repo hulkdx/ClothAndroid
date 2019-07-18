@@ -19,10 +19,6 @@ class HomeViewModel @Inject constructor(
 
     private val mClothesLiveData = MutableLiveData<ClothesViewModelResults>()
 
-    init {
-        loadClothes()
-    }
-
     // region LiveData Setup -----------------------------------------------------------------------
 
     fun getClothes(): LiveData<ClothesViewModelResults> = mClothesLiveData
@@ -30,7 +26,7 @@ class HomeViewModel @Inject constructor(
     // endregion LiveData Setup --------------------------------------------------------------------
     // region Clothes ------------------------------------------------------------------------------
 
-    private fun loadClothes() {
+    fun loadClothes() {
         mLoadClothUseCase.loadAsync(onSuccess = {
             mClothesLiveData.value = ClothesViewModelResults.Success(mClothMapper.mapListClothes(it))
         }, onAuthError = {
