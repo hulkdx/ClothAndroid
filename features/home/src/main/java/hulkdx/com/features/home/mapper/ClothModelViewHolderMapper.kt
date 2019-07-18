@@ -1,7 +1,7 @@
 package hulkdx.com.features.home.mapper
 
-import hulkdx.com.domain.model.Cloth
-import hulkdx.com.features.home.model.ClothModelViewHolder
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.features.home.model.Cloth
 import javax.inject.Inject
 
 /**
@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 class ClothModelViewHolderMapper @Inject constructor() {
 
-    fun mapListClothes(clothes: List<Cloth>): List<ClothModelViewHolder> {
+    fun mapListClothes(clothes: List<ClothEntity>): List<Cloth> {
         return clothes.map {
             return@map mapCloth(it)
         }
     }
 
-    fun mapCloth(cloth: Cloth): ClothModelViewHolder {
+    private fun mapCloth(cloth: ClothEntity): Cloth {
         // TODO
-        return ClothModelViewHolder("")
+        return Cloth("")
     }
 }

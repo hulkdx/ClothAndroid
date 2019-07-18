@@ -10,7 +10,6 @@ import hulkdx.com.features.home.viewmodel.HomeViewModel
 @Module
 abstract class ViewModelModule {
 
-    @Provides
     @Binds
     abstract fun providesViewModel(clothViewModel: HomeViewModel): ViewModel
 

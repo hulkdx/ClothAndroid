@@ -9,6 +9,7 @@ import hulkdx.com.data.remote.di.NetworkModule
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.RepositoryModule
 import hulkdx.com.domain.di.UseCaseModule
+import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import javax.inject.Singleton
 
 /**
@@ -33,6 +34,7 @@ interface ApplicationComponent {
         fun build(): ApplicationComponent
     }
 
+    fun loadClothUseCase(): LoadClothUseCase
 }
 
 

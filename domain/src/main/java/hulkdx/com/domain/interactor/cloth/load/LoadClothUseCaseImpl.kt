@@ -4,12 +4,10 @@ import hulkdx.com.domain.data.remote.ClothApiManager
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
 import hulkdx.com.domain.exception.AuthException
-import hulkdx.com.domain.model.Cloth
+import hulkdx.com.domain.entities.ClothEntity
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import java.io.IOException
 import javax.inject.Inject
 
@@ -24,7 +22,7 @@ class LoadClothUseCaseImpl @Inject constructor(
 
     private var mDisposable: Disposable? = null
 
-    override fun loadAsync(onSuccess:      (List<Cloth>) -> Unit,
+    override fun loadAsync(onSuccess:      (List<ClothEntity>) -> Unit,
                            onGeneralError: (Throwable)   -> Unit,
                            onNetworkError: (Throwable)   -> Unit,
                            onAuthError:    (Throwable)   -> Unit) {
@@ -49,7 +47,7 @@ class LoadClothUseCaseImpl @Inject constructor(
                 })
     }
 
-    private fun loadSync(): List<Cloth> {
+    private fun loadSync(): List<ClothEntity> {
         return mClothApiManager.getCloths()
     }
 

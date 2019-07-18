@@ -3,7 +3,7 @@ package hulkdx.com.domain.interactor.cloth.load
 import hulkdx.com.domain.TEST_CLOTHES
 import hulkdx.com.domain.data.remote.ClothApiManager
 import hulkdx.com.domain.exception.AuthException
-import hulkdx.com.domain.model.Cloth
+import hulkdx.com.domain.entities.ClothEntity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -55,7 +55,7 @@ class LoadClothUseCaseImplTest {
     fun loadAsync_success_resultSuccess() {
         // Arrange
         success()
-        var result: List<Cloth>? = null
+        var result: List<ClothEntity>? = null
         // Act
         SUT.loadAsync({
             result = it

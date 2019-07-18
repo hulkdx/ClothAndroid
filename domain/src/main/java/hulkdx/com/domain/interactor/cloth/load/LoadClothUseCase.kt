@@ -1,6 +1,6 @@
 package hulkdx.com.domain.interactor.cloth.load
 
-import hulkdx.com.domain.model.Cloth
+import hulkdx.com.domain.entities.ClothEntity
 
 
 /**
@@ -8,7 +8,7 @@ import hulkdx.com.domain.model.Cloth
  */
 interface LoadClothUseCase {
 
-    fun loadAsync(onSuccess:      (List<Cloth>) -> Unit,
+    fun loadAsync(onSuccess:      (List<ClothEntity>) -> Unit,
                   onGeneralError: (Throwable)   -> Unit,
                   onNetworkError: (Throwable)   -> Unit,
                   onAuthError:    (Throwable)   -> Unit

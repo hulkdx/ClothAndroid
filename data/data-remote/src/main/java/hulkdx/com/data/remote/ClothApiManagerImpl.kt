@@ -4,9 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import hulkdx.com.data.remote.model.ClothApiModel
 import hulkdx.com.domain.data.remote.ClothApiManager
-import hulkdx.com.domain.model.Cloth
-import hulkdx.com.domain.model.User
-import okhttp3.OkHttpClient
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.UserEntity
 import javax.inject.Inject
 
 /**
@@ -32,14 +31,14 @@ class ClothApiManagerImpl @Inject constructor(
             "    }\n" +
             "]"
 
-    override fun getCloths(): List<Cloth> {
+    override fun getCloths(): List<ClothEntity> {
 
         val collectionType = object : TypeToken<List<ClothApiModel>>() {}.type
         val apiResponse = mGson.fromJson<List<ClothApiModel>>(fakeJson, collectionType)
 
         return apiResponse.map {
             val user = it.user.run {
-                return@run User(
+                return@run UserEntity(
                         id,
                         firstName,
                         lastName,
@@ -47,7 +46,7 @@ class ClothApiManagerImpl @Inject constructor(
                         avatarImageUrl
                 )
             }
-            return@map Cloth(it.id, it.imageUrl, it.price, user)
+            return@map ClothEntity(it.id, it.imageUrl, it.price, user)
         }
     }
 

@@ -7,7 +7,7 @@ import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.ui.base.BaseFragment
 import hulkdx.com.features.home.di.DaggerHomeComponent
 import hulkdx.com.features.home.adapter.ClothAdapter
-import hulkdx.com.features.home.model.ClothModelViewHolder
+import hulkdx.com.features.home.model.Cloth
 import hulkdx.com.features.home.viewmodel.HomeViewModel
 import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -48,7 +48,7 @@ class HomeFragment: BaseFragment<HomeViewModel>() {
 
     // region Load Clothes -------------------------------------------------------------------------
 
-    private fun loadClothesSuccess(clothes: List<ClothModelViewHolder>) {
+    private fun loadClothesSuccess(clothes: List<Cloth>) {
         mClothAdapter.updateClothes(clothes)
         mClothAdapter.notifyDataSetChanged()
     }
