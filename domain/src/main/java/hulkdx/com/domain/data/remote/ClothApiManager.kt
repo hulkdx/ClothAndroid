@@ -1,7 +1,7 @@
 package hulkdx.com.domain.data.remote
 
 import hulkdx.com.domain.exception.AuthException
-import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.ClothesEntity
 import java.io.IOException
 import java.lang.Exception
 
@@ -17,6 +17,6 @@ import java.lang.Exception
 interface ClothApiManager {
 
     @Throws(Exception::class)
-    fun getCloths(): List<ClothEntity>
+    fun getClothes(): ClothesEntity
 
 }

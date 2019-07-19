@@ -1,5 +1,7 @@
 package hulkdx.com.domain.entities
 
+import java.util.*
+
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 16/07/2019.
  */

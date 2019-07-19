@@ -48,7 +48,9 @@ class LoadClothUseCaseImpl @Inject constructor(
     }
 
     private fun loadSync(): List<ClothEntity> {
-        return mClothApiManager.getCloths()
+        val clothesListEntity = mClothApiManager.getClothes()
+        // TODO save it into database.
+        return clothesListEntity.clothes
     }
 
     override fun dispose() {

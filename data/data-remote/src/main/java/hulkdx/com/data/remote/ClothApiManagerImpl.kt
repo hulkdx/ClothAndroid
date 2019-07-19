@@ -1,10 +1,11 @@
 package hulkdx.com.data.remote
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import hulkdx.com.data.remote.model.ClothApiModel
+import com.google.gson.GsonBuilder
+import hulkdx.com.data.remote.model.GetClothesApiModel
 import hulkdx.com.domain.data.remote.ClothApiManager
 import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.UserEntity
 import javax.inject.Inject
 
@@ -15,11 +16,13 @@ import javax.inject.Inject
 class ClothApiManagerImpl @Inject constructor(
 ): ClothApiManager {
 
-    private val mGson = Gson()
-    private val fakeJson = "[\n" +
+    private val mGson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()
+
+    private val fakeJson = "{" +
+            "\"items\": [\n" +
             "    {\n" +
             "        \"id\": 1,\n" +
-            "        \"image_url\": \"https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg\",\n" +
+            "        \"image_url\": \"https://ae01.alicdn.com/kf/HTB16GtKCY9YBuNjy0Fgq6AxcXXac.jpg\",\n" +
             "        \"price\": 400,\n" +
             "        \"currency\": \"Euro\",\n" +
             "        \"user\": {\n" +
@@ -28,16 +31,18 @@ class ClothApiManagerImpl @Inject constructor(
             "            \"last_name\": \"Jafarzadeh\",\n" +
             "            \"email_address\": \"sabajafarzadeh@gmail.com\",\n" +
             "            \"avatar_image_url\": \"https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg\"\n" +
-            "        }\n" +
+            "        },\n" +
             "    }\n" +
-            "]"
+            "], \"updated_at\": \"2019-06-13 08:32:20\"" +
+            "}"
 
-    override fun getCloths(): List<ClothEntity> {
+    override fun getClothes(): ClothesEntity {
 
-        val collectionType = object : TypeToken<List<ClothApiModel>>() {}.type
-        val apiResponse = mGson.fromJson<List<ClothApiModel>>(fakeJson, collectionType)
+        val apiResponse = mGson.fromJson(fakeJson, GetClothesApiModel::class.java)
 
-        return apiResponse.map {
+        // TODO return updated_at as well
+
+        val clothes = apiResponse.items.map {
             val user = it.user.run {
                 return@run UserEntity(
                         id,
@@ -49,6 +54,8 @@ class ClothApiManagerImpl @Inject constructor(
             }
             return@map ClothEntity(it.id, it.imageUrl, it.price, it.currency, user)
         }
+
+        return ClothesEntity(clothes, apiResponse.updated_at)
     }
 
 }

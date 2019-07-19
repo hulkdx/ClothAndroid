@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName
  */
 internal data class UserApiModel (
         @SerializedName("id")               val id:                 Long,
-        @SerializedName("first_name")        val firstName:          String,
-        @SerializedName("last_name")         val lastName:           String,
-        @SerializedName("email_address")     val emailAddress:       String,
-        @SerializedName("avatar_image_url")   val avatarImageUrl:     String?
+        @SerializedName("first_name")       val firstName:          String,
+        @SerializedName("last_name")        val lastName:           String,
+        @SerializedName("email_address")    val emailAddress:       String,
+        @SerializedName("avatar_image_url") val avatarImageUrl:     String?
 )

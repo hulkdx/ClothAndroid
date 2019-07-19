@@ -2,7 +2,6 @@ package hulkdx.com.data.remote.di
 
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import hulkdx.com.data.remote.ClothApiManagerImpl
 import hulkdx.com.domain.data.remote.ClothApiManager
 
@@ -14,4 +13,5 @@ abstract class NetworkModule {
 
     @Binds
     abstract fun provideClothApiManager(clothApiManagerImpl: ClothApiManagerImpl): ClothApiManager
+
 }

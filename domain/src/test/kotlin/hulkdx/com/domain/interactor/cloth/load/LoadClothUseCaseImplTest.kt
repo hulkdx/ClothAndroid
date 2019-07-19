@@ -4,6 +4,7 @@ import hulkdx.com.domain.TEST_CLOTHES
 import hulkdx.com.domain.data.remote.ClothApiManager
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.ClothesEntity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,6 +17,7 @@ import org.junit.Assert.*
 import org.mockito.Mockito.*
 import org.hamcrest.CoreMatchers.*
 import java.io.IOException
+import java.util.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 16/07/2019.
@@ -48,7 +50,7 @@ class LoadClothUseCaseImplTest {
         // Act
         SUT.loadAsync({}, {}, {}, {})
         // Assert
-        verify(mClothApiManager).getCloths()
+        verify(mClothApiManager).getClothes()
     }
 
     @Test
@@ -106,19 +108,19 @@ class LoadClothUseCaseImplTest {
     // region helper methods -----------------------------------------------------------------------
 
     private fun success() {
-        `when`(mClothApiManager.getCloths()).thenReturn(TEST_CLOTHES)
+        `when`(mClothApiManager.getClothes()).thenReturn(ClothesEntity(TEST_CLOTHES, Date()))
     }
 
     private fun ioException() {
-        `when`(mClothApiManager.getCloths()).thenThrow(IOException(""))
+        `when`(mClothApiManager.getClothes()).thenThrow(IOException(""))
     }
 
     private fun generalException() {
-        `when`(mClothApiManager.getCloths()).thenThrow(Exception(""))
+        `when`(mClothApiManager.getClothes()).thenThrow(Exception(""))
     }
 
     private fun authException() {
-        `when`(mClothApiManager.getCloths()).thenThrow(AuthException())
+        `when`(mClothApiManager.getClothes()).thenThrow(AuthException())
     }
 
     // endregion helper methods --------------------------------------------------------------------
