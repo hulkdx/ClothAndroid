@@ -1,7 +1,5 @@
 version: 2.1
 
-# TODO add deploying here...
-
 jobs:
   build:
     working_directory: ~/code
