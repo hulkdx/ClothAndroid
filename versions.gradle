@@ -6,6 +6,7 @@ allprojects {
     
     final daggerVersion     = '2.20'
     final lifecycleVersion  = "2.0.0-rc01"
+    final retrofitVersion   = "2.5.0"
 
     // Libraries
     ext.daggerCompiler          = "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -27,4 +28,8 @@ allprojects {
     ext.cardView                = "androidx.cardview:cardview:1.0.0"
     ext.gson                    = "com.google.code.gson:gson:2.8.5"
     ext.glide                   = "com.github.bumptech.glide:glide:4.9.0"
+
+    ext.retrofit           = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    ext.retrofitGson       = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
 }

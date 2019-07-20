@@ -13,6 +13,8 @@ dependencies {
     implementation      rxJava
     implementation      okhttpLogIntercept
     implementation      gson
+    implementation      retrofit
+    implementation      retrofitGson
 
     testImplementation  jUnit
     testImplementation  mockito

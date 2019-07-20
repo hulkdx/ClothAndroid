@@ -25,13 +25,13 @@ class ClothApiManagerImplTest {
 
     @Before
     fun setup() {
-        SUT = ClothApiManagerImpl()
+//        SUT = ClothApiManagerImpl()
     }
 
-    @Test
-    fun getCloths_() {
-        SUT.getClothes()
-    }
+//    @Test
+//    fun getCloths_() {
+//        SUT.getClothes()
+//    }
 
     // region helper methods -----------------------------------------------------------------------
     // endregion helper methods --------------------------------------------------------------------

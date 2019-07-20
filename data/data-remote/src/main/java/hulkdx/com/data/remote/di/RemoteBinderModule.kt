@@ -9,9 +9,9 @@ import hulkdx.com.domain.data.remote.ClothApiManager
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.
  */
 @Module
-abstract class NetworkModule {
+abstract class RemoteBinderModule {
 
     @Binds
-    abstract fun provideClothApiManager(clothApiManagerImpl: ClothApiManagerImpl): ClothApiManager
+    internal abstract fun provideClothApiManager(clothApiManagerImpl: ClothApiManagerImpl): ClothApiManager
 
 }

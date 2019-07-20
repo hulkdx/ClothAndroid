@@ -38,5 +38,6 @@ dependencies {
     implementation      liveData
     kapt                liveDataAnnotation
     implementation      glide
+    implementation      gson
 
 }

@@ -1,6 +1,7 @@
 package hulkdx.com.features.home
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,11 +64,11 @@ class ExploreFragment: BaseFragment() {
     }
 
     private fun loadClothesNetworkError() {
-        // TODO What happens?
+        Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadClothesGeneralError() {
-        // TODO What happens?
+        Toast.makeText(context, "General Error", Toast.LENGTH_SHORT).show()
     }
 
     // endregion Load Clothes ----------------------------------------------------------------------

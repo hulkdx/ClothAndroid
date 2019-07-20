@@ -14,12 +14,33 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:background="@color/primaryTextColor"
-        android:contentDescription="@string/cloth_image_View_description" />
+        android:contentDescription="@string/cloth_image_View_description"
+        />
 
     <TextView
         android:id="@+id/clothPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="2 EURO"/>
+        android:textSize="20sp"
+        android:textColor="@color/primaryTextColor"
+        tools:text="2 EURO"
+        />
+
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/primaryTextColor"
+        tools:text="User1"
+        />
+
+    <ImageView
+        android:id="@+id/userImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/primaryTextColor"
+        android:contentDescription="@string/cloth_image_View_description"
+        />
 
 </LinearLayout>

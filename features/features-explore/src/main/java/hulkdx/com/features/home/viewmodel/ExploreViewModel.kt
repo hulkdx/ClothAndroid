@@ -1,5 +1,6 @@
 package hulkdx.com.features.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,10 +31,13 @@ class ExploreViewModel @Inject constructor(
         mLoadClothUseCase.loadAsync(onSuccess = {
             mClothesLiveData.value = ClothesViewModelResults.Success(mClothMapper.mapListClothes(it))
         }, onAuthError = {
+            Log.e("ExploreViewModel", "AuthError: $it")
             mClothesLiveData.value = ClothesViewModelResults.AuthError
         }, onGeneralError = {
+            Log.e("ExploreViewModel", "GeneralError: $it")
             mClothesLiveData.value = ClothesViewModelResults.GeneralError
         }, onNetworkError = {
+            Log.e("ExploreViewModel", "NetworkError: $it")
             mClothesLiveData.value = ClothesViewModelResults.NetworkError
         })
     }

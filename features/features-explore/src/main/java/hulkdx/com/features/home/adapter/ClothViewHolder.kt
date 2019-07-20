@@ -15,12 +15,21 @@ internal class ClothViewHolder(
         itemView: View
 ): RecyclerView.ViewHolder(itemView) {
 
-    private val mClothImageView: ImageView = itemView.findViewById(R.id.clothImageView)
-    private val mClothPriceTextView: TextView = itemView.findViewById(R.id.clothPriceTextView)
+    private val mClothImageView:     ImageView = itemView.findViewById(R.id.clothImageView)
+    private val mClothPriceTextView: TextView  = itemView.findViewById(R.id.clothPriceTextView)
+    private val mUsernameTextView:   TextView  = itemView.findViewById(R.id.usernameTextView)
+    private val mUserImageView:      ImageView = itemView.findViewById(R.id.userImageView)
 
     fun bind(cloth: Cloth) {
+        
+        // Cloth
         loadUrlIntoImageView(cloth.imageUrl, mClothImageView)
         mClothPriceTextView.text = cloth.price
+        
+        // User
+        mUsernameTextView.text = cloth.user.username
+        loadUrlIntoImageView(cloth.user.imageUrl, mUserImageView)
+        
     }
 
 }
