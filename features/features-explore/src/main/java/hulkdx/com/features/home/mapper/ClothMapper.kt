@@ -21,10 +21,10 @@ class ClothMapper @Inject constructor() {
         return cloth.run {
 
             val user = cloth.user.run {
-                User(username, imageUrl)
+                User(username, image?.url)
             }
 
-            Cloth(imageUrl, formatPrice(price, currency), user)
+            Cloth(image.url, formatPrice(price, currency), user)
         }
     }
 

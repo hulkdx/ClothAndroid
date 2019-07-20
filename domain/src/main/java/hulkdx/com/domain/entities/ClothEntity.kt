@@ -8,7 +8,7 @@ import java.util.*
 
 data class ClothEntity (
         val id:         Long,
-        val imageUrl:   String,
+        val image:      ImageEntity,
         val price:      Float,
         val currency:   String,
         val user:       UserEntity

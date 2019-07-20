@@ -11,7 +11,11 @@ import com.bumptech.glide.Glide
  *
  * Note: Is this needs to be a ViewModel? or a UseCase?
  */
-fun loadUrlIntoImageView(url: String, imageView: ImageView) {
+fun loadUrlIntoImageView(url: String?, imageView: ImageView) {
+    if (url == null) {
+        return
+    }
+
     Glide.with(imageView.context)
             .load(url)
             .into(imageView)

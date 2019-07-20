@@ -11,5 +11,5 @@ internal data class UserApiModel (
         @SerializedName("first_name")       val firstName:          String,
         @SerializedName("last_name")        val lastName:           String,
         @SerializedName("email_address")    val emailAddress:       String,
-        @SerializedName("avatar_image_url") val avatarImageUrl:     String?
+        @SerializedName("image")            val image:              ImageApiModel?
 )

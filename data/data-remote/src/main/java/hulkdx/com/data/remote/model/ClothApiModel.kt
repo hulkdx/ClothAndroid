@@ -9,7 +9,7 @@ import java.util.*
 
 internal data class ClothApiModel (
         @SerializedName("id")           val id:         Long,
-        @SerializedName("image_url")    val imageUrl:   String,
+        @SerializedName("image")        val image:      ImageApiModel,
         @SerializedName("price")        val price:      Float,
         @SerializedName("currency")     val currency:   String,
         @SerializedName("user")         val user:       UserApiModel

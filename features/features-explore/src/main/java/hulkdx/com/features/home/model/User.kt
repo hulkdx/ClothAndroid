@@ -5,5 +5,5 @@ package hulkdx.com.features.home.model
  */
 data class User (
     val username: String,
-    val imageUrl: String
+    val imageUrl: String?
 )
