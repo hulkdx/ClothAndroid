@@ -12,6 +12,7 @@ import re
 # --------------------------------
 
 url = 'https://www.instagram.com/naku_clothing/'
+limit = 5
 
 # --------------------------------
 # Main
@@ -21,13 +22,18 @@ def main():
   response = requests.get(url).text
   images = re.findall(r"https:\/\/[^.]+.cdninstagram.com\/[^\"]+", response)
   index = -1
+  imgSet = set()
+  for img in images:
+    imgSet.add(img)
 
   json = """
 {
   "items": [
   """
-  for img in images:
+  for img in imgSet:
     index += 1
+    if index == limit:
+      break
     json += """
     {
         "id": %d,
@@ -52,9 +58,9 @@ def main():
                 "url": "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg"
             }
         }
-    }
-    """ % (index, img)
-    print json
+    }""" % (index, img)
+    if (index != len(imgSet) - 1):
+      json += ","
   json += """
   ],
   "updated_at": "2019-06-13 08:32:20"

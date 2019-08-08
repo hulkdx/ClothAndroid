@@ -2,7 +2,6 @@ package hulkdx.com.features.home.mapper
 
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.features.home.model.Cloth
-import hulkdx.com.features.home.model.User
 import javax.inject.Inject
 
 /**
@@ -19,17 +18,8 @@ class ClothMapper @Inject constructor() {
 
     private fun mapCloth(cloth: ClothEntity): Cloth {
         return cloth.run {
-
-            val user = cloth.user.run {
-                User(username, image?.url)
-            }
-
-            Cloth(image.url, formatPrice(price, currency), user)
+            Cloth(image.url)
         }
-    }
-
-    private fun formatPrice(price: Float, currency: String): String {
-        return String.format("%.2f %s", price, currency)
     }
 
 }

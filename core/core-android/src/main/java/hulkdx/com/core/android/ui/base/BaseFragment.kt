@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import hulkdx.com.core.android.util.ViewModelHelper
 import hulkdx.com.core.android.viewmodel.AuthViewModel
 import hulkdx.com.core.android.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -19,7 +20,7 @@ import javax.inject.Inject
 abstract class BaseFragment: Fragment() {
 
     @Inject
-    lateinit var mViewModelFactory: ViewModelFactory
+    lateinit var mViewModelHelper: ViewModelHelper
 
     override fun onAttach(context: Context?) {
         inject(requireContext())

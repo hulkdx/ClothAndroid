@@ -4,9 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.ui.base.BaseFragment
+import hulkdx.com.core.android.util.observeFragment
 import hulkdx.com.core.android.viewmodel.AuthViewModel
 import hulkdx.com.features.home.adapter.ClothAdapter
 import hulkdx.com.features.home.di.DaggerExploreComponent
@@ -34,7 +35,7 @@ class ExploreFragment: BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = GridLayoutManager(context, 3)
         clothRecyclerView.layoutManager = layoutManager
         clothRecyclerView.adapter = mClothAdapter
     }
@@ -42,11 +43,11 @@ class ExploreFragment: BaseFragment() {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
-        mExploreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ExploreViewModel::class.java)
-        mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
+        mExploreViewModel = mViewModelHelper.getViewModel(ExploreViewModel::class.java)
+        mAuthViewModel = mViewModelHelper.getViewModel(AuthViewModel::class.java)
 
         mExploreViewModel.loadClothes()
-        mExploreViewModel.getClothes().observe(this, Observer {
+        mExploreViewModel.getClothes().observeFragment(this, Observer {
             when (it) {
                 is ClothesViewModelResults.Success      -> loadClothesSuccess(it.clothes)
                 is ClothesViewModelResults.NetworkError -> loadClothesNetworkError()

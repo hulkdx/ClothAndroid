@@ -2,6 +2,7 @@ package hulkdx.com.core.android.util
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/07/2019.
@@ -9,14 +10,13 @@ import com.bumptech.glide.Glide
  * A placeholder for loading Images into views. In case in the future we want to replace Glide with
  * our own implementations.
  *
- * Note: Is this needs to be a ViewModel? or a UseCase?
+ * Note: currently this class is not Singleton
  */
-fun loadUrlIntoImageView(url: String?, imageView: ImageView) {
-    if (url == null) {
-        return
-    }
+class ImageLoader @Inject constructor() {
 
-    Glide.with(imageView.context)
-            .load(url)
-            .into(imageView)
+    fun loadImage(url: String, imageView: ImageView) {
+        Glide.with(imageView.context)
+                .load(url)
+                .into(imageView)
+    }
 }
