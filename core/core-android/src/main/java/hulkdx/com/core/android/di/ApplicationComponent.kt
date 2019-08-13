@@ -3,6 +3,7 @@ package hulkdx.com.core.android.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import hulkdx.com.core.android.navigation.NavigationManagerWrapper
 import hulkdx.com.data.cache.di.CacheModule
 import hulkdx.com.data.database.di.DatabaseModule
 import hulkdx.com.data.remote.di.RemoteBinderModule
@@ -37,6 +38,7 @@ interface ApplicationComponent {
     }
 
     fun loadClothUseCase(): LoadClothUseCase
+    fun navigationManagerWrapper(): NavigationManagerWrapper
 }
 
 

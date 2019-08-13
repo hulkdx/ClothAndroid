@@ -1,4 +1,4 @@
-package hulkdx.com.features.home.model
+package hulkdx.com.features.explore.model
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 15/07/2019.

@@ -1,11 +1,13 @@
-package com.hulkdx.cloth.ui
+package com.hulkdx.cloth.view.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.hulkdx.cloth.navigation.NavigationManagerImpl
 import com.hulkdx.cloth.R
 import hulkdx.com.core.android.applicationComponent
 import com.hulkdx.cloth.di.DaggerMainActivityComponent
-import hulkdx.com.features.home.ExploreFragment
+import hulkdx.com.core.android.navigation.NavigationManagerWrapper
+import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
@@ -13,12 +15,16 @@ import hulkdx.com.features.home.ExploreFragment
 
 class MainActivity: AppCompatActivity() {
 
+    @Inject lateinit var mNavigationManagerWrapper: NavigationManagerWrapper
+    @Inject lateinit var mNavigationManager: NavigationManagerImpl
+
     // region Lifecycle ----------------------------------------------------------------------------
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         inject()
+        mNavigationManagerWrapper.setNavigationManager(mNavigationManager)
 
         configureFragments(savedInstanceState == null)
     }
@@ -28,9 +34,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun configureFragments(isFirstTime: Boolean) {
         if (isFirstTime) {
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.container, ExploreFragment())
-                    .commit()
+            mNavigationManager.startFirstFragment()
         }
     }
 
@@ -40,7 +44,7 @@ class MainActivity: AppCompatActivity() {
     private fun inject() {
         DaggerMainActivityComponent
                 .builder()
-                .context(this)
+                .activity(this)
                 .applicationComponent(applicationComponent(this))
                 .build()
                 .inject(this)

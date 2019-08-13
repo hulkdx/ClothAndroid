@@ -1,7 +1,7 @@
-package hulkdx.com.features.home.mapper
+package hulkdx.com.features.explore.mapper
 
 import hulkdx.com.domain.entities.ClothEntity
-import hulkdx.com.features.home.model.Cloth
+import hulkdx.com.features.explore.model.Cloth
 import javax.inject.Inject
 
 /**

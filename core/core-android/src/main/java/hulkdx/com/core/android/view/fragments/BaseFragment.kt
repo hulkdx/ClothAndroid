@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.ui.base
+package hulkdx.com.core.android.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.ViewModelHelper
-import hulkdx.com.core.android.viewmodel.AuthViewModel
-import hulkdx.com.core.android.viewmodel.ViewModelFactory
+import hulkdx.com.core.android.navigation.NavigationManagerWrapper
+import hulkdx.com.core.android.util.ViewModelFactory
 import javax.inject.Inject
 
 /**
@@ -20,7 +17,10 @@ import javax.inject.Inject
 abstract class BaseFragment: Fragment() {
 
     @Inject
-    lateinit var mViewModelHelper: ViewModelHelper
+    protected lateinit var mViewModelFactory: ViewModelFactory
+
+    @Inject
+    protected lateinit var mNavigationManager: NavigationManagerWrapper
 
     override fun onAttach(context: Context?) {
         inject(requireContext())

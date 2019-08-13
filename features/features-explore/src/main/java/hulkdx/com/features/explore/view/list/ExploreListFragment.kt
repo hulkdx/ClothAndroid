@@ -1,4 +1,4 @@
-package hulkdx.com.features.home
+package hulkdx.com.features.explore.view.list
 
 import android.content.Context
 import android.widget.Toast
@@ -6,14 +6,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import hulkdx.com.core.android.applicationComponent
-import hulkdx.com.core.android.ui.base.BaseFragment
+import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.util.observeFragment
 import hulkdx.com.core.android.viewmodel.AuthViewModel
-import hulkdx.com.features.home.adapter.ClothAdapter
-import hulkdx.com.features.home.di.DaggerExploreComponent
-import hulkdx.com.features.home.model.Cloth
-import hulkdx.com.features.home.viewmodel.ExploreViewModel
-import hulkdx.com.features.home.viewmodel.results.ClothesViewModelResults
+import hulkdx.com.features.explore.R
+import hulkdx.com.features.explore.di.DaggerExploreComponent
+import hulkdx.com.features.explore.model.Cloth
+import hulkdx.com.features.explore.viewmodel.ExploreViewModel
+import hulkdx.com.features.explore.viewmodel.ExploreViewModel.ClothesResults.*
 import kotlinx.android.synthetic.main.fragment_explore.*
 import javax.inject.Inject
 
@@ -21,13 +21,26 @@ import javax.inject.Inject
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 
-class ExploreFragment: BaseFragment() {
+class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
 
     @Inject internal lateinit var mClothAdapter: ClothAdapter
 
     private lateinit var mAuthViewModel: AuthViewModel
     private lateinit var mExploreViewModel: ExploreViewModel
 
+    // region Lifecycle ----------------------------------------------------------------------------
+
+    override fun onStart() {
+        super.onStart()
+        mClothAdapter.registerClickListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mClothAdapter.unregisterClickListener()
+    }
+
+    // endregion Lifecycle -------------------------------------------------------------------------
     // region SetupUI ------------------------------------------------------------------------------
 
     override fun setupUI() {
@@ -43,16 +56,16 @@ class ExploreFragment: BaseFragment() {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
-        mExploreViewModel = mViewModelHelper.getViewModel(ExploreViewModel::class.java)
-        mAuthViewModel = mViewModelHelper.getViewModel(AuthViewModel::class.java)
+        mExploreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ExploreViewModel::class.java)
+        mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
 
         mExploreViewModel.loadClothes()
         mExploreViewModel.getClothes().observeFragment(this, Observer {
             when (it) {
-                is ClothesViewModelResults.Success      -> loadClothesSuccess(it.clothes)
-                is ClothesViewModelResults.NetworkError -> loadClothesNetworkError()
-                is ClothesViewModelResults.GeneralError -> loadClothesGeneralError()
-                is ClothesViewModelResults.AuthError    -> authError()
+                is Success      -> loadClothesSuccess(it.clothes)
+                is NetworkError -> loadClothesNetworkError()
+                is GeneralError -> loadClothesGeneralError()
+                is AuthError    -> authError()
             }
         })
     }
@@ -73,6 +86,14 @@ class ExploreFragment: BaseFragment() {
     }
 
     // endregion Load Clothes ----------------------------------------------------------------------
+    // region ClothAdapter Listeners ---------------------------------------------------------------
+
+    override fun onClothClicked(position: Int, cloth: Cloth) {
+        // TODO: GO TO DETAIL FRAGMENT
+        // mNavigationManager.navigateToExplore()
+    }
+
+    // endregion ClothAdapter Listeners ------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
@@ -90,5 +111,4 @@ class ExploreFragment: BaseFragment() {
     }
 
     // endregion Extra functions -------------------------------------------------------------------
-
 }
