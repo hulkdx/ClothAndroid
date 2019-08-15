@@ -25,19 +25,14 @@ android {
 dependencies {
 
     implementation project(':domain')
-    implementation project(':data:data-firebase')
-    implementation project(':data:data-database')
-    implementation project(':data:data-cache')
+    implementation project(':core:core-android')
 
     kapt                daggerCompiler
     implementation      dagger
     implementation      kotlinStd
-    implementation      rxAndroid
-    implementation      leakCanary
+    implementation      recyclerView
+    implementation      constraintLayout
     implementation      appcompat
     implementation      liveData
-    kapt                liveDataAnnotation
-    implementation      glide
-    implementation      gson
 
 }

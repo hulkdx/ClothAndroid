@@ -5,9 +5,8 @@ package hulkdx.com.domain.entities
  */
 data class UserEntity (
         val id:                 Long,
-        val username:           String,
+        val emailAddress:       String,
         val firstName:          String,
         val lastName:           String,
-        val emailAddress:       String,
         val image:              ImageEntity?
 )

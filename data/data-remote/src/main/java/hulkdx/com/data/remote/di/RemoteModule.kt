@@ -2,12 +2,10 @@ package hulkdx.com.data.remote.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import hulkdx.com.data.remote.ClothApiManagerImpl
 import hulkdx.com.data.remote.retrofit.ApiManagerRetrofit
-import hulkdx.com.domain.data.remote.ClothApiManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

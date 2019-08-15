@@ -1,3 +1,9 @@
-include ':main', ':domain', ':core:core-android',
+include ':main',
+        ':domain',
+        ':core:core-android',
         ':features:features-explore',
-        ':data:data-remote', ':data:data-database', ':data:data-cache'
+        ':features:features-auth',
+        ':data:data-remote',
+        ':data:data-firebase',
+        ':data:data-database',
+        ':data:data-cache'

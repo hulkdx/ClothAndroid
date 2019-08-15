@@ -1,7 +1,7 @@
 package hulkdx.com.domain.interactor.cloth.load
 
 import hulkdx.com.domain.TEST_CLOTHES
-import hulkdx.com.domain.data.remote.ClothApiManager
+import hulkdx.com.domain.data.remote.ApiManager
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.entities.ClothesEntity
@@ -32,7 +32,7 @@ class LoadClothUseCaseImplTest {
 
     @get:Rule
     var mMockitoJUnit = MockitoJUnit.rule()
-    @Mock lateinit var mClothApiManager: ClothApiManager
+    @Mock lateinit var mClothApiManager: ApiManager
 
     // endregion helper fields ---------------------------------------------------------------------
 

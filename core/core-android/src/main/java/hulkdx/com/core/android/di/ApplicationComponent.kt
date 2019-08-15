@@ -6,8 +6,7 @@ import dagger.Component
 import hulkdx.com.core.android.navigation.NavigationManagerWrapper
 import hulkdx.com.data.cache.di.CacheModule
 import hulkdx.com.data.database.di.DatabaseModule
-import hulkdx.com.data.remote.di.RemoteBinderModule
-import hulkdx.com.data.remote.di.RemoteModule
+import hulkdx.com.data.firebase.di.RemoteBindsModule
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.RepositoryModule
 import hulkdx.com.domain.di.UseCaseModule
@@ -24,8 +23,7 @@ import javax.inject.Singleton
     UseCaseModule::class,
     DatabaseModule::class,
     CacheModule::class,
-    RemoteBinderModule::class,
-    RemoteModule::class
+    RemoteBindsModule::class
 ])
 interface ApplicationComponent {
 
