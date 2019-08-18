@@ -46,7 +46,8 @@ dependencies {
     kapt                daggerCompiler
     implementation      dagger
     implementation      kotlinStd
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.google.firebase:firebase-auth:18.1.0'
+    implementation      firebaseAuth
 
+    testImplementation  jUnit
+    testImplementation  mockito
 }

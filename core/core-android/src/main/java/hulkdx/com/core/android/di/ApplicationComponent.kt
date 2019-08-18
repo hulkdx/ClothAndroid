@@ -7,6 +7,9 @@ import hulkdx.com.core.android.navigation.NavigationManagerWrapper
 import hulkdx.com.data.cache.di.CacheModule
 import hulkdx.com.data.database.di.DatabaseModule
 import hulkdx.com.data.firebase.di.RemoteBindsModule
+import hulkdx.com.data.firebase.di.RemoteModule
+import hulkdx.com.domain.data.remote.GetClothesEndPoint
+import hulkdx.com.domain.data.remote.RegisterEndPoint
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.RepositoryModule
 import hulkdx.com.domain.di.UseCaseModule
@@ -23,6 +26,7 @@ import javax.inject.Singleton
     UseCaseModule::class,
     DatabaseModule::class,
     CacheModule::class,
+    RemoteModule::class,
     RemoteBindsModule::class
 ])
 interface ApplicationComponent {
@@ -37,6 +41,7 @@ interface ApplicationComponent {
 
     fun loadClothUseCase(): LoadClothUseCase
     fun navigationManagerWrapper(): NavigationManagerWrapper
+    fun registerEndPoint(): RegisterEndPoint
 }
 
 

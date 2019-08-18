@@ -6,7 +6,7 @@ import javax.inject.Inject
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/07/2019.
  */
-class AuthViewModel @Inject constructor(): ViewModel() {
+class AuthCommonViewModel @Inject constructor(): ViewModel() {
 
     fun logout() {
         // TODO

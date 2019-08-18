@@ -1,0 +1,12 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Register -->
+    <style name="RegisterEditTextStyle">
+
+    </style>
+
+    <style name="RegisterButtonStyle">
+
+    </style>
+
+</resources>

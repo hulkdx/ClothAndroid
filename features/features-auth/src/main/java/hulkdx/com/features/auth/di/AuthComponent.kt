@@ -5,7 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import hulkdx.com.core.android.di.ApplicationComponent
 import hulkdx.com.core.android.di.annotations.MainActivityScope
-import hulkdx.com.features.auth.view.list.ExploreListFragment
+import hulkdx.com.features.auth.view.register.RegisterFragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
@@ -24,6 +24,6 @@ interface AuthComponent {
         fun build(): AuthComponent
     }
 
-    fun inject(homeFragment: ExploreListFragment)
+    fun inject(fragment: RegisterFragment)
 
 }

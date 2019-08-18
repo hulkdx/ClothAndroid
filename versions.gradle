@@ -17,7 +17,7 @@ allprojects {
     ext.recyclerView            = "androidx.recyclerview:recyclerview:1.0.0"
     ext.rxJava                  = "io.reactivex.rxjava2:rxjava:2.1.1"
     ext.rxAndroid               = "io.reactivex.rxjava2:rxandroid:2.0.1"
-    ext.mockito                 = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+    ext.mockito                 = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     ext.jUnit                   = "junit:junit:4.12"
     ext.archTesting             = "androidx.arch.core:core-testing:$lifecycleVersion"
     ext.kotlinStd               = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -32,4 +32,6 @@ allprojects {
     ext.retrofit           = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     ext.retrofitGson       = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    ext.firebaseCore = 'com.google.firebase:firebase-auth:18.1.0'
+    ext.firebaseAuth = 'com.google.firebase:firebase-auth:18.1.0'
 }

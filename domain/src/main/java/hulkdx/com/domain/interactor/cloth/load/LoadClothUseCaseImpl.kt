@@ -1,6 +1,6 @@
 package hulkdx.com.domain.interactor.cloth.load
 
-import hulkdx.com.domain.data.remote.ApiManager
+import hulkdx.com.domain.data.remote.GetClothesEndPoint
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
 import hulkdx.com.domain.exception.AuthException
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class LoadClothUseCaseImpl @Inject constructor(
         @BackgroundScheduler private val mBackgroundScheduler: Scheduler,
         @UiScheduler         private val mUiScheduler: Scheduler,
-        private val mClothApiManager: ApiManager
+        private val mClothApiManager: GetClothesEndPoint
 ): LoadClothUseCase {
 
     private var mDisposable: Disposable? = null

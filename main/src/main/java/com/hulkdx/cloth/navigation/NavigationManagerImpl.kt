@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager
 import com.hulkdx.cloth.R
 import hulkdx.com.core.android.navigation.*
 import hulkdx.com.core.android.navigation.NavigationManager
+import hulkdx.com.features.auth.view.register.RegisterFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment
 import java.lang.RuntimeException
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class NavigationManagerImpl @Inject constructor(
 
     fun startFirstFragment() {
         fragmentManager.beginTransaction()
-                .add(containerId, ExploreListFragment())
+                .add(containerId, RegisterFragment())
                 .commit()
     }
 

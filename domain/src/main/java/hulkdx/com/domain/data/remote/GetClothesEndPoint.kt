@@ -16,20 +16,8 @@ import java.lang.Exception
  *
  */
 
-interface ApiManager {
+interface GetClothesEndPoint {
 
     fun getClothes(): ClothesEntity
 
-//    fun login(): UserEntity
-
-    fun register(email: String,
-                 password: String,
-                 firstName: String,
-                 lastName: String,
-                 userImage: ImageEntity?): RegisterResult
-
-}
-
-sealed class RegisterResult {
-    data class Success(val mData: UserEntity): RegisterResult()
 }

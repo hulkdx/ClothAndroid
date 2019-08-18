@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.util.observeFragment
-import hulkdx.com.core.android.viewmodel.AuthViewModel
+import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.di.DaggerExploreComponent
 import hulkdx.com.features.explore.model.Cloth
@@ -25,7 +25,7 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
 
     @Inject internal lateinit var mClothAdapter: ClothAdapter
 
-    private lateinit var mAuthViewModel: AuthViewModel
+    private lateinit var mAuthCommonViewModel: AuthCommonViewModel
     private lateinit var mExploreViewModel: ExploreViewModel
 
     // region Lifecycle ----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
 
     override fun setupViewModel() {
         mExploreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ExploreViewModel::class.java)
-        mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
+        mAuthCommonViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthCommonViewModel::class.java)
 
         mExploreViewModel.loadClothes()
         mExploreViewModel.getClothes().observeFragment(this, Observer {
@@ -107,7 +107,7 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
     override fun fragmentLayout(): Int  = R.layout.fragment_explore
 
     private fun authError() {
-        mAuthViewModel.logout()
+        mAuthCommonViewModel.logout()
     }
 
     // endregion Extra functions -------------------------------------------------------------------
