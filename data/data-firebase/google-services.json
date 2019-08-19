@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "925094367274",
+    "firebase_url": "https://cloth-a72f5.firebaseio.com",
+    "project_id": "cloth-a72f5",
+    "storage_bucket": "cloth-a72f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925094367274:android:f80a138a937e0790",
+        "android_client_info": {
+          "package_name": "hulkdx.com.data.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925094367274-6826q7d5ru447oqt6ct3ft7fdasel388.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPHpQRuJ-EnjL7P395sGXQKSg5jvItKCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925094367274-6826q7d5ru447oqt6ct3ft7fdasel388.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

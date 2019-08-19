@@ -18,8 +18,8 @@ internal class SaveUserInfoIntoFirebase @Inject constructor() {
         TODO()
     }
 
-    class Result {
-
+    enum class Result {
+        Success
     }
 
     class UserNullException: Exception("SaveUserInfoIntoFirebase: User is null")
