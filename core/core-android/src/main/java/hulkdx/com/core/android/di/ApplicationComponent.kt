@@ -13,6 +13,7 @@ import hulkdx.com.domain.data.remote.RegisterEndPoint
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.RepositoryModule
 import hulkdx.com.domain.di.UseCaseModule
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import javax.inject.Singleton
 
@@ -40,6 +41,7 @@ interface ApplicationComponent {
     }
 
     fun loadClothUseCase(): LoadClothUseCase
+    fun registerAuthUseCase(): RegisterAuthUseCase
     fun navigationManagerWrapper(): NavigationManagerWrapper
     fun registerEndPoint(): RegisterEndPoint
 }

@@ -5,7 +5,7 @@ import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
 import hulkdx.com.domain.data.remote.GetClothesEndPoint
 import hulkdx.com.domain.data.remote.RegisterEndPoint
 import hulkdx.com.domain.entities.ClothesEntity
-import hulkdx.com.domain.entities.ImageEntity
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import javax.inject.Inject
 
 
@@ -19,23 +19,18 @@ internal class ApiManagerImpl @Inject constructor(
         private val mSaveUserInfoIntoFirebase: SaveUserInfoIntoFirebase
 ): GetClothesEndPoint, RegisterEndPoint {
 
-//    override fun login(): UserEntity {
-//    }
+    override fun register(param: RegisterAuthUseCase.Params): RegisterAuthUseCase.Result {
+        val (email, password, firstName, lastName ) = param
 
-    override fun register(email: String,
-                          password: String,
-                          firstName: String,
-                          lastName: String,
-                          userImage: ImageEntity?): RegisterEndPoint.Result {
-
-        val asyncToSync = AsyncToSync<RegisterEndPoint.Result>()
+        val asyncToSync = AsyncToSync<RegisterAuthUseCase.Result>()
 
         // createUserWithEmailAndPassword is async we make it sync with locking mechanism
-        // TODO this and mSaveUserInfoIntoFirebase.start needs to be atomic
+        // TODO this and mSaveUserInfoIntoFirebase.saveUserInfoIntoFirebase needs to be atomic
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     val result = if (it.isSuccessful) {
-                        val saveUserResult = mSaveUserInfoIntoFirebase.start(firstName, lastName)
+                        val saveUserResult =
+                                mSaveUserInfoIntoFirebase.saveUserInfoIntoFirebase(param, mAuth.currentUser)
                         mFirebaseToResultMapper.mapSuccess(
                                 saveUserResult
                         )

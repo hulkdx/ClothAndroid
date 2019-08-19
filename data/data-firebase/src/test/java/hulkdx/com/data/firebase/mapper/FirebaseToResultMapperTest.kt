@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import hulkdx.com.domain.data.remote.RegisterEndPoint
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,7 +48,7 @@ class FirebaseToResultMapperTest {
         // Act
         val result = SUT.mapError(mFirebaseAuthWeakPasswordException)
         // Assert
-        assertTrue(result is RegisterEndPoint.Result.WeakPassword)
+        assertTrue(result is Result.WeakPassword)
     }
 
     @Test
@@ -55,7 +57,7 @@ class FirebaseToResultMapperTest {
         // Act
         val result = SUT.mapError(mFirebaseAuthInvalidCredentialsException)
         // Assert
-        assertTrue(result is RegisterEndPoint.Result.InvalidEmailAddress)
+        assertTrue(result is Result.InvalidEmailAddress)
     }
 
     @Test
@@ -64,7 +66,7 @@ class FirebaseToResultMapperTest {
         // Act
         val result = SUT.mapError(mFirebaseAuthUserCollisionException)
         // Assert
-        assertTrue(result is RegisterEndPoint.Result.AccountExists)
+        assertTrue(result is Result.AccountExists)
     }
 
     // region helper methods -----------------------------------------------------------------------

@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import hulkdx.com.data.firebase.SaveUserInfoIntoFirebase
-import hulkdx.com.domain.data.remote.RegisterEndPoint
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase.Result
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -13,24 +13,24 @@ import javax.inject.Inject
  */
 internal class FirebaseToResultMapper @Inject constructor() {
 
-    fun mapError(exception: Exception?): RegisterEndPoint.Result {
+    fun mapError(exception: Exception?): Result {
         return when (exception) {
             is FirebaseAuthWeakPasswordException -> {
-                RegisterEndPoint.Result.WeakPassword
+                Result.WeakPassword
             }
             is FirebaseAuthInvalidCredentialsException -> {
-                RegisterEndPoint.Result.InvalidEmailAddress
+                Result.InvalidEmailAddress
             }
             is FirebaseAuthUserCollisionException -> {
-                RegisterEndPoint.Result.AccountExists
+                Result.AccountExists
             }
             else -> {
-                RegisterEndPoint.Result.GeneralError(exception)
+                Result.GeneralError(exception)
             }
         }
     }
 
-    fun mapSuccess(saveUserResult: SaveUserInfoIntoFirebase.Result): RegisterEndPoint.Result {
+    fun mapSuccess(saveUserResult: SaveUserInfoIntoFirebase.Result): Result {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

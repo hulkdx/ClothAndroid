@@ -35,12 +35,11 @@ internal class ApiMapper @Inject constructor() {
     private fun mapUser(user: UserApiModel): UserEntity {
         return user.run {
             return@run UserEntity(
-                    id,
-                    username,
-                    firstName,
-                    lastName,
-                    emailAddress,
-                    mapImageNullable(image)
+                    id = id,
+                    firstName = firstName,
+                    lastName = lastName,
+                    emailAddress = emailAddress,
+                    image = mapImageNullable(image)
             )
         }
     }

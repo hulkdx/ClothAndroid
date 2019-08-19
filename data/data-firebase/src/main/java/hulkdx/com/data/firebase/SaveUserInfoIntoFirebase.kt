@@ -1,5 +1,8 @@
 package hulkdx.com.data.firebase
 
+import com.google.firebase.auth.FirebaseUser
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
+import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -7,11 +10,18 @@ import javax.inject.Inject
  */
 internal class SaveUserInfoIntoFirebase @Inject constructor() {
 
-    fun start(firstName: String, lastName: String): Result {
+    @Throws(UserNullException::class)
+    fun saveUserInfoIntoFirebase(params: RegisterAuthUseCase.Params, user: FirebaseUser?): Result {
+        if (user == null) {
+            throw UserNullException()
+        }
         TODO()
     }
 
-    sealed class Result {
+    class Result {
 
     }
+
+    class UserNullException: Exception("SaveUserInfoIntoFirebase: User is null")
+
 }

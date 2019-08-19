@@ -3,8 +3,8 @@ package hulkdx.com.features.auth.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hulkdx.com.domain.data.remote.RegisterEndPoint
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import javax.inject.Inject
 
 /**
@@ -12,43 +12,37 @@ import javax.inject.Inject
  */
 
 class AuthViewModel @Inject constructor(
-    val api: RegisterEndPoint
+    private val mRegisterAuthUseCase: RegisterAuthUseCase
 ): ViewModel() {
 
-    private val mLoginLiveData = MutableLiveData<LoginResults>()
-    private val mRegsiterLiveData = MutableLiveData<RegisterResults>()
+//    private val mLoginLiveData = MutableLiveData<LoginResults>()
+    private val mRegisterLiveData = MutableLiveData<RegisterAuthUseCase.Result>()
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-    fun login(): LiveData<LoginResults> = mLoginLiveData
+//    fun loginLiveData(): LiveData<LoginResults> = mLoginLiveData
+    fun registerLiveData(): LiveData<RegisterAuthUseCase.Result> = mRegisterLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
     fun register(email: String, password: String, firstName: String, lastName: String) {
-        Thread {
-            api.register(email, password, firstName, lastName)
-        }.start()
+        mRegisterAuthUseCase.register(
+                RegisterAuthUseCase.Params(email, password, firstName, lastName),
+                callback = {
+                    mRegisterLiveData.value = it
+                })
     }
 
     // region Extra --------------------------------------------------------------------------------
 
     override fun onCleared() {
         super.onCleared()
+        mRegisterAuthUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------
     // region Results ------------------------------------------------------------------------------
 
-    sealed class LoginResults {
-        class Success(val user: UserEntity): LoginResults()
-        object NetworkError: LoginResults()
-        object GeneralError: LoginResults()
-        object AuthError: LoginResults()
-    }
-
-    sealed class RegisterResults {
-
-    }
 
     // endregion Results ---------------------------------------------------------------------------
 

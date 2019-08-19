@@ -7,13 +7,15 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
-import hulkdx.com.domain.data.remote.RegisterEndPoint
+import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import junit.framework.Assert.assertTrue
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 
@@ -57,11 +59,14 @@ class ApiManagerImplTest {
     @Test
     fun register_success_callSaveUserInfoIntoFirebase() {
         // Arrange
+        val param = RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME)
+        val c = argumentCaptor<RegisterAuthUseCase.Params>()
         success()
         // Act
-        SUT.register("", "", FIRST_NAME, LAST_NAME, null)
+        SUT.register(param)
         // Assert
-        verify(mSaveUserInfoIntoFirebase).start(FIRST_NAME, LAST_NAME)
+        verify(mSaveUserInfoIntoFirebase).saveUserInfoIntoFirebase(c.capture(), anyKotlin())
+        assertThat(c.firstValue, `is`(param))
     }
 
     @Test
@@ -69,9 +74,10 @@ class ApiManagerImplTest {
         // Arrange
         success()
         // Act
-        val result = SUT.register("", "", FIRST_NAME, LAST_NAME, null)
+        val result = SUT.register(
+                RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
         // Assert
-        assertTrue(result is RegisterEndPoint.Result.Success)
+        assertTrue(result is RegisterAuthUseCase.Result.Success)
     }
 
     @Test
@@ -79,7 +85,7 @@ class ApiManagerImplTest {
         // Arrange
         success()
         // Act
-        SUT.register("", "", FIRST_NAME, LAST_NAME, null)
+        SUT.register(RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
         // Assert
         verify(mFirebaseToResultMapper).mapSuccess(anyKotlin())
     }
@@ -89,7 +95,7 @@ class ApiManagerImplTest {
         // Arrange
         exception()
         // Act
-        SUT.register("", "", FIRST_NAME, LAST_NAME, null)
+        SUT.register(RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
         // Assert
         verify(mFirebaseToResultMapper).mapError(TEST_EXCEPTION)
     }
@@ -152,7 +158,7 @@ class ApiManagerImplTest {
             }
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
-        `when`(mFirebaseToResultMapper.mapSuccess(anyKotlin())).thenReturn(RegisterEndPoint.Result.Success())
+        `when`(mFirebaseToResultMapper.mapSuccess(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.Success())
     }
 
     private fun exception() {
@@ -211,7 +217,7 @@ class ApiManagerImplTest {
             }
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
-        `when`(mFirebaseToResultMapper.mapError(anyKotlin())).thenReturn(RegisterEndPoint.Result.GeneralError(TEST_EXCEPTION))
+        `when`(mFirebaseToResultMapper.mapError(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.GeneralError(TEST_EXCEPTION))
     }
 
     // endregion helper methods --------------------------------------------------------------------
