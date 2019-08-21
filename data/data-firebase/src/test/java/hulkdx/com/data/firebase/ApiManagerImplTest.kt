@@ -9,6 +9,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
+import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import junit.framework.Assert.assertTrue
 import org.hamcrest.CoreMatchers.`is`
@@ -34,6 +35,11 @@ class ApiManagerImplTest {
 
     private val FIRST_NAME = "first_name"
     private val LAST_NAME = "last_name"
+    private val EMAIL = "email@google.com"
+    private val PASSWORD = "123456"
+
+    private val TEST_REGISTER_PARAM = RegisterAuthUseCase.Params(
+            EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, UserGender.Unknown)
 
     private val TEST_EXCEPTION = RuntimeException("TEST")
 
@@ -59,14 +65,13 @@ class ApiManagerImplTest {
     @Test
     fun register_success_callSaveUserInfoIntoFirebase() {
         // Arrange
-        val param = RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME)
         val c = argumentCaptor<RegisterAuthUseCase.Params>()
         success()
         // Act
-        SUT.register(param)
+        SUT.register(TEST_REGISTER_PARAM)
         // Assert
         verify(mSaveUserInfoIntoFirebase).saveUserInfoIntoFirebase(c.capture(), anyKotlin())
-        assertThat(c.firstValue, `is`(param))
+        assertThat(c.firstValue, `is`(TEST_REGISTER_PARAM))
     }
 
     @Test
@@ -74,8 +79,7 @@ class ApiManagerImplTest {
         // Arrange
         success()
         // Act
-        val result = SUT.register(
-                RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
+        val result = SUT.register(TEST_REGISTER_PARAM)
         // Assert
         assertTrue(result is RegisterAuthUseCase.Result.Success)
     }
@@ -85,7 +89,7 @@ class ApiManagerImplTest {
         // Arrange
         success()
         // Act
-        SUT.register(RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
+        SUT.register(TEST_REGISTER_PARAM)
         // Assert
         verify(mFirebaseToResultMapper).mapSuccess(anyKotlin())
     }
@@ -95,7 +99,7 @@ class ApiManagerImplTest {
         // Arrange
         exception()
         // Act
-        SUT.register(RegisterAuthUseCase.Params("", "", FIRST_NAME, LAST_NAME))
+        SUT.register(TEST_REGISTER_PARAM)
         // Assert
         verify(mFirebaseToResultMapper).mapError(TEST_EXCEPTION)
     }

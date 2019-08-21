@@ -17,4 +17,5 @@ abstract class RemoteBindsModule {
 
     @Binds
     internal abstract fun provideRegisterEndPoint(clothApiManagerImpl: ApiManagerImpl): RegisterEndPoint
+
 }

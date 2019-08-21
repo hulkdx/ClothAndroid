@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import javax.inject.Inject
 
@@ -25,9 +26,9 @@ class AuthViewModel @Inject constructor(
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
-    fun register(email: String, password: String, firstName: String, lastName: String) {
+    fun register(email: String, password: String, firstName: String, lastName: String, gender: UserGender) {
         mRegisterAuthUseCase.register(
-                RegisterAuthUseCase.Params(email, password, firstName, lastName),
+                RegisterAuthUseCase.Params(email, password, firstName, lastName, gender),
                 callback = {
                     mRegisterLiveData.value = it
                 })

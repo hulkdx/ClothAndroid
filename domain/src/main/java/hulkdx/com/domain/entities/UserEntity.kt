@@ -8,5 +8,6 @@ data class UserEntity (
         val emailAddress:       String,
         val firstName:          String,
         val lastName:           String,
-        val image:              ImageEntity?
+        val image:              ImageEntity?,
+        val gender:             UserGender
 )

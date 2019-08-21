@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "762818053607",
+    "firebase_url": "https://cloths-200fd.firebaseio.com",
+    "project_id": "cloths-200fd",
+    "storage_bucket": "cloths-200fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762818053607:android:874e411e1542da70",
+        "android_client_info": {
+          "package_name": "com.hulkdx.cloth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762818053607-pca9luib8rggt8ubapgrept99g0gbn8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hulkdx.cloth",
+            "certificate_hash": "a3f728c68f0d2e942bc09b2f1948391b72cdcb23"
+          }
+        },
+        {
+          "client_id": "762818053607-1e1skb622prlbb6b8jhi823934u5a0d2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO9BxV7JejlpBHmk5oUbm-AbdFNHZX0dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762818053607-1e1skb622prlbb6b8jhi823934u5a0d2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

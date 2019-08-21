@@ -39,7 +39,9 @@ dependencies {
     kapt                liveDataAnnotation
     implementation      glide
     implementation      gson
+
     implementation      firebaseAuth
+    implementation      firebaseDatabase
 
 
 }

@@ -25,19 +25,14 @@ internal class ApiManagerImpl @Inject constructor(
         val asyncToSync = AsyncToSync<RegisterAuthUseCase.Result>()
 
         // createUserWithEmailAndPassword is async we make it sync with locking mechanism
-        // TODO this and mSaveUserInfoIntoFirebase.saveUserInfoIntoFirebase needs to be atomic
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     val result = if (it.isSuccessful) {
                         val saveUserResult =
                                 mSaveUserInfoIntoFirebase.saveUserInfoIntoFirebase(param, mAuth.currentUser)
-                        mFirebaseToResultMapper.mapSuccess(
-                                saveUserResult
-                        )
+                        mFirebaseToResultMapper.mapSuccess(saveUserResult)
                     } else {
-                        mFirebaseToResultMapper.mapError(
-                                it.exception
-                        )
+                        mFirebaseToResultMapper.mapError(it.exception)
                     }
 
                     asyncToSync.signalAll(result)
