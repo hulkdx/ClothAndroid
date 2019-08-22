@@ -2,6 +2,7 @@ package hulkdx.com.features.auth.view.register
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import hulkdx.com.core.android.applicationComponent
@@ -11,6 +12,7 @@ import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
+import hulkdx.com.features.auth.BuildConfig
 import hulkdx.com.features.auth.R
 import hulkdx.com.features.auth.di.DaggerAuthComponent
 import hulkdx.com.features.auth.viewmodel.AuthViewModel
@@ -43,8 +45,14 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
         val password = passwordEditText.text.toString()
         val firstName = firstNameEditText.text.toString()
         val lastName = lastNameEditText.text.toString()
-        // TODO add gender to xml
-        mAuthViewModel.register(email, password, firstName, lastName, UserGender.Male)
+        val itemPosition = genderSpinner.selectedItemPosition
+        mAuthViewModel.register(
+                email,
+                password,
+                firstName,
+                lastName,
+                UserGender.Companion.convert(itemPosition)
+        )
     }
 
     // endregion SetupUI ---------------------------------------------------------------------------
@@ -54,15 +62,29 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
         mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
         mAuthViewModel.registerLiveData().observeFragment(this, Observer {
             when (it) {
-                is RegisterAuthUseCase.Result.Success -> TODO()
-                is RegisterAuthUseCase.Result.InvalidEmailAddress -> TODO()
-                is RegisterAuthUseCase.Result.WeakPassword -> TODO()
-                is RegisterAuthUseCase.Result.AccountExists -> TODO()
-                is RegisterAuthUseCase.Result.GeneralError -> TODO()
+                is RegisterAuthUseCase.Result.Success -> registerSuccess()
+                is RegisterAuthUseCase.Result.InvalidEmailAddress -> registerError()
+                is RegisterAuthUseCase.Result.WeakPassword -> registerError()
+                is RegisterAuthUseCase.Result.AccountExists -> registerError()
+                is RegisterAuthUseCase.Result.GeneralError -> {
+                    showThrowableDebug(it.throwable)
+                    registerError()
+                }
             }
         })
     }
 
+    // region Register Callback---------------------------------------------------------------------
+
+    private fun registerSuccess() {
+        detailsTextView.text = "success"
+    }
+
+    private fun registerError() {
+        detailsTextView.text = "error"
+    }
+
+    // endregion Register Callback------------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
@@ -75,6 +97,12 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
 
     override fun fragmentLayout(): Int {
         return R.layout.fragment_register
+    }
+
+    private fun showThrowableDebug(throwable: Throwable?) {
+        if (throwable != null && BuildConfig.DEBUG) {
+            Toast.makeText(context, throwable.toString(), Toast.LENGTH_LONG).show()
+        }
     }
 
     // endregion Extra functions -------------------------------------------------------------------

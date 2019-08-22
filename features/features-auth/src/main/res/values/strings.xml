@@ -5,4 +5,10 @@
     <string name="register">register</string>
     <string name="first_name">first name</string>
     <string name="last_name">last name</string>
+
+    <string-array name="gender_array">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+
 </resources>
