@@ -5,6 +5,7 @@ package hulkdx.com.core.android.navigation
  */
 
 const val NAVIGATE_FEATURE_EXPLORE = 1
+const val NAVIGATE_FEATURE_REGISTER = 2
 
 interface NavigationManager {
     fun navigateTo(fragmentId: Int)

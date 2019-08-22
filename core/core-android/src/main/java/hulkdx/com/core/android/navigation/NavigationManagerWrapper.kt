@@ -17,6 +17,7 @@ import javax.inject.Singleton
  *      will use it to navigate to another fragment.
  *
  */
+@Suppress("unused")
 @Singleton
 class NavigationManagerWrapper @Inject constructor() {
 
@@ -26,9 +27,12 @@ class NavigationManagerWrapper @Inject constructor() {
         mNavigationManager = navigationManager
     }
 
-    @Suppress("unused")
     fun navigateToExplore() {
         navigateTo(NAVIGATE_FEATURE_EXPLORE)
+    }
+
+    fun navigateToRegister() {
+        navigateTo(NAVIGATE_FEATURE_REGISTER)
     }
 
     private fun navigateTo(fragmentId: Int) {

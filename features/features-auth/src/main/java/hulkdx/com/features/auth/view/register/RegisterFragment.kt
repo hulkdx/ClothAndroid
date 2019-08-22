@@ -46,6 +46,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
         val firstName = firstNameEditText.text.toString()
         val lastName = lastNameEditText.text.toString()
         val itemPosition = genderSpinner.selectedItemPosition
+        registerLoading()
         mAuthViewModel.register(
                 email,
                 password,
@@ -76,8 +77,12 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
 
     // region Register Callback---------------------------------------------------------------------
 
+    private fun registerLoading() {
+        detailsTextView.text = "loading"
+    }
+
     private fun registerSuccess() {
-        detailsTextView.text = "success"
+        mNavigationManager.navigateToExplore()
     }
 
     private fun registerError() {

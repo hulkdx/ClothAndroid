@@ -2,28 +2,34 @@ package hulkdx.com.domain.interactor.auth.register
 
 import hulkdx.com.domain.anyKotlin
 import hulkdx.com.domain.data.remote.RegisterEndPoint
+import hulkdx.com.domain.entities.UserGender
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.ArgumentCaptor
 import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 
 import org.junit.Assert.*
 import org.mockito.Mockito.*
-import org.hamcrest.CoreMatchers.*
-import org.mockito.ArgumentMatchers
-import org.mockito.ArgumentMatchers.*
 import java.lang.RuntimeException
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 19/08/2019.
  */
+@Suppress("PrivatePropertyName")
 class RegisterAuthUseCaseImplTest {
 
     // region constants ----------------------------------------------------------------------------
+
+    private val TEST_PARAM = RegisterAuthUseCase.Params(
+            "",
+            "",
+            "",
+            "",
+            UserGender.Male
+    )
+
     // endregion constants -------------------------------------------------------------------------
 
     // region helper fields ------------------------------------------------------------------------
@@ -45,21 +51,19 @@ class RegisterAuthUseCaseImplTest {
     @Test
     fun register_passItToEndpoint() {
         // Arrange
-        val param = RegisterAuthUseCase.Params("", "", "", "")
         // Act
-        SUT.register(param) {}
+        SUT.register(TEST_PARAM) {}
         // Assert
-        verify(mRegisterEndPoint).register(param)
+        verify(mRegisterEndPoint).register(TEST_PARAM)
     }
 
     @Test
     fun register_exception_generalError() {
         // Arrange
         runtimeException()
-        val param = RegisterAuthUseCase.Params("", "", "", "")
         var result: RegisterAuthUseCase.Result? = null
         // Act
-        SUT.register(param) {
+        SUT.register(TEST_PARAM) {
             result = it
         }
         // Assert
@@ -70,10 +74,9 @@ class RegisterAuthUseCaseImplTest {
     fun register_success_callbackSuccess() {
         // Arrange
         success()
-        val param = RegisterAuthUseCase.Params("", "", "", "")
         var result: RegisterAuthUseCase.Result? = null
         // Act
-        SUT.register(param) {
+        SUT.register(TEST_PARAM) {
             result = it
         }
         // Assert

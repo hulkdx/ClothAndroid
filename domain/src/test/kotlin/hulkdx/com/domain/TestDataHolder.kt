@@ -3,6 +3,7 @@ package hulkdx.com.domain
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.entities.ImageEntity
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.entities.UserGender
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 17/07/2019.
@@ -18,6 +19,7 @@ val TEST_USER_1  = UserEntity(
         firstName = "firstName1",
         lastName = "lastName1",
         emailAddress = "email1@gmail.com",
+        gender = UserGender.Male,
         image = AVATAR_IMAGE_1
 )
 val TEST_USER_2  = UserEntity(
@@ -25,6 +27,7 @@ val TEST_USER_2  = UserEntity(
         firstName = "firstName2",
         lastName = "lastName2",
         emailAddress = "email2",
+        gender = UserGender.Female,
         image = null
 )
 

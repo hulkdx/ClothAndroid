@@ -40,6 +40,9 @@ class NavigationManagerImpl @Inject constructor(
             NAVIGATE_FEATURE_EXPLORE -> {
                 return ExploreListFragment()
             }
+            NAVIGATE_FEATURE_REGISTER -> {
+                return RegisterFragment()
+            }
             else -> {
                 throw RuntimeException("NavigationManagerImpl: cannot find the fragment")
             }

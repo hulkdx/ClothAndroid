@@ -145,15 +145,13 @@ class SaveUserInfoIntoFirebaseTest {
     @Test
     fun saveUserInfoInFirebase_userNotNull_should_callDatabaseReference() {
         // Arrange
-        val mockPush = mock(DatabaseReference::class.java)
-        val mockTask: Task<Void> = mock(Task::class.java) as Task<Void>
-        `when`(mUserDatabase.push()).thenReturn(mockPush)
-        `when`(mockPush.setValue(anyKotlin())).thenReturn(mockTask)
+        val mockChild = mock(DatabaseReference::class.java)
+        `when`(mUserDatabase.child(anyKotlin())).thenReturn(mockChild)
         // Act
         SUT.saveUserInfo(TEST_PARAM, TEST_VALID_FIREBASE_USER, DatabaseReference.CompletionListener { _, _ -> })
         // Assert
-        verify(mUserDatabase).push()
-        verify(mockPush).setValue(anyKotlin())
+        verify(mUserDatabase).child(anyKotlin())
+        verify(mockChild).setValue(anyKotlin(), anyKotlin())
     }
 
     // region helper methods -----------------------------------------------------------------------
