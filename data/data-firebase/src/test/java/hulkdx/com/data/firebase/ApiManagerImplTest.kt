@@ -7,13 +7,16 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
-import junit.framework.Assert.assertTrue
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -63,21 +66,23 @@ class ApiManagerImplTest {
     }
 
     @Test
-    fun register_success_callSaveUserInfoIntoFirebase() {
+    fun register_createUserSuccessANDSaveUserSuccess_callSaveUserInfoIntoFirebase() {
         // Arrange
         val c = argumentCaptor<RegisterAuthUseCase.Params>()
-        success()
+        createUserWithEmailAndPasswordSuccess()
+        saveUserSuccess()
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mSaveUserInfoIntoFirebase).saveUserInfoIntoFirebase(c.capture(), anyKotlin())
+        verify(mSaveUserInfoIntoFirebase).saveUserInfo(c.capture(), anyKotlin(), anyKotlin())
         assertThat(c.firstValue, `is`(TEST_REGISTER_PARAM))
     }
 
     @Test
-    fun register_success_resultIsSuccess() {
+    fun register_createUserSuccessANDSaveUserSuccess_resultIsSuccess() {
         // Arrange
-        success()
+        createUserWithEmailAndPasswordSuccess()
+        saveUserSuccess()
         // Act
         val result = SUT.register(TEST_REGISTER_PARAM)
         // Assert
@@ -85,28 +90,50 @@ class ApiManagerImplTest {
     }
 
     @Test
-    fun register_success_callMapperSuccess() {
+    fun register_createUserWithEmailAndPasswordException_callMapperError() {
         // Arrange
-        success()
-        // Act
-        SUT.register(TEST_REGISTER_PARAM)
-        // Assert
-        verify(mFirebaseToResultMapper).mapSuccess(anyKotlin())
-    }
-
-    @Test
-    fun register_exception_callMapperError() {
-        // Arrange
-        exception()
+        createUserWithEmailAndPasswordException()
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
         verify(mFirebaseToResultMapper).mapError(TEST_EXCEPTION)
     }
 
+    @Test
+    fun register_createUserWithEmailAndPasswordException_notSaveUserInfoIntoFirebase() {
+        // Arrange
+        createUserWithEmailAndPasswordException()
+        // Act
+        SUT.register(TEST_REGISTER_PARAM)
+        // Assert
+        verify(mSaveUserInfoIntoFirebase, never()).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+    }
+
+    @Test
+    fun register_createUserSuccessANDSaveUserFailed_resultGeneralError() {
+        // Arrange
+        createUserWithEmailAndPasswordSuccess()
+        saveUserFailed()
+        // Act
+        val result = SUT.register(TEST_REGISTER_PARAM)
+        // Assert
+        assertTrue(result is RegisterAuthUseCase.Result.GeneralError)
+    }
+
+    @Test
+    fun register_createUserSuccessANDSaveUserFailed_deleteFirebaseAuth() {
+        // Arrange
+        createUserWithEmailAndPasswordSuccess()
+        saveUserFailed()
+        // Act
+        SUT.register(TEST_REGISTER_PARAM)
+        // Assert
+        verify(mAuth.currentUser!!).delete()
+    }
+
     // region helper methods -----------------------------------------------------------------------
 
-    private fun success() {
+    private fun createUserWithEmailAndPasswordSuccess() {
         val result = object: Task<AuthResult>() {
             override fun isComplete(): Boolean {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -162,10 +189,9 @@ class ApiManagerImplTest {
             }
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
-        `when`(mFirebaseToResultMapper.mapSuccess(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.Success())
     }
 
-    private fun exception() {
+    private fun createUserWithEmailAndPasswordException() {
         val result = object: Task<AuthResult>() {
             override fun isComplete(): Boolean {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -222,6 +248,29 @@ class ApiManagerImplTest {
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
         `when`(mFirebaseToResultMapper.mapError(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.GeneralError(TEST_EXCEPTION))
+    }
+
+    private fun saveUserSuccess() {
+        val dbRef = mock(DatabaseReference::class.java)
+
+        doAnswer { invocation ->
+            invocation.getArgument<DatabaseReference.CompletionListener>(2)
+                    .onComplete(null, dbRef)
+            null
+        }.`when`(mSaveUserInfoIntoFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+    }
+
+    private fun saveUserFailed() {
+        val dbRef = mock(DatabaseReference::class.java)
+
+        doAnswer { invocation ->
+            invocation.getArgument<DatabaseReference.CompletionListener>(2)
+                    .onComplete(DatabaseError.fromCode(-1), dbRef)
+            null
+        }.`when`(mSaveUserInfoIntoFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+
+        val user = mock(FirebaseUser::class.java)
+        `when`(mAuth.currentUser).thenReturn(user)
     }
 
     // endregion helper methods --------------------------------------------------------------------

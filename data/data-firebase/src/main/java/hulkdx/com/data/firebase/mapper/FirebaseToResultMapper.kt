@@ -31,14 +31,4 @@ internal class FirebaseToResultMapper @Inject constructor() {
         }
     }
 
-    fun mapSuccess(isSaveUserSuccess: Boolean): RegisterAuthUseCase.Result {
-        return if (isSaveUserSuccess) {
-            RegisterAuthUseCase.Result.Success()
-        } else {
-            // TODO: what should happens if the user is added to firebase auth but not database?
-            // TODO: it needs to be atomic and remove the firebase auth
-            throw RuntimeException("NOT IMPLEMENTED")
-        }
-    }
-
 }

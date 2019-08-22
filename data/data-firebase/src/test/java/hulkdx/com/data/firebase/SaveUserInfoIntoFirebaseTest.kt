@@ -13,7 +13,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
 
 import org.mockito.Mockito.*
@@ -138,7 +137,7 @@ class SaveUserInfoIntoFirebaseTest {
     fun saveUserInfoInFirebase_userNull_throwUserNullException() {
         // Arrange
         // Act
-        SUT.saveUserInfoIntoFirebase(TEST_PARAM, null)
+        SUT.saveUserInfo(TEST_PARAM, null, DatabaseReference.CompletionListener { _, _ -> })
         // Assert
         // assert is done in expected = SaveUserInfoIntoFirebase.UserNullException::class
     }
@@ -151,7 +150,7 @@ class SaveUserInfoIntoFirebaseTest {
         `when`(mUserDatabase.push()).thenReturn(mockPush)
         `when`(mockPush.setValue(anyKotlin())).thenReturn(mockTask)
         // Act
-        SUT.saveUserInfoIntoFirebase(TEST_PARAM, TEST_VALID_FIREBASE_USER)
+        SUT.saveUserInfo(TEST_PARAM, TEST_VALID_FIREBASE_USER, DatabaseReference.CompletionListener { _, _ -> })
         // Assert
         verify(mUserDatabase).push()
         verify(mockPush).setValue(anyKotlin())

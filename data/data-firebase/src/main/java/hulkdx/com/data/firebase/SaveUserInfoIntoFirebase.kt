@@ -1,6 +1,7 @@
 package hulkdx.com.data.firebase
 
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseError
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import java.lang.Exception
 import javax.inject.Inject
@@ -14,18 +15,17 @@ import javax.inject.Named
  * Created by Mohammad Jafarzadeh Rezvan on 18/08/2019.
  */
 class SaveUserInfoIntoFirebase @Inject constructor(
-        @Named("USER")
-        private val mUserDatabase: DatabaseReference
+        @Named("USER") private val mUserDatabase: DatabaseReference
 ) {
 
     @Throws(UserNullException::class)
-    fun saveUserInfoIntoFirebase(params: RegisterAuthUseCase.Params, user: FirebaseUser?): Boolean {
+    fun saveUserInfo(params: RegisterAuthUseCase.Params, user: FirebaseUser?,
+                     onComplete: DatabaseReference.CompletionListener) {
         if (user == null) {
             throw UserNullException()
         }
         val userApi = convertParamsToUserApi(params, user)
-        val result = mUserDatabase.push().setValue(userApi)
-        return result.isSuccessful
+        mUserDatabase.child(userApi.userUuid).setValue(userApi, onComplete)
     }
 
     private fun convertParamsToUserApi(params: RegisterAuthUseCase.Params,
