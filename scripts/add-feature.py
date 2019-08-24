@@ -18,16 +18,18 @@ def main():
         show_usage()
 
 def add_feature(name_of_feature):
-    current_date = date.today().strftime("%d/%m/%Y") 
-    root_dir = 'features/features-' + name_of_feature
-    main_dir = root_dir + '/src/main'
+    current_date = date.today().strftime("%d/%m/%Y")
+    root_dir = '..'
+    features_root_dir = root_dir + '/features/features-' + name_of_feature
+    main_dir = features_root_dir + '/src/main'
     res_dir = main_dir + '/res/'
     src_dir = main_dir + '/java/hulkdx/com/features/' + name_of_feature
     make_dir(src_dir)
 	# --------------------------------
     # settings.gradle
 	# --------------------------------
-    with open('settings.gradle', 'r') as reader:
+    settings_gradle_path = root_dir + '/settings.gradle'
+    with open(settings_gradle_path, 'r') as reader:
         read = reader.read()
         feature_name_settings_gradle = '\':features:features-' + name_of_feature + '\''
         if not re.search(feature_name_settings_gradle, read):
@@ -35,12 +37,13 @@ def add_feature(name_of_feature):
             split = read.split(seperator)
             split.insert(3, '\n        ' + feature_name_settings_gradle)
             updated = seperator.join(split)
-            with open('settings.gradle', 'w+') as writer:
+            with open(settings_gradle_path, 'w+') as writer:
                 writer.write(updated)
 	# --------------------------------
     # main/build.gradle
 	# --------------------------------
-    with open('main/build.gradle', 'r') as reader:
+    main_build_gradle_path = root_dir + '/main/build.gradle'
+    with open(main_build_gradle_path, 'r') as reader:
         read = reader.read()
         feature_name_settings_gradle = '\':features:features-' + name_of_feature + '\''
         if not re.search(feature_name_settings_gradle, read):
@@ -49,16 +52,16 @@ def add_feature(name_of_feature):
             index = split.index("    implementation project(':core:core-android')")
             split.insert(index, '    implementation project(' + feature_name_settings_gradle + ')')
             updated = seperator.join(split)
-            with open('main/build.gradle', 'w+') as writer:
+            with open(main_build_gradle_path, 'w+') as writer:
                 writer.write(updated)
 	# --------------------------------
 	# root directory
 	# --------------------------------
 
-    make_file(root_dir + '/.gitignore', '''
+    make_file(features_root_dir + '/.gitignore', '''
 /build
       ''')
-    make_file(root_dir + '/build.gradle', '''apply plugin: 'com.android.library'
+    make_file(features_root_dir + '/build.gradle', '''apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -269,7 +272,7 @@ class ''' + name_of_feature.capitalize() + '''ViewModel @Inject constructor(
     res_layout_dir = res_dir + '/layout'
     make_dir(res_layout_dir)
     make_file(res_layout_dir + '/fragment_' + name_of_feature + '.xml', '''<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
