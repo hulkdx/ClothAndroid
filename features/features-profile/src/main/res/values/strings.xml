@@ -1,3 +1,18 @@
 <resources>
+
+    <string name="gallery_app_not_found">
+        Cannot find a gallery application
+    </string>
+    <string name="gallery_app_result_not_successful">
+        There were errors while receiving data from the gallery application: not successful
+    </string>
+    <string name="gallery_app_result_uri_null">
+        There were errors while receiving data from the gallery application: uri null
+    </string>
+
+    <string name="gallery_app_result_input_stream_null">
+        There were errors while receiving data from the gallery application: input stream null
+    </string>
+
 </resources>
     

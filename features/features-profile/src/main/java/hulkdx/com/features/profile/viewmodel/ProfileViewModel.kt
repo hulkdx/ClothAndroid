@@ -3,6 +3,8 @@ package hulkdx.com.features.profile.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
+import java.io.InputStream
 import javax.inject.Inject
 
 /**
@@ -10,33 +12,36 @@ import javax.inject.Inject
  */
 
 class ProfileViewModel @Inject constructor(
-    // private val mWhatNameUseCase: WhatNameUseCase
+     private val mUploadClothUseCase: UploadClothUseCase
 ): ViewModel() {
 
-    // private val mWhatNameLiveData = MutableLiveData<WhatNameUseCase.Result>()
+     private val mUploadClothLiveData = MutableLiveData<UploadClothResult>()
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-    // fun WhatNameLiveData(): LiveData<WhatNameUseCase.Result> = mWhatNameLiveData
+     fun uploadClothLiveData(): LiveData<UploadClothResult> = mUploadClothLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
-    // fun somefunction() {
-    //     mWhatNameUseCase.somefunction(
-    //             callback = {
-    //                 mWhatNameLiveData.value = it
-    //             })
-    // }
+    fun uploadNewCloth(inputStream: InputStream) {
+        mUploadClothUseCase.upload(inputStream, callback = {
+        })
+    }
 
     // region Extra --------------------------------------------------------------------------------
 
     override fun onCleared() {
         super.onCleared()
-        // mWhatNameUseCase.dispose()
+         mUploadClothUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------
     // region Results ------------------------------------------------------------------------------
+
+    class UploadClothResult {
+
+    }
+
     // endregion Results ---------------------------------------------------------------------------
 
 }

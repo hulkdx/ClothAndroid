@@ -7,6 +7,7 @@ import hulkdx.com.core.android.navigation.*
 import hulkdx.com.core.android.navigation.NavigationManager
 import hulkdx.com.features.auth.view.register.RegisterFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment
+import hulkdx.com.features.profile.view.ProfileFragment
 import java.lang.RuntimeException
 import javax.inject.Inject
 
@@ -31,17 +32,17 @@ class NavigationManagerImpl @Inject constructor(
 
     fun startFirstFragment() {
         fragmentManager.beginTransaction()
-                .add(containerId, RegisterFragment())
+                .add(containerId, ProfileFragment())
                 .commit()
     }
 
     private fun getFragment(fragmentId: Int): Fragment {
-        when (fragmentId) {
+        return when (fragmentId) {
             NAVIGATE_FEATURE_EXPLORE -> {
-                return ExploreListFragment()
+                ExploreListFragment()
             }
             NAVIGATE_FEATURE_REGISTER -> {
-                return RegisterFragment()
+                RegisterFragment()
             }
             else -> {
                 throw RuntimeException("NavigationManagerImpl: cannot find the fragment")

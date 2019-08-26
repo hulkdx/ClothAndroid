@@ -33,6 +33,8 @@ dependencies {
     implementation      kotlinStd
     implementation      firebaseAuth
     implementation      firebaseDatabase
+    implementation      firebaseStorage
+
 
     testImplementation  jUnit
     testImplementation  mockito

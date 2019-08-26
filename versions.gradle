@@ -36,6 +36,7 @@ allprojects {
     // Firebase
     ext.firebaseAuth     = 'com.google.firebase:firebase-auth:18.1.0'
     ext.firebaseDatabase = 'com.google.firebase:firebase-database:19.0.0'
+    ext.firebaseStorage  = 'com.google.firebase:firebase-storage:19.0.0'
 
     // AndroidTests
     ext.testRunner      = "androidx.test.ext:junit:1.1.1"

@@ -42,6 +42,7 @@ dependencies {
 
     implementation      firebaseAuth
     implementation      firebaseDatabase
+    implementation      firebaseStorage
 
 
 }

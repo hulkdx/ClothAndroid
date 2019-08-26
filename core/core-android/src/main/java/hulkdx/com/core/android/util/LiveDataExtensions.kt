@@ -16,5 +16,5 @@ import androidx.lifecycle.Observer
  * TODO: research this.
  */
 fun <T> LiveData<T>.observeFragment(fragment: Fragment, observer: Observer<T>) {
-    observe(fragment, observer)
+    observe(fragment.viewLifecycleOwner, observer)
 }
