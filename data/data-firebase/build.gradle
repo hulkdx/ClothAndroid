@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // Enable MultiDex for androidTest: multiDexEnabled true
     }
 
     buildTypes {
@@ -42,6 +43,7 @@ dependencies {
     androidTestImplementation testRunner
     androidTestImplementation jUnit
     androidTestImplementation mockito
+    androidTestImplementation mockitoAndroid
     androidTestImplementation testRule
 
 }

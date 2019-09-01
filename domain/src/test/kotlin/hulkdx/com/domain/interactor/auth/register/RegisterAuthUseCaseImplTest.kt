@@ -1,8 +1,10 @@
 package hulkdx.com.domain.interactor.auth.register
 
+import hulkdx.com.domain.TEST_USER_1
 import hulkdx.com.domain.anyKotlin
-import hulkdx.com.domain.data.remote.RegisterEndPoint
+import hulkdx.com.domain.repository.remote.RegisterEndPoint
 import hulkdx.com.domain.entities.UserGender
+import hulkdx.com.domain.repository.local.UserDatabase
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
@@ -41,11 +43,12 @@ class RegisterAuthUseCaseImplTest {
 
     private lateinit var SUT: RegisterAuthUseCaseImpl
     @Mock lateinit var mRegisterEndPoint: RegisterEndPoint
+    @Mock lateinit var mUserDatabase: UserDatabase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = RegisterAuthUseCaseImpl(trampoline, trampoline, mRegisterEndPoint)
+        SUT = RegisterAuthUseCaseImpl(trampoline, trampoline, mUserDatabase, mRegisterEndPoint)
     }
 
     @Test
@@ -83,6 +86,16 @@ class RegisterAuthUseCaseImplTest {
         assertTrue(result is RegisterAuthUseCase.Result.Success)
     }
 
+    @Test
+    fun register_success_saveToDatabase() {
+        // Arrange
+        success()
+        // Act
+        SUT.register(TEST_PARAM) {}
+        // Assert
+        verify(mUserDatabase).save(TEST_USER_1)
+    }
+
     // region helper methods -----------------------------------------------------------------------
 
     private fun runtimeException() {
@@ -90,7 +103,7 @@ class RegisterAuthUseCaseImplTest {
     }
 
     private fun success() {
-        `when`(mRegisterEndPoint.register(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.Success())
+        `when`(mRegisterEndPoint.register(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.Success(TEST_USER_1))
     }
 
     // endregion helper methods --------------------------------------------------------------------

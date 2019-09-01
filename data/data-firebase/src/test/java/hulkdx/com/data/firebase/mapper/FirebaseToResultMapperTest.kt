@@ -3,8 +3,6 @@ package hulkdx.com.data.firebase.mapper
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import hulkdx.com.domain.data.remote.RegisterEndPoint
-import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase.*
 import org.junit.Before
 import org.junit.Rule

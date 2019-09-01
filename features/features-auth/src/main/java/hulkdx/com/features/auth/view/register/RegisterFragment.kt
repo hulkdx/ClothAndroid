@@ -52,7 +52,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
                 password,
                 firstName,
                 lastName,
-                UserGender.Companion.convert(itemPosition)
+                UserGender.convert(itemPosition)
         )
     }
 

@@ -1,6 +1,6 @@
-package hulkdx.com.data.firebase.model
+package hulkdx.com.data.firebase.model.api
 
-data class UserApiModel (
+internal data class UserApiModel (
         val firstName: String,
         val lastName: String,
         val email: String,

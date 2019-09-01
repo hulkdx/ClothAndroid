@@ -1,12 +1,12 @@
-package hulkdx.com.data.firebase
+package hulkdx.com.data.firebase.database
 
 import android.net.Uri
 import android.os.Parcel
 import com.google.android.gms.internal.firebase_auth.zzey
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
+import hulkdx.com.data.firebase.anyKotlin
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import org.junit.Before
@@ -21,7 +21,7 @@ import org.mockito.Mockito.*
  * Created by Mohammad Jafarzadeh Rezvan on 19/08/2019.
  */
 @Suppress("PrivatePropertyName", "UNCHECKED_CAST")
-class SaveUserInfoIntoFirebaseTest {
+class UserDatabaseTest {
     // region constants ----------------------------------------------------------------------------
 
     private val TEST_PARAM = RegisterAuthUseCase.Params("", "", "", "", UserGender.Male)
@@ -125,21 +125,12 @@ class SaveUserInfoIntoFirebaseTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: SaveUserInfoIntoFirebase
+    private lateinit var SUT: UserDatabaseFirebase
     @Mock lateinit var mUserDatabase: DatabaseReference
 
     @Before
     fun setup() {
-        SUT = SaveUserInfoIntoFirebase(mUserDatabase)
-    }
-
-    @Test(expected = SaveUserInfoIntoFirebase.UserNullException::class)
-    fun saveUserInfoInFirebase_userNull_throwUserNullException() {
-        // Arrange
-        // Act
-        SUT.saveUserInfo(TEST_PARAM, null, DatabaseReference.CompletionListener { _, _ -> })
-        // Assert
-        // assert is done in expected = SaveUserInfoIntoFirebase.UserNullException::class
+        SUT = UserDatabaseFirebase(mUserDatabase)
     }
 
     @Test

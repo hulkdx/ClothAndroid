@@ -1,4 +1,4 @@
-package hulkdx.com.domain.data.remote
+package hulkdx.com.domain.repository.remote
 
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 

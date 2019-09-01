@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.nhaarman.mockitokotlin2.argumentCaptor
+import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
+import hulkdx.com.data.firebase.database.UserDatabaseFirebase
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
@@ -58,11 +60,12 @@ class ApiManagerImplTest {
     private lateinit var SUT: ApiManagerImpl
     @Mock lateinit var mAuth: FirebaseAuth
     @Mock internal lateinit var mFirebaseToResultMapper: FirebaseToResultMapper
-    @Mock internal lateinit var mSaveUserInfoIntoFirebase: SaveUserInfoIntoFirebase
+    @Mock internal lateinit var mUserDatabaseFirebase: UserDatabaseFirebase
+    @Mock internal lateinit var mClothDatabaseFirebase: ClothDatabaseFirebase
 
     @Before
     fun setup() {
-        SUT = ApiManagerImpl(mAuth, mFirebaseToResultMapper, mSaveUserInfoIntoFirebase)
+        SUT = ApiManagerImpl(mAuth, mFirebaseToResultMapper, mClothDatabaseFirebase, mUserDatabaseFirebase)
     }
 
     @Test
@@ -74,7 +77,7 @@ class ApiManagerImplTest {
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mSaveUserInfoIntoFirebase).saveUserInfo(c.capture(), anyKotlin(), anyKotlin())
+        verify(mUserDatabaseFirebase).saveUserInfo(c.capture(), anyKotlin(), anyKotlin())
         assertThat(c.firstValue, `is`(TEST_REGISTER_PARAM))
     }
 
@@ -106,7 +109,7 @@ class ApiManagerImplTest {
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mSaveUserInfoIntoFirebase, never()).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        verify(mUserDatabaseFirebase, never()).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
     }
 
     @Test
@@ -189,6 +192,10 @@ class ApiManagerImplTest {
             }
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
+
+        val currentUserMock = mock(FirebaseUser::class.java)
+        `when`(mAuth.currentUser).thenReturn(currentUserMock)
+        `when`(currentUserMock.uid).thenReturn("UID")
     }
 
     private fun createUserWithEmailAndPasswordException() {
@@ -257,7 +264,7 @@ class ApiManagerImplTest {
             invocation.getArgument<DatabaseReference.CompletionListener>(2)
                     .onComplete(null, dbRef)
             null
-        }.`when`(mSaveUserInfoIntoFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        }.`when`(mUserDatabaseFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
     }
 
     private fun saveUserFailed() {
@@ -267,7 +274,7 @@ class ApiManagerImplTest {
             invocation.getArgument<DatabaseReference.CompletionListener>(2)
                     .onComplete(DatabaseError.fromCode(-1), dbRef)
             null
-        }.`when`(mSaveUserInfoIntoFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        }.`when`(mUserDatabaseFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
 
         val user = mock(FirebaseUser::class.java)
         `when`(mAuth.currentUser).thenReturn(user)

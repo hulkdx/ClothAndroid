@@ -1,5 +1,6 @@
 package hulkdx.com.domain.interactor.auth.register
 
+import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.entities.UserGender
 
 
@@ -21,9 +22,7 @@ interface RegisterAuthUseCase {
     )
 
     sealed class Result {
-        class Success(
-                //                val mData: UserEntity
-        ): Result()
+        class Success(val user: UserEntity): Result()
         object InvalidEmailAddress: Result()
         object WeakPassword: Result()
         object AccountExists: Result()

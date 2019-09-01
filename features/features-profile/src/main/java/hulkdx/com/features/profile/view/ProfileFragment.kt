@@ -12,6 +12,8 @@ import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.util.observeFragment
 
 import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.features.profile.R
 import hulkdx.com.features.profile.di.DaggerProfileComponent
 import hulkdx.com.features.profile.viewmodel.ProfileViewModel
@@ -43,7 +45,24 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
     // endregion SetupUI ---------------------------------------------------------------------------
     // region Gallery ------------------------------------------------------------------------------
 
+    private fun validateParams(): UploadClothUseCase.Params? {
+
+        //
+        // Validations here:
+        //
+        val price = priceEditText.text.toString().toFloatOrNull()
+        if (price == null) {
+            showError(R.string.upload_error_validation_price)
+            return null
+        }
+
+        return UploadClothUseCase.Params(price, "EURO")
+    }
+
     private fun startGallery() {
+
+        validateParams() ?: return
+
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         if (intent.resolveActivity(requireContext().packageManager) == null) {
@@ -68,7 +87,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
             showError(R.string.gallery_app_result_input_stream_null)
             return
         }
-        mProfileViewModel.uploadNewCloth(inputStream)
+
+        mProfileViewModel.uploadNewCloth(inputStream, validateParams() ?: return)
     }
 
     // endregion Gallery ---------------------------------------------------------------------------
@@ -76,12 +96,28 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     override fun setupViewModel() {
         mProfileViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileViewModel::class.java)
-        mProfileViewModel.uploadClothLiveData().observeFragment(this, Observer {
-            // TODO:
+        mProfileViewModel.uploadClothLiveData().observeFragment(this, Observer { result ->
+            when (result) {
+                is UploadClothUseCase.Result.Success -> uploadClothSuccess(result.cloth)
+                is UploadClothUseCase.Result.AuthError -> authError()
+                is UploadClothUseCase.Result.GeneralError -> uploadClothError(result.throwable)
+            }
         })
     }
 
     // region Upload Cloth Callback ----------------------------------------------------------------
+
+    private fun uploadClothSuccess(cloth: ClothEntity) {
+        showError("success")
+    }
+
+    private fun authError() {
+        showError("authError")
+    }
+
+    private fun uploadClothError(throwable: Throwable) {
+        showError(throwable.toString())
+    }
 
     // endregion Upload Cloth Callback -------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
@@ -107,6 +143,10 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     private fun showError(stringCode: Int) {
         Toast.makeText(context, stringCode, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showError(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     // endregion Extra functions -------------------------------------------------------------------

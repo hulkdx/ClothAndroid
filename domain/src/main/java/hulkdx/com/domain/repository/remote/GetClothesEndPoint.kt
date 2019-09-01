@@ -1,9 +1,7 @@
-package hulkdx.com.domain.data.remote
+package hulkdx.com.domain.repository.remote
 
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothesEntity
-import hulkdx.com.domain.entities.ImageEntity
-import hulkdx.com.domain.entities.UserEntity
 import java.io.IOException
 import java.lang.Exception
 

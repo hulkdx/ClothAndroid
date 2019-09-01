@@ -1,5 +1,7 @@
 package hulkdx.com.domain.interactor.cloth.upload
 
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.ImageEntity
 import java.io.InputStream
 
 /**
@@ -7,11 +9,20 @@ import java.io.InputStream
  */
 interface UploadClothUseCase {
 
-    fun upload(inputStream: InputStream, callback: (Result) -> (Unit))
+    fun upload(inputStream: InputStream,
+               params: Params,
+               callback: (Result) -> (Unit))
 
     fun dispose()
 
-    class Result {
+    data class Params (
+            val price: Float,
+            val currency: String
+    )
 
+    sealed class Result {
+        data class Success(val cloth: ClothEntity): Result()
+        object AuthError: Result()
+        data class GeneralError(val throwable: Throwable): Result()
     }
 }

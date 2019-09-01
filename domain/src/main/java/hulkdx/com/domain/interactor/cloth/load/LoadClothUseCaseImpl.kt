@@ -1,6 +1,6 @@
 package hulkdx.com.domain.interactor.cloth.load
 
-import hulkdx.com.domain.data.remote.GetClothesEndPoint
+import hulkdx.com.domain.repository.remote.GetClothesEndPoint
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
 import hulkdx.com.domain.exception.AuthException

@@ -1,17 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY gallery_app_result "There were errors while receiving data from the gallery application:">
+    ]>
 <resources>
 
     <string name="gallery_app_not_found">
         Cannot find a gallery application
     </string>
     <string name="gallery_app_result_not_successful">
-        There were errors while receiving data from the gallery application: not successful
+        &gallery_app_result; not successful
     </string>
     <string name="gallery_app_result_uri_null">
-        There were errors while receiving data from the gallery application: uri null
+        &gallery_app_result; uri null
     </string>
 
     <string name="gallery_app_result_input_stream_null">
-        There were errors while receiving data from the gallery application: input stream null
+        &gallery_app_result; input stream null
+    </string>
+
+    <string name="upload_error_validation_price">
+        Select the price
     </string>
 
 </resources>

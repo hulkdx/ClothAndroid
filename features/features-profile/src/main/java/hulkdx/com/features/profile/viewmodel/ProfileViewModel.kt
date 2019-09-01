@@ -15,17 +15,18 @@ class ProfileViewModel @Inject constructor(
      private val mUploadClothUseCase: UploadClothUseCase
 ): ViewModel() {
 
-     private val mUploadClothLiveData = MutableLiveData<UploadClothResult>()
+     private val mUploadClothLiveData = MutableLiveData<UploadClothUseCase.Result>()
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-     fun uploadClothLiveData(): LiveData<UploadClothResult> = mUploadClothLiveData
+     fun uploadClothLiveData(): LiveData<UploadClothUseCase.Result> = mUploadClothLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
-    fun uploadNewCloth(inputStream: InputStream) {
-        mUploadClothUseCase.upload(inputStream, callback = {
-        })
+    fun uploadNewCloth(inputStream: InputStream, param: UploadClothUseCase.Params) {
+        mUploadClothUseCase.upload(inputStream, param) { result ->
+            mUploadClothLiveData.value = result
+        }
     }
 
     // region Extra --------------------------------------------------------------------------------
@@ -37,11 +38,6 @@ class ProfileViewModel @Inject constructor(
 
     // endregion Extra -----------------------------------------------------------------------------
     // region Results ------------------------------------------------------------------------------
-
-    class UploadClothResult {
-
-    }
-
     // endregion Results ---------------------------------------------------------------------------
 
 }
