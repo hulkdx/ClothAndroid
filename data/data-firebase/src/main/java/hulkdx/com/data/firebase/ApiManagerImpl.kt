@@ -10,6 +10,7 @@ import hulkdx.com.domain.repository.remote.RegisterEndPoint
 import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.ImageEntity
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.domain.repository.remote.AddClothEndPoint
@@ -74,11 +75,17 @@ internal class ApiManagerImpl @Inject constructor(
     }
 
     override fun getClothes(): ClothesEntity {
+
+        mAuth.currentUser ?: throw AuthException()
+
         return mClothDatabaseFirebase.findAll()
     }
 
     override fun addCloth(user: UserEntity, image: ImageEntity,
                           params: UploadClothUseCase.Params): UploadClothUseCase.Result {
+
+        mAuth.currentUser ?: throw AuthException()
+
         val asyncToSync = AsyncToSync<Boolean>()
 
         val clothEntity = mClothDatabaseFirebase.add(image, user, params,

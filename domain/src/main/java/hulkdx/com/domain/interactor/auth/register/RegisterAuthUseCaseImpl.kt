@@ -37,7 +37,7 @@ class RegisterAuthUseCaseImpl @Inject constructor(
     private fun registerSync(param: RegisterAuthUseCase.Params): RegisterAuthUseCase.Result {
         val result = mRegisterEndPoint.register(param)
         if (result is RegisterAuthUseCase.Result.Success) {
-            mUserDatabase.save(result.user)
+            mUserDatabase.saveUser(result.user)
         }
         return result
     }

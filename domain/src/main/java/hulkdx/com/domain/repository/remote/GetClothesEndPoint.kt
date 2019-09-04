@@ -16,6 +16,7 @@ import java.lang.Exception
 
 interface GetClothesEndPoint {
 
+    @Throws(Exception::class)
     fun getClothes(): ClothesEntity
 
 }

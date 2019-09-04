@@ -10,12 +10,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
 import hulkdx.com.data.firebase.database.UserDatabaseFirebase
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
+import hulkdx.com.domain.entities.ImageEntity
+import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.entities.UserGender
+import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
+import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.*
@@ -48,6 +53,20 @@ class ApiManagerImplTest {
 
     private val TEST_EXCEPTION = RuntimeException("TEST")
 
+    private val TEST_IMAGE_1 = ImageEntity(
+            size = 1025,
+            url = "url2"
+    )
+
+    private val TEST_USER_1  = UserEntity(
+            id = "1",
+            firstName = "firstName1",
+            lastName = "lastName1",
+            emailAddress = "email1@gmail.com",
+            gender = UserGender.Male,
+            image = TEST_IMAGE_1
+    )
+
     // endregion constants -------------------------------------------------------------------------
 
     // region helper fields ------------------------------------------------------------------------
@@ -67,6 +86,8 @@ class ApiManagerImplTest {
     fun setup() {
         SUT = ApiManagerImpl(mAuth, mFirebaseToResultMapper, mClothDatabaseFirebase, mUserDatabaseFirebase)
     }
+
+    // endregion register --------------------------------------------------------------------------
 
     @Test
     fun register_createUserSuccessANDSaveUserSuccess_callSaveUserInfoIntoFirebase() {
@@ -134,6 +155,31 @@ class ApiManagerImplTest {
         verify(mAuth.currentUser!!).delete()
     }
 
+    // endregion register --------------------------------------------------------------------------
+    // region addCloth -----------------------------------------------------------------------------
+
+    @Test(expected = AuthException::class)
+    fun addCloth_userNull_AuthException() {
+        // Arrange
+        userNull()
+        // Act
+        SUT.addCloth(TEST_USER_1, TEST_IMAGE_1, UploadClothUseCase.Params(0f, ""))
+        // Assert
+    }
+
+    // endregion addCloth --------------------------------------------------------------------------
+    // region getClothes ---------------------------------------------------------------------------
+
+    @Test(expected = AuthException::class)
+    fun getClothes_userNull_AuthException() {
+        // Arrange
+        userNull()
+        // Act
+        SUT.getClothes()
+        // Assert
+    }
+
+    // endregion getClothes ------------------------------------------------------------------------
     // region helper methods -----------------------------------------------------------------------
 
     private fun createUserWithEmailAndPasswordSuccess() {
@@ -193,9 +239,7 @@ class ApiManagerImplTest {
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
 
-        val currentUserMock = mock(FirebaseUser::class.java)
-        `when`(mAuth.currentUser).thenReturn(currentUserMock)
-        `when`(currentUserMock.uid).thenReturn("UID")
+        userValid()
     }
 
     private fun createUserWithEmailAndPasswordException() {
@@ -278,6 +322,16 @@ class ApiManagerImplTest {
 
         val user = mock(FirebaseUser::class.java)
         `when`(mAuth.currentUser).thenReturn(user)
+    }
+
+    private fun userValid() {
+        val currentUserMock = mock(FirebaseUser::class.java)
+        `when`(mAuth.currentUser).thenReturn(currentUserMock)
+        `when`(currentUserMock.uid).thenReturn("UID")
+    }
+
+    private fun userNull() {
+        `when`(mAuth.currentUser).thenReturn(null)
     }
 
     // endregion helper methods --------------------------------------------------------------------
