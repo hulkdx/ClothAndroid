@@ -22,18 +22,18 @@ class NavigationManagerImpl @Inject constructor(
 
     private val containerId = R.id.container
 
+    fun startFirstFragment() {
+        fragmentManager.beginTransaction()
+                .add(containerId, ProfileFragment(), NAVIGATE_FEATURE_PROFILE.toString())
+                .commit()
+    }
+
     override fun navigateTo(fragmentId: Int) {
         val fragment = getFragment(fragmentId)
 
         fragmentManager.beginTransaction()
-                .replace(containerId, fragment)
+                .replace(containerId, fragment, fragmentId.toString())
                 .commitAllowingStateLoss()
-    }
-
-    fun startFirstFragment() {
-        fragmentManager.beginTransaction()
-                .add(containerId, ProfileFragment())
-                .commit()
     }
 
     private fun getFragment(fragmentId: Int): Fragment {
@@ -43,6 +43,9 @@ class NavigationManagerImpl @Inject constructor(
             }
             NAVIGATE_FEATURE_REGISTER -> {
                 RegisterFragment()
+            }
+            NAVIGATE_FEATURE_PROFILE -> {
+                ProfileFragment()
             }
             else -> {
                 throw RuntimeException("NavigationManagerImpl: cannot find the fragment")

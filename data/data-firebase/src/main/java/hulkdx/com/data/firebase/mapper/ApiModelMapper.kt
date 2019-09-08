@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 01/09/2019.
  */
-class ApiModelMapper @Inject constructor() {
+internal class ApiModelMapper @Inject constructor() {
 
     fun mapClothToApi(clothEntity: ClothEntity): ClothApiModel {
         return clothEntity.run {

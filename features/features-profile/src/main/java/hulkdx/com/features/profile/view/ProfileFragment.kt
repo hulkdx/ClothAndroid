@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 24/08/2019.
  */
+
 private const val ACTIVITY_REQUEST_CODE_GALLERY = 0
 
 class ProfileFragment : BaseFragment(), View.OnClickListener {

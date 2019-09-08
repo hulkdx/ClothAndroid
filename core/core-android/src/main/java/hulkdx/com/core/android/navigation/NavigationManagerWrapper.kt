@@ -1,5 +1,6 @@
 package hulkdx.com.core.android.navigation
 
+import androidx.fragment.app.Fragment
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,7 +36,11 @@ class NavigationManagerWrapper @Inject constructor() {
         navigateTo(NAVIGATE_FEATURE_REGISTER)
     }
 
-    private fun navigateTo(fragmentId: Int) {
+    fun navigateToProfile() {
+        navigateTo(NAVIGATE_FEATURE_PROFILE)
+    }
+
+    fun navigateTo(fragmentId: Int) {
         mNavigationManager.navigateTo(fragmentId)
     }
 }
