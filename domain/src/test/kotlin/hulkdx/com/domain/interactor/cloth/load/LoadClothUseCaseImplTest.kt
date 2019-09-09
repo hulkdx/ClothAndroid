@@ -1,10 +1,12 @@
 package hulkdx.com.domain.interactor.cloth.load
 
 import hulkdx.com.domain.TEST_CLOTHES
+import hulkdx.com.domain.anyKotlin
 import hulkdx.com.domain.repository.remote.GetClothesEndPoint
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.entities.ClothesEntity
+import hulkdx.com.domain.repository.local.ClothDatabase
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +24,7 @@ import java.util.*
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 16/07/2019.
  */
-@Suppress("HasPlatformType")
+@Suppress("HasPlatformType", "PrivatePropertyName")
 class LoadClothUseCaseImplTest {
 
     // region constants ----------------------------------------------------------------------------
@@ -33,6 +35,7 @@ class LoadClothUseCaseImplTest {
     @get:Rule
     var mMockitoJUnit = MockitoJUnit.rule()
     @Mock lateinit var mClothApiManager: GetClothesEndPoint
+    @Mock lateinit var mClothDatabase: ClothDatabase
 
     // endregion helper fields ---------------------------------------------------------------------
 
@@ -41,7 +44,7 @@ class LoadClothUseCaseImplTest {
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = LoadClothUseCaseImpl(trampoline, trampoline, mClothApiManager)
+        SUT = LoadClothUseCaseImpl(trampoline, trampoline, mClothDatabase, mClothApiManager)
     }
 
     @Test
@@ -66,45 +69,54 @@ class LoadClothUseCaseImplTest {
         assertThat(result, `is`(TEST_CLOTHES))
     }
 
-//    TODO:
-//    @Test
-//    fun loadAsync_ioException_resultNetworkError() {
-//        // Arrange
-//        ioException()
-//        var result = false
-//        // Act
-//        SUT.loadAsync(onSuccess = {}, onNetworkError = {
-//            result = true
-//        }, onGeneralError = {}, onAuthError = {})
-//        // Assert
-//        assertThat(result, `is`(true))
-//    }
-//
-//    @Test
-//    fun loadAsync_generalException_resultGeneralException() {
-//        // Arrange
-//        generalException()
-//        var result = false
-//        // Act
-//        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {
-//            result = true
-//        }, onAuthError = {})
-//        // Assert
-//        assertThat(result, `is`(true))
-//    }
-//
-//    @Test
-//    fun loadAsync_authException_resultGeneralException() {
-//        // Arrange
-//        authException()
-//        var result = false
-//        // Act
-//        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {}, onAuthError = {
-//            result = true
-//        })
-//        // Assert
-//        assertThat(result, `is`(true))
-//    }
+    @Test
+    fun loadAsync_ioException_resultNetworkError() {
+        // Arrange
+        ioException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {
+            result = true
+        }, onGeneralError = {}, onAuthError = {})
+        // Assert
+        assertThat(result, `is`(true))
+    }
+
+    @Test
+    fun loadAsync_generalException_resultGeneralException() {
+        // Arrange
+        generalException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {
+            result = true
+        }, onAuthError = {})
+        // Assert
+        assertThat(result, `is`(true))
+    }
+
+    @Test
+    fun loadAsync_authException_resultGeneralException() {
+        // Arrange
+        authException()
+        var result = false
+        // Act
+        SUT.loadAsync(onSuccess = {}, onNetworkError = {}, onGeneralError = {}, onAuthError = {
+            result = true
+        })
+        // Assert
+        assertThat(result, `is`(true))
+    }
+
+    @Test
+    fun loadAsync_success_saveDatabase() {
+        // Arrange
+        success()
+        // Act
+        SUT.loadAsync({}, {}, {}, {})
+        // Assert
+        verify(mClothDatabase).saveAll(anyKotlin())
+    }
 
     // region helper methods -----------------------------------------------------------------------
 

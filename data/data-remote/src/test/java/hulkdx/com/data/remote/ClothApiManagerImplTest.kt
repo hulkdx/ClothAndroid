@@ -16,7 +16,7 @@
 //
 //    // region helper fields ------------------------------------------------------------------------
 //
-//    @get:Rule
+//    @getUser:Rule
 //    var mMockitoJUnit = MockitoJUnit.rule()!!
 //
 //    // endregion helper fields ---------------------------------------------------------------------

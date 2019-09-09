@@ -93,7 +93,7 @@ class RegisterAuthUseCaseImplTest {
         // Act
         SUT.register(TEST_PARAM) {}
         // Assert
-        verify(mUserDatabase).save(TEST_USER_1)
+        verify(mUserDatabase).saveUser(TEST_USER_1)
     }
 
     // region helper methods -----------------------------------------------------------------------

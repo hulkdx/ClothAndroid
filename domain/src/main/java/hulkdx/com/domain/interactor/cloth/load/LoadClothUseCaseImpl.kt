@@ -5,6 +5,7 @@ import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.repository.local.ClothDatabase
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class LoadClothUseCaseImpl @Inject constructor(
         @BackgroundScheduler private val mBackgroundScheduler: Scheduler,
         @UiScheduler         private val mUiScheduler: Scheduler,
+        private val mClothDatabase: ClothDatabase,
         private val mClothApiManager: GetClothesEndPoint
 ): LoadClothUseCase {
 
@@ -49,7 +51,7 @@ class LoadClothUseCaseImpl @Inject constructor(
 
     private fun loadSync(): List<ClothEntity> {
         val clothesListEntity = mClothApiManager.getClothes()
-        // TODO save it into database.
+        mClothDatabase.saveAll(clothesListEntity)
         return clothesListEntity.clothes
     }
 

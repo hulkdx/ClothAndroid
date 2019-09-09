@@ -39,7 +39,7 @@ class UploadClothUseCaseImpl @Inject constructor(
     }
 
     private fun uploadSync(inputStream: InputStream, params: Params): Result {
-        val user = mUserDatabase.get() ?: return Result.AuthError
+        val user = mUserDatabase.getUser() ?: return Result.AuthError
         val image = mFileUploader.uploadImage(inputStream)
         return mAddClothEndPoint.addCloth(user, image, params)
     }

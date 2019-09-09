@@ -21,6 +21,7 @@ internal open class UserRealmObject(
 ): RealmObject() {
 
     // empty constructor requires by RealmObject
+    @Suppress("unused")
     constructor(): this(
             "",
             "",

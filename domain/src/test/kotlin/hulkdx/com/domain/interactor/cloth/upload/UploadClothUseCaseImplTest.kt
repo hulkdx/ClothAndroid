@@ -63,7 +63,7 @@ class UploadClothUseCaseImplTest {
         // Act
         SUT.upload(mParamsInputStream, UPLOAD_PARAMS) {}
         // Assert
-        verify(mUserDatabase).get()
+        verify(mUserDatabase).getUser()
     }
 
     @Test
@@ -103,11 +103,11 @@ class UploadClothUseCaseImplTest {
     // region helper methods -----------------------------------------------------------------------
 
     private fun userNull() {
-        whenever(mUserDatabase.get()).thenReturn(null)
+        whenever(mUserDatabase.getUser()).thenReturn(null)
     }
 
     private fun userNotNull() {
-        whenever(mUserDatabase.get()).thenReturn(TEST_USER_1)
+        whenever(mUserDatabase.getUser()).thenReturn(TEST_USER_1)
     }
 
     private fun uploadSuccess() {

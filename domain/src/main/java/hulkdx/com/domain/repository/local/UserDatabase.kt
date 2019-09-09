@@ -7,7 +7,7 @@ import hulkdx.com.domain.entities.UserEntity
  */
 interface UserDatabase {
 
-    fun save(user: UserEntity)
-    fun get(): UserEntity?
+    fun saveUser(user: UserEntity)
+    fun getUser(): UserEntity?
 
 }
