@@ -30,13 +30,13 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
 
     // region Lifecycle ----------------------------------------------------------------------------
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         mClothAdapter.registerClickListener(this)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         mClothAdapter.unregisterClickListener()
     }
 
