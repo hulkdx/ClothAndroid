@@ -3,8 +3,10 @@ package hulkdx.com.features.explore.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.di.ApplicationComponent
 import hulkdx.com.core.android.di.annotations.MainActivityScope
+import hulkdx.com.features.explore.view.detail.ExploreDetailFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment
 
 /**
@@ -24,6 +26,14 @@ interface ExploreComponent {
         fun build(): ExploreComponent
     }
 
-    fun inject(homeFragment: ExploreListFragment)
+    fun inject(exploreList: ExploreListFragment)
+    fun inject(homeFragment: ExploreDetailFragment)
 
+}
+
+fun getExploreComponent(context: Context): ExploreComponent {
+    return DaggerExploreComponent.builder()
+            .context(context)
+            .applicationComponent(applicationComponent(context))
+            .build()
 }

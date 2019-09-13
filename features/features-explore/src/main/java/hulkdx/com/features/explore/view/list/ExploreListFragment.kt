@@ -11,10 +11,12 @@ import hulkdx.com.core.android.util.observeFragment
 import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.di.DaggerExploreComponent
+import hulkdx.com.features.explore.di.getExploreComponent
 import hulkdx.com.features.explore.model.Cloth
+import hulkdx.com.features.explore.view.detail.ExploreDetailFragment
 import hulkdx.com.features.explore.viewmodel.ExploreViewModel
 import hulkdx.com.features.explore.viewmodel.ExploreViewModel.ClothesResults.*
-import kotlinx.android.synthetic.main.fragment_explore.*
+import kotlinx.android.synthetic.main.fragment_explore_list.*
 import javax.inject.Inject
 
 /**
@@ -89,22 +91,23 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
     // region ClothAdapter Listeners ---------------------------------------------------------------
 
     override fun onClothClicked(position: Int, cloth: Cloth) {
-        // TODO: GO TO DETAIL FRAGMENT
-        // mNavigationManager.navigateToExplore()
+        val fragment = ExploreDetailFragment.newInstance(cloth)
+
+        requireFragmentManager().beginTransaction()
+                .add(fragment, null)
+                .addToBackStack(null)
+                .commitAllowingStateLoss()
     }
 
     // endregion ClothAdapter Listeners ------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
-        DaggerExploreComponent.builder()
-                .context(context)
-                .applicationComponent(applicationComponent(context))
-                .build()
+        getExploreComponent(context)
                 .inject(this)
     }
 
-    override fun fragmentLayout(): Int  = R.layout.fragment_explore
+    override fun fragmentLayout(): Int  = R.layout.fragment_explore_list
 
     private fun authError() {
         mAuthCommonViewModel.logout()

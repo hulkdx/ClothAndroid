@@ -17,9 +17,10 @@ class ClothMapper @Inject constructor() {
     }
 
     private fun mapCloth(cloth: ClothEntity): Cloth {
-        return cloth.run {
-            Cloth(image.url)
-        }
+        return cloth.run { Cloth(
+                imageUrl = image.url,
+                price = "$price $currency"
+        ) }
     }
 
 }
