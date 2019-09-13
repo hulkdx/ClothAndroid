@@ -1,6 +1,5 @@
 package hulkdx.com.core.android.navigation
 
-import androidx.fragment.app.Fragment
 import javax.inject.Inject
 import javax.inject.Singleton
 

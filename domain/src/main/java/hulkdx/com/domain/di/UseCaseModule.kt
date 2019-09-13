@@ -12,6 +12,7 @@ import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCaseImpl
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.
  */
+@Suppress("unused")
 @Module
 abstract class UseCaseModule {
 

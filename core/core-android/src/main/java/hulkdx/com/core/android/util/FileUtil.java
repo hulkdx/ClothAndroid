@@ -20,7 +20,7 @@ import java.io.File;
  *
  * From: https://gist.github.com/HBiSoft/15899990b8cd0723c3a894c1636550a8
  */
-public class FileUtil {
+class FileUtil {
 
     @SuppressLint("ObsoleteSdkInt")
     public static String getRealPath(Context context, Uri fileUri) {

@@ -3,7 +3,6 @@ package hulkdx.com.features.auth.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import javax.inject.Inject

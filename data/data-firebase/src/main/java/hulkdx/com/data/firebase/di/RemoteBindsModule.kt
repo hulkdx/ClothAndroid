@@ -12,6 +12,7 @@ import hulkdx.com.domain.repository.remote.RegisterEndPoint
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.
  */
+@Suppress("unused")
 @Module
 abstract class RemoteBindsModule {
 

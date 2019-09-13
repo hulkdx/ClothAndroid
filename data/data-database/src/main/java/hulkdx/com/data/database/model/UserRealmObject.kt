@@ -1,6 +1,5 @@
 package hulkdx.com.data.database.model
 
-import hulkdx.com.domain.entities.ImageEntity
 import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.entities.UserGender
 import io.realm.RealmObject
@@ -9,6 +8,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 31/08/2019.
  */
+@Suppress("MemberVisibilityCanBePrivate")
 internal open class UserRealmObject(
         @PrimaryKey
         var id:                 String,
@@ -16,8 +16,7 @@ internal open class UserRealmObject(
         var firstName:          String,
         var lastName:           String,
         var gender:             Int,
-        var imageUrl:           String?,
-        var imageSize:          Long?
+        var image:              ImageRealmObject?
 ): RealmObject() {
 
     // empty constructor requires by RealmObject
@@ -28,7 +27,6 @@ internal open class UserRealmObject(
             "",
             "",
             0,
-            null,
             null
     )
 
@@ -41,24 +39,13 @@ internal open class UserRealmObject(
                         firstName,
                         lastName,
                         UserGender.convert(gender),
-                        image?.url,
-                        image?.size
+                        mapImageEntityNull(image)
                 )
             }
         }
     }
 
-    fun map(): UserEntity? {
-        var userImageEntity: ImageEntity? = null
-
-        imageUrl?.let { url ->
-            imageSize?.let { size ->
-                userImageEntity = ImageEntity(
-                        url = url,
-                        size = size
-                )
-            }
-        }
+    fun map(): UserEntity {
 
         return UserEntity(
                 id = id,
@@ -66,7 +53,7 @@ internal open class UserRealmObject(
                 firstName = firstName,
                 lastName = lastName,
                 gender = UserGender.convert(gender),
-                image = userImageEntity
+                image = mapImageRealmObjectNull(image)
         )
     }
 }

@@ -9,6 +9,7 @@ import hulkdx.com.features.profile.viewmodel.ProfileViewModel
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 24/08/2019.
  */
+@Suppress("unused")
 @Module
 abstract class ProfileViewModelModule {
 

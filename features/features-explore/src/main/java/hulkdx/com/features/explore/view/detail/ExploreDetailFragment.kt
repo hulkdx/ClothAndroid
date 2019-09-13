@@ -3,16 +3,14 @@ package hulkdx.com.features.explore.view.detail
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.util.ImageLoader
 import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
 import hulkdx.com.features.explore.R
-import hulkdx.com.features.explore.di.DaggerExploreComponent
 import hulkdx.com.features.explore.di.getExploreComponent
 import hulkdx.com.features.explore.model.Cloth
 import kotlinx.android.synthetic.main.fragment_explore_detail.*
-import java.lang.RuntimeException
+import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 08/09/2019.
@@ -21,7 +19,8 @@ class ExploreDetailFragment: BaseFragment() {
 
     private lateinit var mAuthCommonViewModel: AuthCommonViewModel
     private lateinit var mCloth: Cloth
-    private lateinit var mImageLoader: ImageLoader
+
+    @Inject lateinit var mImageLoader: ImageLoader
 
     // region Statics ------------------------------------------------------------------------------
 

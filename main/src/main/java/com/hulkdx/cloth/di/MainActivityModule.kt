@@ -1,7 +1,5 @@
 package com.hulkdx.cloth.di
 
-import android.app.Activity
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import dagger.Module

@@ -1,7 +1,6 @@
 package hulkdx.com.domain.interactor.cloth.upload
 
 import hulkdx.com.domain.entities.ClothEntity
-import hulkdx.com.domain.entities.ImageEntity
 import java.io.InputStream
 
 /**

@@ -1,9 +1,11 @@
 package hulkdx.com.data.database
 
+import hulkdx.com.data.database.model.ClothesRealmObject
 import hulkdx.com.data.database.model.UserRealmObject
+import hulkdx.com.data.database.model.mapClothesEntity
+import hulkdx.com.data.database.model.mapClothesRealmObject
 import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.UserEntity
-import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.repository.local.ClothDatabase
 import hulkdx.com.domain.repository.local.UserDatabase
 import io.realm.Realm
@@ -43,11 +45,21 @@ class DatabaseImpl @Inject constructor(
     // region ClothDatabase ------------------------------------------------------------------------
 
     override fun saveAll(clothes: ClothesEntity) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mapClothesEntity(clothes).execute { clothesRealmObject, realm ->
+            realm.beginTransaction()
+            realm.insertOrUpdate(clothesRealmObject)
+            realm.commitTransaction()
+        }
     }
 
     override fun getAll(): ClothesEntity? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var result: ClothesEntity? = null
+        execute { _, realm ->
+            val realmObject: ClothesRealmObject =
+                    realm.where(ClothesRealmObject::class.java).findFirst() ?: return@execute
+            result = mapClothesRealmObject(realmObject)
+        }
+        return result
     }
 
     // endregion ClothDatabase ---------------------------------------------------------------------

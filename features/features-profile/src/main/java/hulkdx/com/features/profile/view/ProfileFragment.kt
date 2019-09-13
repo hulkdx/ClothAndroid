@@ -32,6 +32,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
     // region SetupUI ------------------------------------------------------------------------------
 
     override fun setupUI() {
+        println("SABAAA setupUI ${System.currentTimeMillis()}")
         uploadClothButton.setOnClickListener(this)
     }
 

@@ -5,12 +5,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import hulkdx.com.core.android.applicationComponent
-import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.util.observeFragment
+import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
 import hulkdx.com.features.explore.R
-import hulkdx.com.features.explore.di.DaggerExploreComponent
 import hulkdx.com.features.explore.di.getExploreComponent
 import hulkdx.com.features.explore.model.Cloth
 import hulkdx.com.features.explore.view.detail.ExploreDetailFragment
@@ -94,7 +92,7 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
         val fragment = ExploreDetailFragment.newInstance(cloth)
 
         requireFragmentManager().beginTransaction()
-                .add(fragment, null)
+                .add(R.id.container, fragment, null)
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
     }

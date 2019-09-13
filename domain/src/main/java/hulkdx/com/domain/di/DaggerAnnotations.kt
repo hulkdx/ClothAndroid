@@ -1,7 +1,6 @@
 package hulkdx.com.domain.di
 
 import javax.inject.Qualifier
-import javax.inject.Scope
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.

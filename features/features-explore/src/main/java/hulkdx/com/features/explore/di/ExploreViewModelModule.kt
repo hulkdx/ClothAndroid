@@ -12,6 +12,7 @@ import hulkdx.com.features.explore.viewmodel.ExploreViewModel
  *
  * Using Dagger Multi-bindings to insert Map<Class<? extends ViewModel> into ViewModelFactory.
  */
+@Suppress("unused")
 @Module
 abstract class ExploreViewModelModule {
 

@@ -1,7 +1,6 @@
 package hulkdx.com.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 16/07/2019.
