@@ -7,7 +7,7 @@ buildscript {
     dependencies {
         apply from: 'versions.gradle'
 
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.2'
     }
@@ -23,3 +23,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// https://github.com/ben-manes/gradle-versions-plugin
+// ./gradlew dependencyUpdates
+// check the new dependencies update
+//plugins {
+//    id "com.github.ben-manes.versions" version "0.25.0"
+//}
