@@ -38,7 +38,7 @@ dependencies {
     implementation      liveData
     kapt                liveDataAnnotation
     implementation      glide
-    implementation      gson
+    implementation      constraintLayout
 
     implementation      firebaseAuth
     implementation      firebaseDatabase

@@ -20,7 +20,7 @@ class NavigationManagerImpl @Inject constructor(
         private val fragmentManager: FragmentManager
 ): NavigationManager {
 
-    private val containerId = R.id.container
+    private val containerId = android.R.id.content
 
     fun startFirstFragment() {
         fragmentManager.beginTransaction()

@@ -11,7 +11,7 @@
         android:id="@+id/clothImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:scaleType="fitXY"
         android:contentDescription="@string/cloth_image_View_description"
         app:layout_constraintDimensionRatio="w,1:1"

@@ -92,7 +92,7 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
         val fragment = ExploreDetailFragment.newInstance(cloth)
 
         requireFragmentManager().beginTransaction()
-                .add(R.id.container, fragment, null)
+                .replace(android.R.id.content, fragment, null)
                 .addToBackStack(null)
                 .commitAllowingStateLoss()
     }

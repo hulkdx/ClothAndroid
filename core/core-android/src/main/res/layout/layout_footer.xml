@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/footerRootLinearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
     >
 
     <Button
-        style="?android:attr/buttonBarButtonStyle"
         android:id="@+id/footerExploreButton"
-        android:layout_width="wrap_content"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Explore"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/footerCategoryButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
         />
 
     <Button
+        android:id="@+id/footerCategoryButton"
         style="?android:attr/buttonBarButtonStyle"
-        android:id="@+id/footerProfileButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Profile"
+        android:text="Category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/footerProfileButton"
+        app:layout_constraintStart_toEndOf="@+id/footerExploreButton"
         />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/footerProfileButton"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/footerCategoryButton"
+        />
+
+</merge>

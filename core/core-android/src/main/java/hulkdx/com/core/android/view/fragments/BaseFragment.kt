@@ -39,8 +39,8 @@ abstract class BaseFragment: Fragment() {
 
     // region LifeCycle ----------------------------------------------------------------------------
 
-    override fun onAttach(context: Context?) {
-        inject(requireContext())
+    override fun onAttach(context: Context) {
+        inject(context)
         super.onAttach(context)
     }
 
@@ -71,7 +71,7 @@ abstract class BaseFragment: Fragment() {
     // region Setup Footer / Header ----------------------------------------------------------------
 
     private fun setupFooter(rootView: View) {
-        rootView.findViewById<View>(R.id.footerRootLinearLayout) ?: return
+        rootView.findViewById<View>(R.id.footerExploreButton) ?: return
 
         footerExploreButton.setOnClickListener(baseFragmentClickListeners)
         footerProfileButton.setOnClickListener(baseFragmentClickListeners)
