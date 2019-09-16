@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import hulkdx.com.core.android.R
+import hulkdx.com.core.android.model.FragmentType
 import hulkdx.com.core.android.navigation.NAVIGATE_FEATURE_EXPLORE
 import hulkdx.com.core.android.navigation.NAVIGATE_FEATURE_PROFILE
 import hulkdx.com.core.android.navigation.NavigationManagerWrapper
@@ -33,6 +34,9 @@ abstract class BaseFragment: Fragment() {
             }
             R.id.footerProfileButton -> {
                 onFooterProfileButtonClicked()
+            }
+            R.id.footerCategoryButton -> {
+                onCategoryButtonClicked()
             }
         }
     }
@@ -73,8 +77,31 @@ abstract class BaseFragment: Fragment() {
     private fun setupFooter(rootView: View) {
         rootView.findViewById<View>(R.id.footerExploreButton) ?: return
 
-        footerExploreButton.setOnClickListener(baseFragmentClickListeners)
-        footerProfileButton.setOnClickListener(baseFragmentClickListeners)
+        val type = mNavigationManager.getFragmentType(getNavigationId())
+
+        // Click listeners
+        if (type != FragmentType.TYPE_EXPLORE) {
+            footerExploreButton.setOnClickListener(baseFragmentClickListeners)
+        }
+        if (type != FragmentType.TYPE_CATEGORY) {
+            footerCategoryButton.setOnClickListener(baseFragmentClickListeners)
+        }
+        if (type != FragmentType.TYPE_PROFILE) {
+            footerProfileButton.setOnClickListener(baseFragmentClickListeners)
+        }
+
+        // isPressed to show the pressed image
+        when (type) {
+            FragmentType.TYPE_EXPLORE -> {
+                footerExploreButton.isPressed = true
+            }
+            FragmentType.TYPE_CATEGORY -> {
+                footerCategoryButton.isPressed = true
+            }
+            FragmentType.TYPE_PROFILE -> {
+                footerProfileButton.isPressed = true
+            }
+        }
     }
 
     private fun onFooterExploreButtonClicked() {
@@ -85,18 +112,18 @@ abstract class BaseFragment: Fragment() {
         navigateTo(NAVIGATE_FEATURE_PROFILE)
     }
 
+    private fun onCategoryButtonClicked() {
+    }
+
     // endregion Setup Footer / Header -------------------------------------------------------------
     // region Extra --------------------------------------------------------------------------------
 
-    private fun navigateTo(fragmentId: Int) {
-        if (isCurrentFragmentTypeOf(fragmentId)) {
-            return
-        }
-        mNavigationManager.navigateTo(fragmentId)
+    private fun navigateTo(navigationId: Int) {
+        mNavigationManager.navigateTo(navigationId)
     }
 
-    private fun isCurrentFragmentTypeOf(fragmentId: Int): Boolean {
-        return tag != null && tag == fragmentId.toString()
+    private fun getNavigationId(): Int? {
+        return tag?.toInt()
     }
 
     // endregion Extra -----------------------------------------------------------------------------

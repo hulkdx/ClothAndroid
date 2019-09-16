@@ -2,7 +2,6 @@ package com.hulkdx.cloth.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.hulkdx.cloth.R
 import hulkdx.com.core.android.navigation.*
 import hulkdx.com.core.android.navigation.NavigationManager
 import hulkdx.com.features.auth.view.register.RegisterFragment
@@ -28,11 +27,11 @@ class NavigationManagerImpl @Inject constructor(
                 .commit()
     }
 
-    override fun navigateTo(fragmentId: Int) {
-        val fragment = getFragment(fragmentId)
+    override fun navigateTo(navigationId: Int) {
+        val fragment = getFragment(navigationId)
 
         fragmentManager.beginTransaction()
-                .replace(containerId, fragment, fragmentId.toString())
+                .replace(containerId, fragment, navigationId.toString())
                 .commitAllowingStateLoss()
     }
 

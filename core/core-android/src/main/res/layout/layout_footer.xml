@@ -4,35 +4,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <Button
+    <ImageButton
         android:id="@+id/footerExploreButton"
-        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Explore"
+        style="@style/footer_image_buttons"
+        android:background="@color/footer_background_color"
+        android:src="@drawable/selector_footer_explore"
+        android:contentDescription="@string/explore"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/footerCategoryButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/footerCategoryButton"
-        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Category"
+        style="@style/footer_image_buttons"
+        android:src="@drawable/selector_footer_category"
+        android:contentDescription="@string/category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/footerProfileButton"
         app:layout_constraintStart_toEndOf="@+id/footerExploreButton"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/footerProfileButton"
-        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Profile"
+        style="@style/footer_image_buttons"
+        android:src="@drawable/selector_footer_profile"
+        android:contentDescription="@string/profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/footerCategoryButton"
