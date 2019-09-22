@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.*
 import dagger.multibindings.IntoMap
 import hulkdx.com.core.android.di.annotations.ViewModelKey
-import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
+import hulkdx.com.core.android.viewmodel.CoreViewModel
 import hulkdx.com.features.explore.viewmodel.ExploreViewModel
 
 /**
@@ -23,7 +23,7 @@ abstract class ExploreViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AuthCommonViewModel::class)
-    abstract fun providesAuthViewModel(authViewModel: AuthCommonViewModel): ViewModel
+    @ViewModelKey(CoreViewModel::class)
+    abstract fun providesCoreViewModel(viewModel: CoreViewModel): ViewModel
 
 }

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import hulkdx.com.core.android.util.ImageLoader
 import hulkdx.com.core.android.view.fragments.BaseFragment
-import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
+import hulkdx.com.core.android.viewmodel.CoreViewModel
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.di.getExploreComponent
 import hulkdx.com.features.explore.model.Cloth
@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class ExploreDetailFragment: BaseFragment() {
 
-    private lateinit var mAuthCommonViewModel: AuthCommonViewModel
+    private lateinit var mCoreViewModel: CoreViewModel
     private lateinit var mCloth: Cloth
 
     @Inject lateinit var mImageLoader: ImageLoader
@@ -59,7 +59,7 @@ class ExploreDetailFragment: BaseFragment() {
     }
 
     override fun setupViewModel() {
-        mAuthCommonViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthCommonViewModel::class.java)
+        mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
     }
 
     // endregion SetupUI ---------------------------------------------------------------------------

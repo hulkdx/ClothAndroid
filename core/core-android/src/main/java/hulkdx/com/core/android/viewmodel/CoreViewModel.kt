@@ -5,8 +5,10 @@ import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/07/2019.
+ *
+ * This class is not singleton. Add a singleton dependency if it needs one.
  */
-class AuthCommonViewModel @Inject constructor(): ViewModel() {
+class CoreViewModel @Inject constructor(): ViewModel() {
 
     fun logout() {
         // TODO

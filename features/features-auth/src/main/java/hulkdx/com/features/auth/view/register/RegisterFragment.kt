@@ -9,7 +9,7 @@ import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.util.observeFragment
 
 import hulkdx.com.core.android.view.fragments.BaseFragment
-import hulkdx.com.core.android.viewmodel.AuthCommonViewModel
+import hulkdx.com.core.android.viewmodel.CoreViewModel
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.features.auth.BuildConfig
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
  */
 class RegisterFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var mAuthCommonViewModel: AuthCommonViewModel
+    private lateinit var mCoreViewModel: CoreViewModel
     private lateinit var mAuthViewModel: AuthViewModel
 
     // region SetupUI ------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
-        mAuthCommonViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthCommonViewModel::class.java)
+        mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
         mAuthViewModel = ViewModelProviders.of(this, mViewModelFactory).get(AuthViewModel::class.java)
         mAuthViewModel.registerLiveData().observeFragment(this, Observer {
             when (it) {
