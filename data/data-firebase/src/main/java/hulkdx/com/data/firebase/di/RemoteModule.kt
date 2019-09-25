@@ -7,6 +7,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
+import hulkdx.com.data.firebase.ApiManagerImpl
+import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
+import hulkdx.com.data.firebase.database.UserDatabaseFirebase
+import hulkdx.com.data.firebase.mapper.ApiModelMapper
+import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
+import hulkdx.com.data.firebase.storage.upload.FileUploaderImpl
 import javax.inject.Named
 
 /**
@@ -30,15 +36,15 @@ object RemoteModule {
     @Provides
     @Named("USER")
     @JvmStatic
-    internal fun provideUserDatabaseReference(firebaseDatabase: FirebaseDatabase): DatabaseReference {
-        return firebaseDatabase.getReference("users")
+    internal fun provideUserDatabaseReference(): DatabaseReference {
+        return provideFirebaseDatabase().getReference("users")
     }
 
     @Provides
     @Named("CLOTH")
     @JvmStatic
-    internal fun provideClothDatabaseReference(firebaseDatabase: FirebaseDatabase): DatabaseReference {
-        return firebaseDatabase.getReference("clothes")
+    internal fun provideClothDatabaseReference(): DatabaseReference {
+        return provideFirebaseDatabase().getReference("clothes")
     }
 
     @Provides
@@ -49,7 +55,45 @@ object RemoteModule {
 
     @Provides
     @JvmStatic
-    internal fun provideStorageReference(firebaseStorage: FirebaseStorage): StorageReference {
-        return firebaseStorage.getReference("images")
+    internal fun provideStorageReference(): StorageReference {
+        return provideFirebaseStorage().getReference("images")
+    }
+
+    @Provides
+    @JvmStatic
+    internal fun provideApiManagerImpl(mFirebaseToResultMapper: FirebaseToResultMapper,
+                                       mClothDatabaseFirebase: ClothDatabaseFirebase,
+                                       mUserDatabase: UserDatabaseFirebase): ApiManagerImpl {
+        return ApiManagerImpl(
+                provideFirebaseAuth(),
+                mFirebaseToResultMapper,
+                mClothDatabaseFirebase,
+                mUserDatabase
+        )
+    }
+
+    @Provides
+    @JvmStatic
+    internal fun provideClothDatabaseFirebase(mApiModelMapper: ApiModelMapper): ClothDatabaseFirebase {
+        return ClothDatabaseFirebase(
+                provideClothDatabaseReference(),
+                mApiModelMapper
+        )
+    }
+
+    @Provides
+    @JvmStatic
+    internal fun provideUserDatabaseFirebase(): UserDatabaseFirebase {
+        return UserDatabaseFirebase(
+                provideUserDatabaseReference()
+        )
+    }
+
+    @Provides
+    @JvmStatic
+    internal fun provideFileUploaderImpl(): FileUploaderImpl {
+        return FileUploaderImpl(
+                provideStorageReference()
+        )
     }
 }

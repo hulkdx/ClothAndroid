@@ -40,6 +40,10 @@ class NavigationManagerWrapper @Inject constructor() {
         navigateTo(NAVIGATE_FEATURE_PROFILE)
     }
 
+    fun navigateToLogin() {
+        navigateTo(NAVIGATE_FEATURE_LOGIN)
+    }
+
     fun navigateTo(fragmentId: Int) {
         mNavigationManager.navigateTo(fragmentId)
     }

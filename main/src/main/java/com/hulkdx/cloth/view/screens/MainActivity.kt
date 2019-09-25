@@ -2,11 +2,14 @@ package com.hulkdx.cloth.view.screens
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.hulkdx.cloth.navigation.NavigationManagerImpl
 import com.hulkdx.cloth.R
 import hulkdx.com.core.android.applicationComponent
 import com.hulkdx.cloth.di.DaggerMainActivityComponent
 import hulkdx.com.core.android.navigation.NavigationManagerWrapper
+import hulkdx.com.core.android.util.ViewModelFactory
+import hulkdx.com.core.android.viewmodel.CoreViewModel
 import javax.inject.Inject
 
 /**
@@ -17,6 +20,9 @@ class MainActivity: AppCompatActivity() {
 
     @Inject lateinit var mNavigationManagerWrapper: NavigationManagerWrapper
     @Inject lateinit var mNavigationManager: NavigationManagerImpl
+    @Inject lateinit var mViewModelFactory: ViewModelFactory
+    
+    lateinit var mCoreViewModel: CoreViewModel
 
     // region Lifecycle ----------------------------------------------------------------------------
 
@@ -25,6 +31,11 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
         inject()
         mNavigationManagerWrapper.setNavigationManager(mNavigationManager)
+
+        mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
+        if (savedInstanceState == null) {
+            mCoreViewModel.fetchUserInfo()
+        }
 
         configureFragments(savedInstanceState == null)
     }

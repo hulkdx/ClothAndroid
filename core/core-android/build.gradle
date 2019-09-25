@@ -40,9 +40,4 @@ dependencies {
     implementation      glide
     implementation      constraintLayout
 
-    implementation      firebaseAuth
-    implementation      firebaseDatabase
-    implementation      firebaseStorage
-
-
 }

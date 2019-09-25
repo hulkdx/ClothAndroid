@@ -2,6 +2,7 @@ package hulkdx.com.core.android.view.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +22,9 @@ import javax.inject.Inject
 
 abstract class BaseFragment: Fragment() {
 
-    @Inject
-    protected lateinit var mViewModelFactory: ViewModelFactory
+    @Inject protected lateinit var mViewModelFactory: ViewModelFactory
 
-    @Inject
-    protected lateinit var mNavigationManager: NavigationManagerWrapper
+    @Inject protected lateinit var mNavigationManager: NavigationManagerWrapper
 
     private val baseFragmentClickListeners = View.OnClickListener { view ->
         when (view.id) {
@@ -94,12 +93,15 @@ abstract class BaseFragment: Fragment() {
         when (type) {
             FragmentType.TYPE_EXPLORE -> {
                 footerExploreButton.isPressed = true
+                footerExploreButton.isClickable = false
             }
             FragmentType.TYPE_CATEGORY -> {
                 footerCategoryButton.isPressed = true
+                footerCategoryButton.isClickable = false
             }
             FragmentType.TYPE_PROFILE -> {
                 footerProfileButton.isPressed = true
+                footerProfileButton.isClickable = false
             }
         }
     }

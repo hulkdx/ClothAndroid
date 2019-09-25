@@ -15,6 +15,7 @@ import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.features.auth.BuildConfig
 import hulkdx.com.features.auth.R
 import hulkdx.com.features.auth.di.DaggerAuthComponent
+import hulkdx.com.features.auth.di.getAuthComponent
 import hulkdx.com.features.auth.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -93,10 +94,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener {
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
-        DaggerAuthComponent.builder()
-                .context(context)
-                .applicationComponent(applicationComponent(context))
-                .build()
+        getAuthComponent(context)
                 .inject(this)
     }
 

@@ -10,6 +10,7 @@ import hulkdx.com.domain.repository.remote.RegisterEndPoint
 import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.ImageEntity
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.entities.UserType
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
@@ -22,7 +23,7 @@ import javax.inject.Inject
  * Created by Mohammad Jafarzadeh Rezvan on 16/07/2019.
  */
 
-internal class ApiManagerImpl @Inject constructor(
+internal class ApiManagerImpl(
         private val mAuth: FirebaseAuth,
         private val mFirebaseToResultMapper: FirebaseToResultMapper,
         private val mClothDatabaseFirebase: ClothDatabaseFirebase,
@@ -40,7 +41,7 @@ internal class ApiManagerImpl @Inject constructor(
                         //
                         // Note: At this point userId is not available therefore the id is set to -1
                         //
-                        val user = UserEntity("-1", param.email, param.firstName, param.lastName, null, param.gender)
+                        val user = UserEntity("-1", param.email, param.firstName, param.lastName, UserType.NORMAL, null, param.gender)
                         RegisterAuthUseCase.Result.Success(user)
                     } else {
                         mFirebaseToResultMapper.mapError(it.exception)
@@ -66,7 +67,7 @@ internal class ApiManagerImpl @Inject constructor(
         val result2 = asyncToSyncTwo.await()
 
         return if (result2) {
-            val user = UserEntity(currentUser.uid, param.email, param.firstName, param.lastName, null, param.gender)
+            val user = UserEntity(currentUser.uid, param.email, param.firstName, param.lastName, UserType.ADMIN, null, param.gender)
             RegisterAuthUseCase.Result.Success(user)
         } else {
             currentUser.delete()

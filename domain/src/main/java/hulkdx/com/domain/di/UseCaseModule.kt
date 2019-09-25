@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCaseImpl
+import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
+import hulkdx.com.domain.interactor.auth.user.GetUserUseCaseImpl
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCaseImpl
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
@@ -24,5 +26,8 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun uploadClothUseCase(impl: UploadClothUseCaseImpl): UploadClothUseCase
+
+    @Binds
+    abstract fun getUserUseCase(impl: GetUserUseCaseImpl): GetUserUseCase
 
 }

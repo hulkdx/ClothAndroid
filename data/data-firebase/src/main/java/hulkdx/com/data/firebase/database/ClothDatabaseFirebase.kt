@@ -20,8 +20,8 @@ import javax.inject.Named
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/08/2019.
  */
-internal class ClothDatabaseFirebase @Inject constructor(
-        @Named("CLOTH") private val mClothDatabase: DatabaseReference,
+internal class ClothDatabaseFirebase(
+        private val mClothDatabase: DatabaseReference,
         private val mApiModelMapper: ApiModelMapper
 ) {
 

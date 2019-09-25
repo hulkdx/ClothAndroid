@@ -31,11 +31,13 @@ dependencies {
     implementation project(':features:features-auth')
     implementation project(':features:features-profile')
     implementation project(':core:core-android')
+    implementation project(':domain')
 
     kapt                daggerCompiler
     implementation      dagger
     implementation      kotlinStd
     implementation      appcompat
+    implementation      liveData
 
     testImplementation  jUnit
     testImplementation  mockito

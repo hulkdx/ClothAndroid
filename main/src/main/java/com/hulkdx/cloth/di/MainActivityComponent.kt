@@ -12,6 +12,7 @@ import hulkdx.com.core.android.di.annotations.MainActivityScope
  */
 @MainActivityScope
 @Component(modules = [
+    MainViewModelModule::class,
     MainActivityModule::class
 ], dependencies = [ApplicationComponent::class])
 interface MainActivityComponent {

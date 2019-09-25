@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 26/08/2019.
  */
-class FileUploaderImpl @Inject constructor(
+class FileUploaderImpl(
         private val mStorageReference: StorageReference
 ): FileUploader {
 

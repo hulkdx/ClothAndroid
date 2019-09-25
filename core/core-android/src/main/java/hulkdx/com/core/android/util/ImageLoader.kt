@@ -1,7 +1,9 @@
 package hulkdx.com.core.android.util
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import javax.inject.Inject
 
 /**
@@ -14,9 +16,22 @@ import javax.inject.Inject
  */
 class ImageLoader @Inject constructor() {
 
-    fun loadImage(url: String, imageView: ImageView) {
-        Glide.with(imageView.context)
+    fun loadImage(url: String,
+                  imageView: ImageView,
+                  isCircleCropTransform: Boolean = false,
+                  placeholderDrawable: Drawable? = null) {
+        var request = Glide.with(imageView.context)
                 .load(url)
-                .into(imageView)
+
+        if (placeholderDrawable != null) {
+            request = request.placeholder(placeholderDrawable).apply(RequestOptions.circleCropTransform())
+        }
+
+        if (isCircleCropTransform) {
+
+            request = request.apply(RequestOptions.circleCropTransform())
+        }
+
+        request.into(imageView)
     }
 }

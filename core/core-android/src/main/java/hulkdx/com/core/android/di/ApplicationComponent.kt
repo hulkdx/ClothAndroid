@@ -3,6 +3,7 @@ package hulkdx.com.core.android.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import hulkdx.com.core.android.model.CoreUserLiveData
 import hulkdx.com.core.android.navigation.NavigationManagerWrapper
 import hulkdx.com.data.cache.di.CacheModule
 import hulkdx.com.data.database.di.DatabaseBindsModule
@@ -13,6 +14,7 @@ import hulkdx.com.domain.repository.remote.RegisterEndPoint
 import hulkdx.com.domain.di.ApplicationContext
 import hulkdx.com.domain.di.UseCaseModule
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
+import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
 import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import javax.inject.Singleton
@@ -43,8 +45,11 @@ interface ApplicationComponent {
     fun loadClothUseCase(): LoadClothUseCase
     fun registerAuthUseCase(): RegisterAuthUseCase
     fun uploadClothUseCase(): UploadClothUseCase
+    fun getUserUseCase(): GetUserUseCase
     fun navigationManagerWrapper(): NavigationManagerWrapper
     fun registerEndPoint(): RegisterEndPoint
+    fun coreUserLiveData(): CoreUserLiveData
+
 }
 
 

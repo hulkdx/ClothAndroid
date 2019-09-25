@@ -8,16 +8,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.applicationComponent
 import hulkdx.com.core.android.util.observeFragment
-
 import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.features.profile.R
-import hulkdx.com.features.profile.di.DaggerProfileComponent
+import hulkdx.com.features.profile.di.getProfileComponent
 import hulkdx.com.features.profile.viewmodel.ProfileViewModel
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile_new_cloth.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 24/08/2019.
@@ -25,14 +23,13 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 private const val ACTIVITY_REQUEST_CODE_GALLERY = 0
 
-class ProfileFragment : BaseFragment(), View.OnClickListener {
+class NewClothProfileFragment: BaseFragment(), View.OnClickListener {
 
     private lateinit var mProfileViewModel: ProfileViewModel
 
     // region SetupUI ------------------------------------------------------------------------------
 
     override fun setupUI() {
-        println("SABAAA setupUI ${System.currentTimeMillis()}")
         uploadClothButton.setOnClickListener(this)
     }
 
@@ -95,7 +92,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     // endregion Gallery ---------------------------------------------------------------------------
 
-
     override fun setupViewModel() {
         mProfileViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileViewModel::class.java)
         mProfileViewModel.uploadClothLiveData().observeFragment(this, Observer { result ->
@@ -125,15 +121,12 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
     // region Extra functions ----------------------------------------------------------------------
 
     override fun inject(context: Context) {
-        DaggerProfileComponent.builder()
-                .context(context)
-                .applicationComponent(applicationComponent(context))
-                .build()
+        getProfileComponent(context)
                 .inject(this)
     }
 
     override fun fragmentLayout(): Int {
-        return R.layout.fragment_profile
+        return R.layout.fragment_profile_new_cloth
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

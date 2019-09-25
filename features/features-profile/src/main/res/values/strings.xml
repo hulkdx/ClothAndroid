@@ -22,5 +22,13 @@
         Select the price
     </string>
 
+    <string name="user_image">
+        Profile Image
+    </string>
+
+    <string name="upload_a_new_cloth">
+        Upload a new cloth
+    </string>
+
 </resources>
     

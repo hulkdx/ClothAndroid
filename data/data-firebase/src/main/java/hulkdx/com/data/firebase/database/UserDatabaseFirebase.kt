@@ -7,14 +7,13 @@ import javax.inject.Inject
 import com.google.firebase.database.DatabaseReference
 import hulkdx.com.data.firebase.model.api.UserApiModel
 import hulkdx.com.domain.entities.UserGender
-import javax.inject.Named
 
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/08/2019.
  */
-internal class UserDatabaseFirebase @Inject constructor(
-        @Named("USER") private val mUserDatabase: DatabaseReference
+internal class UserDatabaseFirebase(
+        private val mUserDatabase: DatabaseReference
 ) {
 
     @Throws(UserNullException::class)
