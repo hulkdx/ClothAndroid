@@ -44,7 +44,7 @@ class FirebaseToResultMapperTest {
     fun mapError_FirebaseAuthWeakPasswordException_returnWeakPassword() {
         // Arrange
         // Act
-        val result = SUT.mapError(mFirebaseAuthWeakPasswordException)
+        val result = SUT.mapErrorRegister(mFirebaseAuthWeakPasswordException)
         // Assert
         assertTrue(result is Result.WeakPassword)
     }
@@ -53,7 +53,7 @@ class FirebaseToResultMapperTest {
     fun mapError_FirebaseAuthInvalidCredentialsException_returnInvalidEmailAddress() {
         // Arrange
         // Act
-        val result = SUT.mapError(mFirebaseAuthInvalidCredentialsException)
+        val result = SUT.mapErrorRegister(mFirebaseAuthInvalidCredentialsException)
         // Assert
         assertTrue(result is Result.InvalidEmailAddress)
     }
@@ -62,7 +62,7 @@ class FirebaseToResultMapperTest {
     fun mapError_FirebaseAuthUserCollisionException_returnAccountExists() {
         // Arrange
         // Act
-        val result = SUT.mapError(mFirebaseAuthUserCollisionException)
+        val result = SUT.mapErrorRegister(mFirebaseAuthUserCollisionException)
         // Assert
         assertTrue(result is Result.AccountExists)
     }

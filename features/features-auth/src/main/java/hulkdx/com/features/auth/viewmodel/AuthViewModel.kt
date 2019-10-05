@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hulkdx.com.domain.entities.UserGender
+import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCase
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import javax.inject.Inject
 
@@ -12,10 +13,11 @@ import javax.inject.Inject
  */
 
 class AuthViewModel @Inject constructor(
-    private val mRegisterAuthUseCase: RegisterAuthUseCase
+    private val mRegisterAuthUseCase: RegisterAuthUseCase,
+    private val mLoginAuthUseCase: LoginAuthUseCase
 ): ViewModel() {
 
-//    private val mLoginLiveData = MutableLiveData<LoginResults>()
+    private val mLoginLiveData = MutableLiveData<LoginAuthUseCase.Result>()
     private val mRegisterLiveData = MutableLiveData<RegisterAuthUseCase.Result>()
 
     // region LiveData Setup -----------------------------------------------------------------------
@@ -26,11 +28,15 @@ class AuthViewModel @Inject constructor(
     // endregion LiveData Setup --------------------------------------------------------------------
 
     fun register(email: String, password: String, firstName: String, lastName: String, gender: UserGender) {
-        mRegisterAuthUseCase.register(
-                RegisterAuthUseCase.Params(email, password, firstName, lastName, gender),
-                callback = {
-                    mRegisterLiveData.value = it
-                })
+        mRegisterAuthUseCase.register(RegisterAuthUseCase.Params(email, password, firstName, lastName, gender)) {
+            mRegisterLiveData.value = it
+        }
+    }
+
+    fun login(username: String, password: String) {
+        mLoginAuthUseCase.login(username, password) {
+            mLoginLiveData.value = it
+        }
     }
 
     // region Extra --------------------------------------------------------------------------------
@@ -38,12 +44,8 @@ class AuthViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         mRegisterAuthUseCase.dispose()
+        mLoginAuthUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------
-    // region Results ------------------------------------------------------------------------------
-
-
-    // endregion Results ---------------------------------------------------------------------------
-
 }

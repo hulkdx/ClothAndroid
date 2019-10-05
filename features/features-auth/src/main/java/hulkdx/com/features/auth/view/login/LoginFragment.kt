@@ -8,6 +8,7 @@ import hulkdx.com.features.auth.R
 import hulkdx.com.features.auth.di.AuthComponent
 import hulkdx.com.features.auth.di.getAuthComponent
 import hulkdx.com.features.auth.viewmodel.AuthViewModel
+import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 18/08/2019.
@@ -20,6 +21,14 @@ class LoginFragment: BaseFragment() {
     // region SetupUI ------------------------------------------------------------------------------
 
     override fun setupUI() {
+        registerButton.setOnClickListener {
+            mNavigationManager.navigateToRegister()
+        }
+        loginButton.setOnClickListener {
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            mAuthViewModel.login(username, password)
+        }
     }
 
     // endregion SetupUI ---------------------------------------------------------------------------

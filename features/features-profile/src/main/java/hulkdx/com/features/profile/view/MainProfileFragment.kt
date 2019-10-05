@@ -1,15 +1,10 @@
 package hulkdx.com.features.profile.view
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.drawable.ColorDrawable
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.model.CoreUserLiveData
 import hulkdx.com.core.android.util.ImageLoader
 import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.core.android.viewmodel.CoreViewModel
@@ -19,10 +14,6 @@ import hulkdx.com.features.profile.di.getProfileComponent
 import hulkdx.com.features.profile.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile_main.*
 import javax.inject.Inject
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
-import android.graphics.RectF
-import android.graphics.Path
 import hulkdx.com.core.android.util.CircleColorDrawable
 import hulkdx.com.domain.entities.UserType
 
@@ -46,7 +37,7 @@ class MainProfileFragment : BaseFragment() {
 
     override fun setupViewModel() {
         mProfileViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileViewModel::class.java)
-        mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
+        mCoreViewModel = ViewModelProviders.of(requireActivity(), mViewModelFactory).get(CoreViewModel::class.java)
 
         // UserInfo will be loaded on MainActivity (once the application is firstly loaded)
         mCoreViewModel.getUserLiveData().observe(this, Observer {
@@ -56,11 +47,11 @@ class MainProfileFragment : BaseFragment() {
 
     // region User Changed -------------------------------------------------------------------------
 
-    private fun onUserChanged(result: CoreUserLiveData.Result) {
+    private fun onUserChanged(result: CoreViewModel.Result) {
         when (result) {
-            is CoreUserLiveData.Result.Loading     -> onUserLoading()
-            is CoreUserLiveData.Result.ValidUser   -> onUserValid(result.user)
-            is CoreUserLiveData.Result.InvalidUser -> onUserInvalid()
+            is CoreViewModel.Result.Loading     -> onUserLoading()
+            is CoreViewModel.Result.ValidUser   -> onUserValid(result.user)
+            is CoreViewModel.Result.InvalidUser -> onUserInvalid()
         }
     }
 

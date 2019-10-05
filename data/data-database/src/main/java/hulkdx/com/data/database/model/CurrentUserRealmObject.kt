@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey
  * Created by Mohammad Jafarzadeh Rezvan on 31/08/2019.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-internal open class UserRealmObject(
+internal open class CurrentUserRealmObject(
         @PrimaryKey
         var id:                 String,
         var emailAddress:       String,
@@ -30,21 +30,6 @@ internal open class UserRealmObject(
             null
     )
 
-    companion object {
-        fun map(userEntity: UserEntity): UserRealmObject {
-            return userEntity.run {
-                return@run UserRealmObject(
-                        id,
-                        emailAddress,
-                        firstName,
-                        lastName,
-                        gender.ordinal,
-                        mapImageEntityNull(image)
-                )
-            }
-        }
-    }
-
     fun map(): UserEntity {
 
         return UserEntity(
@@ -54,6 +39,19 @@ internal open class UserRealmObject(
                 lastName = lastName,
                 gender = UserGender.values()[gender],
                 image = mapImageRealmObjectNull(image)
+        )
+    }
+}
+
+internal fun UserEntity.mapCurrentUserRealmObject(): CurrentUserRealmObject {
+    return run {
+        return@run CurrentUserRealmObject(
+                id,
+                emailAddress,
+                firstName,
+                lastName,
+                gender.ordinal,
+                mapImageEntityNull(image)
         )
     }
 }

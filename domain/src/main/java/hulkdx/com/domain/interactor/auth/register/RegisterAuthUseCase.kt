@@ -22,7 +22,7 @@ interface RegisterAuthUseCase {
     )
 
     sealed class Result {
-        class Success(val user: UserEntity): Result()
+        data class Success(val user: UserEntity): Result()
         object InvalidEmailAddress: Result()
         object WeakPassword: Result()
         object AccountExists: Result()

@@ -1,7 +1,8 @@
 package hulkdx.com.data.database
 
+import hulkdx.com.data.database.model.*
 import hulkdx.com.data.database.model.ClothesRealmObject
-import hulkdx.com.data.database.model.UserRealmObject
+import hulkdx.com.data.database.model.CurrentUserRealmObject
 import hulkdx.com.data.database.model.mapClothesEntity
 import hulkdx.com.data.database.model.mapClothesRealmObject
 import hulkdx.com.domain.entities.ClothesEntity
@@ -25,7 +26,7 @@ class DatabaseImpl @Inject constructor(
     // region UserDatabase -------------------------------------------------------------------------
 
     override fun saveUser(user: UserEntity) {
-        UserRealmObject.map(user).execute { userRealmObject, realm ->
+        user.mapCurrentUserRealmObject().execute { userRealmObject, realm ->
             realm.beginTransaction()
             realm.insertOrUpdate(userRealmObject)
             realm.commitTransaction()
@@ -35,7 +36,7 @@ class DatabaseImpl @Inject constructor(
     override fun getUser(): UserEntity? {
         var result: UserEntity? = null
         execute { _, realm ->
-            val userRealmObject = realm.where(UserRealmObject::class.java).findFirst()
+            val userRealmObject = realm.where(CurrentUserRealmObject::class.java).findFirst()
             result = userRealmObject?.map()
         }
         return result

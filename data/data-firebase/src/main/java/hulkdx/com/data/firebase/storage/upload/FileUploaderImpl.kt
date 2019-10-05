@@ -8,7 +8,6 @@ import hulkdx.com.domain.entities.ImageEntity
 import java.io.InputStream
 import java.lang.Exception
 import java.lang.RuntimeException
-import javax.inject.Inject
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 26/08/2019.

@@ -74,18 +74,19 @@ object RemoteModule {
 
     @Provides
     @JvmStatic
-    internal fun provideClothDatabaseFirebase(mApiModelMapper: ApiModelMapper): ClothDatabaseFirebase {
+    internal fun provideClothDatabaseFirebase(apiModelMapper: ApiModelMapper): ClothDatabaseFirebase {
         return ClothDatabaseFirebase(
                 provideClothDatabaseReference(),
-                mApiModelMapper
+                apiModelMapper
         )
     }
 
     @Provides
     @JvmStatic
-    internal fun provideUserDatabaseFirebase(): UserDatabaseFirebase {
+    internal fun provideUserDatabaseFirebase(apiModelMapper: ApiModelMapper): UserDatabaseFirebase {
         return UserDatabaseFirebase(
-                provideUserDatabaseReference()
+                provideUserDatabaseReference(),
+                apiModelMapper
         )
     }
 

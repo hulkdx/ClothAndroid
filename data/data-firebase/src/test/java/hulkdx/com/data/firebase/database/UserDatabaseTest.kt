@@ -2,11 +2,12 @@ package hulkdx.com.data.firebase.database
 
 import android.net.Uri
 import android.os.Parcel
-import com.google.android.gms.internal.firebase_auth.zzey
+import com.google.android.gms.internal.firebase_auth.zzex
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.*
 import com.google.firebase.database.DatabaseReference
 import hulkdx.com.data.firebase.anyKotlin
+import hulkdx.com.data.firebase.mapper.ApiModelMapper
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import org.junit.Before
@@ -27,11 +28,15 @@ class UserDatabaseTest {
     private val TEST_PARAM = RegisterAuthUseCase.Params("", "", "", "", UserGender.Male)
 
     private val TEST_VALID_FIREBASE_USER = object: FirebaseUser() {
-        override fun zzg(): String {
+        override fun zze(): zzex {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
-        override fun zze(): zzey {
+        override fun zza(p0: zzex) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun zzg(): String {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
@@ -48,10 +53,6 @@ class UserDatabaseTest {
         }
 
         override fun zza(p0: MutableList<out UserInfo>): FirebaseUser {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun zza(p0: zzey) {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
@@ -127,10 +128,11 @@ class UserDatabaseTest {
 
     private lateinit var SUT: UserDatabaseFirebase
     @Mock lateinit var mUserDatabase: DatabaseReference
+    @Mock internal lateinit var mApiModelMapper: ApiModelMapper
 
     @Before
     fun setup() {
-        SUT = UserDatabaseFirebase(mUserDatabase)
+        SUT = UserDatabaseFirebase(mUserDatabase, mApiModelMapper)
     }
 
     @Test
@@ -139,7 +141,7 @@ class UserDatabaseTest {
         val mockChild = mock(DatabaseReference::class.java)
         `when`(mUserDatabase.child(anyKotlin())).thenReturn(mockChild)
         // Act
-        SUT.saveUserInfo(TEST_PARAM, TEST_VALID_FIREBASE_USER, DatabaseReference.CompletionListener { _, _ -> })
+        SUT.register(TEST_PARAM, TEST_VALID_FIREBASE_USER, DatabaseReference.CompletionListener { _, _ -> })
         // Assert
         verify(mUserDatabase).child(anyKotlin())
         verify(mockChild).setValue(anyKotlin(), anyKotlin())

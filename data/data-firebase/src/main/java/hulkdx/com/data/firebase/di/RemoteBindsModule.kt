@@ -4,10 +4,7 @@ import dagger.Binds
 import dagger.Module
 import hulkdx.com.data.firebase.ApiManagerImpl
 import hulkdx.com.data.firebase.storage.upload.FileUploaderImpl
-import hulkdx.com.domain.repository.remote.AddClothEndPoint
-import hulkdx.com.domain.repository.remote.FileUploader
-import hulkdx.com.domain.repository.remote.GetClothesEndPoint
-import hulkdx.com.domain.repository.remote.RegisterEndPoint
+import hulkdx.com.domain.repository.remote.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.
@@ -27,5 +24,8 @@ abstract class RemoteBindsModule {
 
     @Binds
     internal abstract fun provideAddClothEndPoint(impl: ApiManagerImpl): AddClothEndPoint
+
+    @Binds
+    internal abstract fun provideLoginEndPoint(impl: ApiManagerImpl): LoginEndPoint
 
 }

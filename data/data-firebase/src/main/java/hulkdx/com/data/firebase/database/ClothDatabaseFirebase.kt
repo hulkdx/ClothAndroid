@@ -1,20 +1,14 @@
 package hulkdx.com.data.firebase.database
 
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import javax.inject.Inject
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import hulkdx.com.data.firebase.AsyncToSync
 import hulkdx.com.data.firebase.mapper.ApiModelMapper
-import hulkdx.com.data.firebase.model.ReadDatabaseResult
+import hulkdx.com.data.firebase.util.convertToModel
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.ImageEntity
 import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import java.lang.RuntimeException
-import javax.inject.Named
 
 
 /**
@@ -37,31 +31,13 @@ internal class ClothDatabaseFirebase(
                 price = params.price,
                 currency = params.currency
         )
-        val clothApiModel = mApiModelMapper.mapClothToApi(clothEntity)
-        mClothDatabase.child(id).setValue(clothApiModel, onComplete)
+        mClothDatabase.child(id).setValue(clothEntity, onComplete)
         return clothEntity
     }
 
     fun findAll(): ClothesEntity {
-        val asyncToSync = AsyncToSync<ReadDatabaseResult>()
-
-        mClothDatabase.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(databaseError: DatabaseError) {
-                asyncToSync.signalAll(ReadDatabaseResult.Error(databaseError))
-            }
-
-            override fun onDataChange(databaseSnapshot: DataSnapshot) {
-                asyncToSync.signalAll(ReadDatabaseResult.Success(databaseSnapshot))
-            }
-        })
-
-        when (val result = asyncToSync.await()) {
-            is ReadDatabaseResult.Error -> throw result.databaseError.toException()
-            is ReadDatabaseResult.Success -> {
-                @Suppress("UNCHECKED_CAST")
-                val value = result.databaseSnapshot.value as Map<String, Any>
-                return mApiModelMapper.mapClothHashToEntity(value)
-            }
+        return mClothDatabase.convertToModel { value ->
+            mApiModelMapper.mapClothHashToEntity(value)
         }
     }
 }

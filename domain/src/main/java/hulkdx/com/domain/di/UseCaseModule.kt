@@ -2,6 +2,8 @@ package hulkdx.com.domain.di
 
 import dagger.Binds
 import dagger.Module
+import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCase
+import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCaseImpl
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCaseImpl
 import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
@@ -29,5 +31,8 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun getUserUseCase(impl: GetUserUseCaseImpl): GetUserUseCase
+
+    @Binds
+    abstract fun loginAuthUseCase(impl: LoginAuthUseCaseImpl): LoginAuthUseCase
 
 }

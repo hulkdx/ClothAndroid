@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.gson.Gson
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
@@ -98,7 +99,7 @@ class ApiManagerImplTest {
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mUserDatabaseFirebase).saveUserInfo(c.capture(), anyKotlin(), anyKotlin())
+        verify(mUserDatabaseFirebase).register(c.capture(), anyKotlin(), anyKotlin())
         assertThat(c.firstValue, `is`(TEST_REGISTER_PARAM))
     }
 
@@ -120,7 +121,7 @@ class ApiManagerImplTest {
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mFirebaseToResultMapper).mapError(TEST_EXCEPTION)
+        verify(mFirebaseToResultMapper).mapErrorRegister(TEST_EXCEPTION)
     }
 
     @Test
@@ -130,7 +131,7 @@ class ApiManagerImplTest {
         // Act
         SUT.register(TEST_REGISTER_PARAM)
         // Assert
-        verify(mUserDatabaseFirebase, never()).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        verify(mUserDatabaseFirebase, never()).register(anyKotlin(), anyKotlin(), anyKotlin())
     }
 
     @Test
@@ -156,6 +157,20 @@ class ApiManagerImplTest {
     }
 
     // endregion register --------------------------------------------------------------------------
+    // region Login --------------------------------------------------------------------------------
+
+    @Test
+    fun login_() {
+        val m = mapOf<String, Any>("test" to 1, "tets2" to 12)
+        val g = Gson()
+        val k = g.toJsonTree(m)
+        val s = g.fromJson(k, ZZ::class.java)
+        println(s)
+    }
+
+    data class ZZ(val test: Int, val tets2: String)
+
+    // endregion Login -----------------------------------------------------------------------------
     // region addCloth -----------------------------------------------------------------------------
 
     @Test(expected = AuthException::class)
@@ -298,7 +313,7 @@ class ApiManagerImplTest {
             }
         }
         `when`(mAuth.createUserWithEmailAndPassword(any(), any())).thenReturn(result)
-        `when`(mFirebaseToResultMapper.mapError(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.GeneralError(TEST_EXCEPTION))
+        `when`(mFirebaseToResultMapper.mapErrorRegister(anyKotlin())).thenReturn(RegisterAuthUseCase.Result.GeneralError(TEST_EXCEPTION))
     }
 
     private fun saveUserSuccess() {
@@ -308,7 +323,7 @@ class ApiManagerImplTest {
             invocation.getArgument<DatabaseReference.CompletionListener>(2)
                     .onComplete(null, dbRef)
             null
-        }.`when`(mUserDatabaseFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        }.`when`(mUserDatabaseFirebase).register(anyKotlin(), anyKotlin(), anyKotlin())
     }
 
     private fun saveUserFailed() {
@@ -318,7 +333,7 @@ class ApiManagerImplTest {
             invocation.getArgument<DatabaseReference.CompletionListener>(2)
                     .onComplete(DatabaseError.fromCode(-1), dbRef)
             null
-        }.`when`(mUserDatabaseFirebase).saveUserInfo(anyKotlin(), anyKotlin(), anyKotlin())
+        }.`when`(mUserDatabaseFirebase).register(anyKotlin(), anyKotlin(), anyKotlin())
 
         val user = mock(FirebaseUser::class.java)
         `when`(mAuth.currentUser).thenReturn(user)
