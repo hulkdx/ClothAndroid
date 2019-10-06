@@ -27,17 +27,26 @@ android {
 
 dependencies {
 
-    implementation project(':features:features-explore')
-    implementation project(':features:features-auth')
-    implementation project(':features:features-profile')
-    implementation project(':core:core-android')
+    implementation project(':features-common')
+    implementation project(':features-explore')
+    implementation project(':features-auth')
+    implementation project(':features-profile')
+    implementation project(':data-firebase')
+    implementation project(':data-database')
+    implementation project(':data-cache')
     implementation project(':domain')
 
     kapt                daggerCompiler
+    kapt                daggerAndroidCompiler
     implementation      dagger
+    implementation      daggerAndroidSupport
     implementation      kotlinStd
+    implementation      leakCanary
     implementation      appcompat
     implementation      liveData
+    kapt                liveDataAnnotation
+    implementation      recyclerView
+    implementation      leakCanary
 
     testImplementation  jUnit
     testImplementation  mockito

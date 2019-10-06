@@ -1,7 +1,7 @@
 package com.hulkdx.cloth.di
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.hulkdx.cloth.view.screens.MainActivity
 import dagger.Module
 import dagger.Provides
 
@@ -10,6 +10,6 @@ object MainActivityModule {
 
     @Provides
     @JvmStatic
-    fun provideFragmentManager(activity: AppCompatActivity): FragmentManager = activity.supportFragmentManager
+    fun provideFragmentManager(activity: MainActivity): FragmentManager = activity.supportFragmentManager
 
 }

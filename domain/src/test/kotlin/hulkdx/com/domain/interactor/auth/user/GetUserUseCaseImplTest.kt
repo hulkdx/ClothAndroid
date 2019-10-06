@@ -1,22 +1,17 @@
 package hulkdx.com.domain.interactor.auth.user
 
 import hulkdx.com.domain.TEST_USER_1
-import hulkdx.com.domain.anyKotlin
-import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.repository.local.UserDatabase
+import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.ArgumentCaptor
 import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 
 import org.junit.Assert.*
 import org.mockito.Mockito.*
-import org.hamcrest.CoreMatchers.*
-import org.mockito.ArgumentMatchers.*
 import java.lang.RuntimeException
 
 /**
@@ -46,10 +41,11 @@ class GetUserUseCaseImplTest {
     @Test
     fun fetchUserInfo_passItToEndpoint() {
         // Arrange
+        validUser()
         // Act
         SUT.fetchUserInfo {}
         // Assert
-        verify(mUserDatabase).getUser()
+        verify(mUserDatabase).getUserFlowable()
     }
 
     @Test
@@ -62,20 +58,20 @@ class GetUserUseCaseImplTest {
             result = it
         }
         // Assert
-        assertTrue(result is GetUserUseCase.Result.Success)
+        assertTrue(result is GetUserUseCase.Result.ValidUser)
     }
 
     @Test
-    fun fetchUserInfo_nullUser_callbackFailed() {
+    fun fetchUserInfo_invalidUser_callbackFailed() {
         // Arrange
-        nullUser()
+        invalidUser()
         var result: GetUserUseCase.Result? = null
         // Act
         SUT.fetchUserInfo {
             result = it
         }
         // Assert
-        assertTrue(result is GetUserUseCase.Result.Failed)
+        assertTrue(result is GetUserUseCase.Result.InvalidUser)
     }
 
     @Test
@@ -88,21 +84,21 @@ class GetUserUseCaseImplTest {
             result = it
         }
         // Assert
-        assertTrue(result is GetUserUseCase.Result.Failed)
+        assertTrue(result is GetUserUseCase.Result.InvalidUser)
     }
 
     // region helper methods -----------------------------------------------------------------------
 
     private fun runtimeException() {
-        `when`(mUserDatabase.getUser()).thenThrow(RuntimeException())
+        `when`(mUserDatabase.getUserFlowable()).thenReturn(Flowable.error(RuntimeException()))
     }
 
     private fun validUser() {
-        `when`(mUserDatabase.getUser()).thenReturn(TEST_USER_1)
+        `when`(mUserDatabase.getUserFlowable()).thenReturn(Flowable.just(GetUserUseCase.Result.ValidUser(TEST_USER_1)))
     }
 
-    private fun nullUser() {
-        `when`(mUserDatabase.getUser()).thenReturn(null)
+    private fun invalidUser() {
+        `when`(mUserDatabase.getUserFlowable()).thenReturn(Flowable.just(GetUserUseCase.Result.InvalidUser))
     }
 
     // endregion helper methods --------------------------------------------------------------------

@@ -7,7 +7,7 @@ import hulkdx.com.core.android.navigation.NavigationManager
 import hulkdx.com.features.auth.view.login.LoginFragment
 import hulkdx.com.features.auth.view.register.RegisterFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment
-import hulkdx.com.features.profile.view.MainProfileFragment
+import hulkdx.com.features.profile.view.ProfileFragment
 import java.lang.RuntimeException
 import javax.inject.Inject
 
@@ -28,12 +28,17 @@ class NavigationManagerImpl @Inject constructor(
                 .commit()
     }
 
-    override fun navigateTo(navigationId: Int) {
+    override fun navigateTo(navigationId: Int, addToBackStack: Boolean) {
         val fragment = getFragment(navigationId)
 
-        fragmentManager.beginTransaction()
+        val transaction = fragmentManager.beginTransaction()
                 .replace(containerId, fragment, navigationId.toString())
-                .commitAllowingStateLoss()
+
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commitAllowingStateLoss()
     }
 
     private fun getFragment(fragmentId: Int): Fragment {
@@ -45,7 +50,7 @@ class NavigationManagerImpl @Inject constructor(
                 RegisterFragment()
             }
             NAVIGATE_FEATURE_PROFILE -> {
-                MainProfileFragment()
+                ProfileFragment()
             }
             NAVIGATE_FEATURE_LOGIN -> {
                 LoginFragment()

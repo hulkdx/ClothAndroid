@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.hulkdx.cloth.navigation.NavigationManagerImpl
 import com.hulkdx.cloth.R
-import hulkdx.com.core.android.applicationComponent
-import com.hulkdx.cloth.di.DaggerMainActivityComponent
+import dagger.android.*
+import dagger.android.support.DaggerAppCompatActivity
 import hulkdx.com.core.android.navigation.NavigationManagerWrapper
 import hulkdx.com.core.android.util.ViewModelFactory
 import hulkdx.com.core.android.viewmodel.CoreViewModel
@@ -16,8 +16,10 @@ import javax.inject.Inject
  * Created by Mohammad Jafarzadeh Rezvan on 14/07/2019.
  */
 
-class MainActivity: AppCompatActivity() {
+class MainActivity: AppCompatActivity(), HasAndroidInjector {
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
+    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
     @Inject lateinit var mNavigationManagerWrapper: NavigationManagerWrapper
     @Inject lateinit var mNavigationManager: NavigationManagerImpl
     @Inject lateinit var mViewModelFactory: ViewModelFactory
@@ -27,9 +29,9 @@ class MainActivity: AppCompatActivity() {
     // region Lifecycle ----------------------------------------------------------------------------
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        inject()
         mNavigationManagerWrapper.setNavigationManager(mNavigationManager)
 
         mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
@@ -50,17 +52,5 @@ class MainActivity: AppCompatActivity() {
     }
 
     // region Fragments ----------------------------------------------------------------------------
-    // region Extra --------------------------------------------------------------------------------
-
-    private fun inject() {
-        DaggerMainActivityComponent
-                .builder()
-                .activity(this)
-                .applicationComponent(applicationComponent(this))
-                .build()
-                .inject(this)
-    }
-
-    // endregion Extra -----------------------------------------------------------------------------
 
 }

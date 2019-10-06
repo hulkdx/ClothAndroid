@@ -11,7 +11,8 @@ interface GetUserUseCase {
     fun dispose()
 
     sealed class Result {
-        class Success(val user: UserEntity): Result()
-        class Failed(val throwable: Throwable?): Result()
+        object Loading: Result()
+        data class ValidUser(val user: UserEntity): Result()
+        object InvalidUser: Result()
     }
 }

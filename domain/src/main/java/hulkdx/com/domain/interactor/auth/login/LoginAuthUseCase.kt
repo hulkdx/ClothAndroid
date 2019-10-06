@@ -14,6 +14,7 @@ interface LoginAuthUseCase {
     fun dispose()
 
     sealed class Result {
+        object Loading: Result()
         data class Success(val user: UserEntity): Result()
         object WrongEmail: Result()
         object WrongPassword: Result()

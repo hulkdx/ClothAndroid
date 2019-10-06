@@ -3,6 +3,7 @@ package hulkdx.com.domain.interactor.cloth.upload
 import hulkdx.com.domain.repository.remote.FileUploader
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
+import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase.Params
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase.Result
 import hulkdx.com.domain.repository.local.UserDatabase
@@ -11,6 +12,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import java.io.InputStream
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 /**

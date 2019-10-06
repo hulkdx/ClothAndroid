@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<hulkdx.com.core.android.view.customview.SquareImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clothImageView"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:scaleType="fitXY"
+    android:contentDescription="@string/cloth_image_View_description"
+    />

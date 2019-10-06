@@ -1,0 +1,25 @@
+package com.hulkdx.cloth.di
+
+import com.hulkdx.cloth.view.screens.MainActivity
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import hulkdx.com.core.android.di.annotations.ActivityScoped
+import hulkdx.com.features.auth.di.AuthBindingModule
+import hulkdx.com.features.explore.di.ExploreBindingModule
+import hulkdx.com.features.profile.di.ProfileBindingModule
+
+@Module
+abstract class ActivityBindingModule {
+
+    @ActivityScoped
+    @ContributesAndroidInjector(modules = [
+        MainActivityModule::class,
+        MainViewModelModule::class,
+        // fragments
+        ExploreBindingModule::class,
+        ProfileBindingModule::class,
+        AuthBindingModule::class
+    ])
+    internal abstract fun mainActivity(): MainActivity
+
+}

@@ -1,10 +1,10 @@
 include ':main',
         ':domain',
-        ':core:core-android',
-        ':features:features-profile',
-        ':features:features-explore',
-        ':features:features-auth',
-        ':data:data-remote',
-        ':data:data-firebase',
-        ':data:data-database',
-        ':data:data-cache'
+        ':features-common',
+        ':features-profile',
+        ':features-explore',
+        ':features-auth',
+        // ':data-remote',
+        ':data-firebase',
+        ':data-database',
+        ':data-cache'

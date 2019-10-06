@@ -19,14 +19,13 @@ class GetUserUseCaseImpl @Inject constructor(
     private var mDisposable: Disposable? = null
 
     override fun fetchUserInfo(callback: (GetUserUseCase.Result) -> Unit) {
-        mDisposable = Single.fromCallable { mUserDatabase.getUser() }
-                .subscribeOn(mBackgroundScheduler)
+        callback(GetUserUseCase.Result.Loading)
+        mDisposable = mUserDatabase.getUserFlowable()
                 .observeOn(mUiScheduler)
-                .subscribe({
-                    if (it != null) callback(GetUserUseCase.Result.Success(it))
-                    else callback(GetUserUseCase.Result.Failed(null))
+                .subscribe({ result ->
+                    callback(result)
                 }, {
-                    callback(GetUserUseCase.Result.Failed(it))
+                    callback(GetUserUseCase.Result.InvalidUser)
                 })
     }
 
