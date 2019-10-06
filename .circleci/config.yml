@@ -17,7 +17,7 @@ jobs:
           name: Build
           command: ./gradlew lint test check assemble assembleAndroidTest
       - store_artifacts:
-          path: presentation/build/reports
+          path: main/build/reports
           destination: reports
       - store_test_results:
-          path: presentation/build/test-results
+          path: main/build/test-results
