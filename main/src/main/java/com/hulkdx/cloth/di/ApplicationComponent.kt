@@ -13,7 +13,6 @@ import hulkdx.com.data.database.di.DatabaseBindsModule
 import hulkdx.com.data.firebase.di.RemoteBindsModule
 import hulkdx.com.data.firebase.di.RemoteModule
 import hulkdx.com.domain.di.ApplicationContext
-import hulkdx.com.domain.di.UseCaseModule
 import javax.inject.Singleton
 
 /**
@@ -24,7 +23,6 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     SchedulerModule::class,
     ActivityBindingModule::class,
-    UseCaseModule::class,
     DatabaseBindsModule::class,
     DatabaseModule::class,
     CacheModule::class,

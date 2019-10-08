@@ -43,12 +43,12 @@ class UploadClothUseCaseImplTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: UploadClothUseCaseImpl
+    private lateinit var SUT: UploadClothUseCase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = UploadClothUseCaseImpl(
+        SUT = UploadClothUseCase(
                 trampoline,
                 trampoline,
                 mUserDatabase,

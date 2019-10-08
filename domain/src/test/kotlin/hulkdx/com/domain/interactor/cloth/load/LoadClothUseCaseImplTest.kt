@@ -39,12 +39,12 @@ class LoadClothUseCaseImplTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: LoadClothUseCaseImpl
+    private lateinit var SUT: LoadClothUseCase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = LoadClothUseCaseImpl(trampoline, trampoline, mClothDatabase, mClothApiManager)
+        SUT = LoadClothUseCase(trampoline, trampoline, mClothDatabase, mClothApiManager)
     }
 
     @Test

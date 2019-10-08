@@ -29,13 +29,13 @@ class GetUserUseCaseImplTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: GetUserUseCaseImpl
+    private lateinit var SUT: GetUserUseCase
     @Mock lateinit var mUserDatabase: UserDatabase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = GetUserUseCaseImpl(trampoline, trampoline, mUserDatabase)
+        SUT = GetUserUseCase(trampoline, trampoline, mUserDatabase)
     }
 
     @Test

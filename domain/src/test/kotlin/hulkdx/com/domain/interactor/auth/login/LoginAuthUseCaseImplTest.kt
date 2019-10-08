@@ -3,7 +3,6 @@ package hulkdx.com.domain.interactor.auth.login
 import hulkdx.com.domain.TEST_USER_1
 import hulkdx.com.domain.anyKotlin
 import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCase.Result
-import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.repository.local.UserDatabase
 import hulkdx.com.domain.repository.remote.LoginEndPoint
 import io.reactivex.schedulers.Schedulers
@@ -11,14 +10,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.ArgumentCaptor
 import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 
 import org.junit.Assert.*
 import org.mockito.Mockito.*
-import org.hamcrest.CoreMatchers.*
-import org.mockito.ArgumentMatchers.*
 import java.lang.RuntimeException
 
 /**
@@ -41,12 +36,12 @@ class LoginAuthUseCaseImplTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: LoginAuthUseCaseImpl
+    private lateinit var SUT: LoginAuthUseCase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = LoginAuthUseCaseImpl(trampoline, trampoline, mUserDatabase, mLoginEndPoint)
+        SUT = LoginAuthUseCase(trampoline, trampoline, mUserDatabase, mLoginEndPoint)
     }
 
     @Test

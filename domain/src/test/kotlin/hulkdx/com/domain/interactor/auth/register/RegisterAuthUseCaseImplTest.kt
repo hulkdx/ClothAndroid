@@ -41,14 +41,14 @@ class RegisterAuthUseCaseImplTest {
 
     // endregion helper fields ---------------------------------------------------------------------
 
-    private lateinit var SUT: RegisterAuthUseCaseImpl
+    private lateinit var SUT: RegisterAuthUseCase
     @Mock lateinit var mRegisterEndPoint: RegisterEndPoint
     @Mock lateinit var mUserDatabase: UserDatabase
 
     @Before
     fun setup() {
         val trampoline = Schedulers.trampoline()
-        SUT = RegisterAuthUseCaseImpl(trampoline, trampoline, mUserDatabase, mRegisterEndPoint)
+        SUT = RegisterAuthUseCase(trampoline, trampoline, mUserDatabase, mRegisterEndPoint)
     }
 
     @Test
