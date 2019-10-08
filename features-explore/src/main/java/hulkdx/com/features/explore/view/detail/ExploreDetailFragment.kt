@@ -1,12 +1,10 @@
 package hulkdx.com.features.explore.view.detail
 
-import android.content.Context
 import android.os.Bundle
 import hulkdx.com.core.android.util.ImageLoader
 import hulkdx.com.core.android.view.fragments.BaseFragment
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.model.Cloth
-import hulkdx.com.features.explore.view.list.ClothAdapter
 import kotlinx.android.synthetic.main.fragment_explore_detail.*
 import javax.inject.Inject
 
@@ -51,7 +49,14 @@ class ExploreDetailFragment: BaseFragment() {
 
     override fun setupUI() {
         mImageLoader.loadImage(mCloth.imageUrl, clothImageView)
+        mCloth.userUrl?.let { userUrl ->
+            mImageLoader.loadImage(userUrl, userImageView, isCircleCropTransform = true)
+        }
         priceTextView.text = mCloth.price
+        userNameTextView.text = mCloth.userName
+        addToCartButton.setOnClickListener {
+            // TODO
+        }
     }
 
     // endregion SetupUI ---------------------------------------------------------------------------

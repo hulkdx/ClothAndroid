@@ -9,6 +9,8 @@ import android.os.Parcelable
 
 data class Cloth (
         val imageUrl: String,
+        val userUrl: String?,
+        val userName: String,
         val price: String
 ): Parcelable {
 
@@ -16,11 +18,15 @@ data class Cloth (
 
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,
+            parcel.readString(),
+            parcel.readString()!!,
             parcel.readString()!!
     )
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(imageUrl)
+        dest.writeString(userUrl)
+        dest.writeString(userName)
         dest.writeString(price)
     }
 

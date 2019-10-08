@@ -3,4 +3,6 @@
     <string name="explore">Explore</string>
     <string name="category">Category</string>
     <string name="profile">Profile</string>
+    <string name="user_image">Profile Image</string>
+
 </resources>
