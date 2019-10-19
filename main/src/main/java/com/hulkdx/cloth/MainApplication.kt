@@ -8,7 +8,7 @@ import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import hulkdx.com.core.android.BuildConfig
+import hulkdx.com.features.common.BuildConfig
 import javax.inject.Inject
 
 /**

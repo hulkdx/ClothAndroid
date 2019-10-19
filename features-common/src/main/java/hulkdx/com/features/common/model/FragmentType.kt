@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.model
+package hulkdx.com.features.common.model
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 16/09/2019.

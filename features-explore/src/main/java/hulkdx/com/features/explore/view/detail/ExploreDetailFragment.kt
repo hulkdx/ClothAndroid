@@ -1,8 +1,8 @@
 package hulkdx.com.features.explore.view.detail
 
 import android.os.Bundle
-import hulkdx.com.core.android.util.ImageLoader
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.util.ImageLoader
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.model.Cloth
 import kotlinx.android.synthetic.main.fragment_explore_detail.*

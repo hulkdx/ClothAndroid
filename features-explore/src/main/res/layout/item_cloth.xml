@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<hulkdx.com.core.android.view.customview.SquareImageView
+<hulkdx.com.features.common.view.customview.SquareImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clothImageView"
     android:layout_width="match_parent"

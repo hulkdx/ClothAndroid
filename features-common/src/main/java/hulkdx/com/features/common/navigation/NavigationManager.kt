@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.navigation
+package hulkdx.com.features.common.navigation
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 12/08/2019.

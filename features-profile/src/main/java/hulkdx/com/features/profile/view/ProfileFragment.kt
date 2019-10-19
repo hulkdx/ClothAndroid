@@ -4,14 +4,14 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.ImageLoader
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.util.ImageLoader
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.features.profile.R
 import hulkdx.com.features.profile.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
-import hulkdx.com.core.android.util.CircleColorDrawable
+import hulkdx.com.features.common.util.CircleColorDrawable
 import hulkdx.com.domain.entities.UserType
 import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
 

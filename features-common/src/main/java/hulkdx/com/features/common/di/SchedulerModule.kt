@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.di
+package hulkdx.com.features.common.di
 
 import dagger.Module
 import dagger.Provides

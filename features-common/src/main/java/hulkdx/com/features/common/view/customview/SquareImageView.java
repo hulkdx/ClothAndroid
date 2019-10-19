@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.view.customview;
+package hulkdx.com.features.common.view.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;

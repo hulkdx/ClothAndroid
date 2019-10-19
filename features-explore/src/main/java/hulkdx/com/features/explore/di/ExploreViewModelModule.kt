@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Binds
 import dagger.multibindings.IntoMap
-import hulkdx.com.core.android.di.CoreViewModelModule
-import hulkdx.com.core.android.di.annotations.ViewModelKey
+import hulkdx.com.features.common.di.CoreViewModelModule
+import hulkdx.com.features.common.di.annotations.ViewModelKey
 import hulkdx.com.features.explore.viewmodel.ExploreViewModel
 
 /**

@@ -1,6 +1,6 @@
-package hulkdx.com.core.android.navigation
+package hulkdx.com.features.common.navigation
 
-import hulkdx.com.core.android.model.FragmentType
+import hulkdx.com.features.common.model.FragmentType
 import javax.inject.Inject
 import javax.inject.Singleton
 

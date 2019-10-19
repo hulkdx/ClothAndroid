@@ -1,13 +1,12 @@
 package hulkdx.com.features.auth.view.register
 
-import android.content.Context
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.observeFragment
+import hulkdx.com.features.common.util.observeFragment
 
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.domain.entities.UserGender
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.features.auth.BuildConfig

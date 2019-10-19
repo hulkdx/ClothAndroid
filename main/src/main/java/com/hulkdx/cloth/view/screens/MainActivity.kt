@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.hulkdx.cloth.navigation.NavigationManagerImpl
 import com.hulkdx.cloth.R
 import dagger.android.*
-import dagger.android.support.DaggerAppCompatActivity
-import hulkdx.com.core.android.navigation.NavigationManagerWrapper
-import hulkdx.com.core.android.util.ViewModelFactory
-import hulkdx.com.core.android.viewmodel.CoreViewModel
+import hulkdx.com.features.common.navigation.NavigationManagerWrapper
+import hulkdx.com.features.common.util.ViewModelFactory
+import hulkdx.com.features.common.viewmodel.CoreViewModel
 import javax.inject.Inject
 
 /**

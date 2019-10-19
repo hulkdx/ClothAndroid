@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.observeFragment
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.util.observeFragment
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.domain.entities.ClothEntity
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.features.profile.R

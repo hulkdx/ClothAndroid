@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.view.fragments
+package hulkdx.com.features.common.view.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -9,11 +9,11 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
-import hulkdx.com.core.android.R
-import hulkdx.com.core.android.model.FragmentType
-import hulkdx.com.core.android.navigation.NavigationManagerWrapper
-import hulkdx.com.core.android.util.ViewModelFactory
-import hulkdx.com.core.android.viewmodel.CoreViewModel
+import hulkdx.com.features.common.R
+import hulkdx.com.features.common.model.FragmentType
+import hulkdx.com.features.common.navigation.NavigationManagerWrapper
+import hulkdx.com.features.common.util.ViewModelFactory
+import hulkdx.com.features.common.viewmodel.CoreViewModel
 import kotlinx.android.synthetic.main.layout_footer.*
 import javax.inject.Inject
 

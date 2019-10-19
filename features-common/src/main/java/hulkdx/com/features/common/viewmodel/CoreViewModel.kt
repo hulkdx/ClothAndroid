@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.viewmodel
+package hulkdx.com.features.common.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

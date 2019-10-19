@@ -2,7 +2,7 @@ package hulkdx.com.features.profile.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import hulkdx.com.core.android.di.annotations.FragmentScoped
+import hulkdx.com.features.common.di.annotations.FragmentScoped
 import hulkdx.com.features.profile.view.ProfileFragment
 import hulkdx.com.features.profile.view.NewClothProfileFragment
 

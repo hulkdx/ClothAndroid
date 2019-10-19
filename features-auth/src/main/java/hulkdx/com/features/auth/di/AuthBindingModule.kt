@@ -2,7 +2,7 @@ package hulkdx.com.features.auth.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import hulkdx.com.core.android.di.annotations.FragmentScoped
+import hulkdx.com.features.common.di.annotations.FragmentScoped
 import hulkdx.com.features.auth.view.login.LoginFragment
 import hulkdx.com.features.auth.view.register.RegisterFragment
 

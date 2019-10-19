@@ -2,8 +2,8 @@ package com.hulkdx.cloth.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import hulkdx.com.core.android.navigation.*
-import hulkdx.com.core.android.navigation.NavigationManager
+import hulkdx.com.features.common.navigation.*
+import hulkdx.com.features.common.navigation.NavigationManager
 import hulkdx.com.features.auth.view.login.LoginFragment
 import hulkdx.com.features.auth.view.register.RegisterFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment

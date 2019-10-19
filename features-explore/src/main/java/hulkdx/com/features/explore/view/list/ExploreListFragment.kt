@@ -1,12 +1,11 @@
 package hulkdx.com.features.explore.view.list
 
-import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import hulkdx.com.core.android.util.observeFragment
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.util.observeFragment
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.model.Cloth
 import hulkdx.com.features.explore.view.detail.ExploreDetailFragment

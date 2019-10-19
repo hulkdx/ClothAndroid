@@ -1,9 +1,7 @@
-package hulkdx.com.core.android.util
+package hulkdx.com.features.common.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import java.lang.RuntimeException
 
 import javax.inject.Inject
 import javax.inject.Provider

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
-import hulkdx.com.core.android.util.ImageLoader
+import hulkdx.com.features.common.util.ImageLoader
 import hulkdx.com.features.explore.R
 import hulkdx.com.features.explore.model.Cloth
 import javax.inject.Inject

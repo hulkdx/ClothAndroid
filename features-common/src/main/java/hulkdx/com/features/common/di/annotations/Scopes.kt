@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.di.annotations
+package hulkdx.com.features.common.di.annotations
 
 import javax.inject.Scope
 

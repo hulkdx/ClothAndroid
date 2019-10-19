@@ -1,4 +1,4 @@
-package hulkdx.com.core.android.util;
+package hulkdx.com.features.common.util;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

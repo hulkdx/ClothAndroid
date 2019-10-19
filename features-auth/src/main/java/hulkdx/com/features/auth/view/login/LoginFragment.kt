@@ -2,8 +2,8 @@ package hulkdx.com.features.auth.view.login
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.util.observeFragment
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.util.observeFragment
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCase
 import hulkdx.com.features.auth.R
 import hulkdx.com.features.auth.viewmodel.AuthViewModel
