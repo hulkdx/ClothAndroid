@@ -20,7 +20,7 @@ def main():
 def add_feature(name_of_feature):
     current_date = date.today().strftime("%d/%m/%Y")
     root_dir = '..'
-    features_root_dir = root_dir + '/features/features-' + name_of_feature
+    features_root_dir = root_dir + '/features-' + name_of_feature
     main_dir = features_root_dir + '/src/main'
     res_dir = main_dir + '/res/'
     src_dir = main_dir + '/java/hulkdx/com/features/' + name_of_feature
@@ -29,13 +29,13 @@ def add_feature(name_of_feature):
     # settings.gradle
 	# --------------------------------
     settings_gradle_path = root_dir + '/settings.gradle'
+    feature_name_gradle = '\':features-' + name_of_feature + '\''
     with open(settings_gradle_path, 'r') as reader:
         read = reader.read()
-        feature_name_settings_gradle = '\':features:features-' + name_of_feature + '\''
-        if not re.search(feature_name_settings_gradle, read):
+        if not re.search(feature_name_gradle, read):
             seperator = ','
             split = read.split(seperator)
-            split.insert(3, '\n        ' + feature_name_settings_gradle)
+            split.insert(3, '\n        ' + feature_name_gradle)
             updated = seperator.join(split)
             with open(settings_gradle_path, 'w+') as writer:
                 writer.write(updated)
@@ -45,12 +45,11 @@ def add_feature(name_of_feature):
     main_build_gradle_path = root_dir + '/main/build.gradle'
     with open(main_build_gradle_path, 'r') as reader:
         read = reader.read()
-        feature_name_settings_gradle = '\':features:features-' + name_of_feature + '\''
-        if not re.search(feature_name_settings_gradle, read):
+        if not re.search(feature_name_gradle, read):
             seperator = '\n'
             split = read.split(seperator)
-            index = split.index("    implementation project(':core:core-android')")
-            split.insert(index, '    implementation project(' + feature_name_settings_gradle + ')')
+            index = split.index("    implementation project(':features-common')")
+            split.insert(index, '    implementation project(' + feature_name_gradle + ')')
             updated = seperator.join(split)
             with open(main_build_gradle_path, 'w+') as writer:
                 writer.write(updated)
@@ -87,9 +86,10 @@ android {
 dependencies {
 
     implementation project(':domain')
-    implementation project(':core:core-android')
+    implementation project(':features-common')
 
     kapt                daggerCompiler
+    kapt                daggerAndroidCompiler
     implementation      dagger
     implementation      kotlinStd
     implementation      recyclerView
@@ -105,49 +105,44 @@ dependencies {
 	# --------------------------------
     di_dir = src_dir + '/di'
     make_dir(di_dir)
-    make_file(di_dir + '/' + name_of_feature.capitalize() + 'Component.kt', '''package hulkdx.com.features.''' + name_of_feature + '''.di
+    make_file(di_dir + '/' + name_of_feature.capitalize() + 'BindingModule.kt', '''package hulkdx.com.features.''' + name_of_feature + '''.di
 
-import android.content.Context
-import dagger.BindsInstance
-import dagger.Component
-import hulkdx.com.core.android.di.ApplicationComponent
-import hulkdx.com.core.android.di.annotations.MainActivityScope
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import hulkdx.com.features.common.di.annotations.FragmentScoped
 import hulkdx.com.features.''' + name_of_feature + '''.view.''' + name_of_feature.capitalize() + '''Fragment
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on ''' + current_date + '''.
  */
-@MainActivityScope
-@Component(modules = [
-    ''' + name_of_feature.capitalize() + '''ViewModelModule::class
-], dependencies = [ApplicationComponent::class])
-interface ''' + name_of_feature.capitalize() + '''Component {
+@Module
+abstract class ''' + name_of_feature.capitalize() + '''BindingModule {
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun context(context: Context): Builder
-        fun applicationComponent(applicationComponent: ApplicationComponent): Builder
-        fun build(): ''' + name_of_feature.capitalize() + '''Component
-    }
-
-    fun inject(fragment: ''' + name_of_feature.capitalize() + '''Fragment)
+    @FragmentScoped
+    @ContributesAndroidInjector(modules = [
+        ''' + name_of_feature.capitalize() + '''ViewModelModule::class
+    ])
+    internal abstract fun ''' + name_of_feature + '''Fragment(): ''' + name_of_feature.capitalize() + '''Fragment
 
 }
     ''')
     make_file(di_dir + '/' + name_of_feature.capitalize() + 'ViewModelModule.kt', '''package hulkdx.com.features.''' + name_of_feature + '''.di
 
 import androidx.lifecycle.ViewModel
-import dagger.*
+import dagger.Module
+import dagger.Binds
 import dagger.multibindings.IntoMap
-import hulkdx.com.core.android.di.annotations.ViewModelKey
+import hulkdx.com.features.common.di.CoreViewModelModule
+import hulkdx.com.features.common.di.annotations.ViewModelKey
 import hulkdx.com.features.''' + name_of_feature + '''.viewmodel.''' + name_of_feature.capitalize() + '''ViewModel
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on ''' + current_date + '''.
  */
-@Module
-abstract class ''' + name_of_feature.capitalize() + '''ViewModelModule {
+@Module(includes = [
+    CoreViewModelModule::class
+])
+internal abstract class ''' + name_of_feature.capitalize() + '''ViewModelModule {
 
     @Binds
     @IntoMap
@@ -167,12 +162,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import hulkdx.com.core.android.applicationComponent
-import hulkdx.com.core.android.util.observeFragment
+import hulkdx.com.features.common.util.observeFragment
 
-import hulkdx.com.core.android.view.fragments.BaseFragment
+import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.features.''' + name_of_feature + '''.R
-import hulkdx.com.features.''' + name_of_feature + '''.di.Dagger''' + name_of_feature.capitalize() + '''Component
 import hulkdx.com.features.''' + name_of_feature + '''.viewmodel.''' + name_of_feature.capitalize() + '''ViewModel
 import kotlinx.android.synthetic.main.fragment_''' + name_of_feature + '''.*
 
@@ -191,6 +184,7 @@ class ''' + name_of_feature.capitalize() + '''Fragment : BaseFragment() {
     // endregion SetupUI ---------------------------------------------------------------------------
 
     override fun setupViewModel() {
+        super.setupViewModel()
         m''' + name_of_feature.capitalize() + '''ViewModel = ViewModelProviders.of(this, mViewModelFactory).get(''' + name_of_feature.capitalize() + '''ViewModel::class.java)
         // m''' + name_of_feature.capitalize() + '''ViewModel.TODOLiveData().observeFragment(this, Observer {
         //     when (it) {
@@ -202,14 +196,6 @@ class ''' + name_of_feature.capitalize() + '''Fragment : BaseFragment() {
 
     // endregion TODO Callback ---------------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
-
-    override fun inject(context: Context) {
-        Dagger''' + name_of_feature.capitalize() + '''Component.builder()
-                .context(context)
-                .applicationComponent(applicationComponent(context))
-                .build()
-                .inject(this)
-    }
 
     override fun fragmentLayout(): Int {
         return R.layout.fragment_''' + name_of_feature + '''

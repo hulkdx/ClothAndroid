@@ -14,6 +14,7 @@ import javax.inject.Inject
 import hulkdx.com.features.common.util.CircleColorDrawable
 import hulkdx.com.domain.entities.UserType
 import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
+import hulkdx.com.features.common.util.observeFragment
 
 
 /**
@@ -37,7 +38,7 @@ class ProfileFragment : BaseFragment() {
         mProfileViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileViewModel::class.java)
 
         // UserInfo will be loaded on MainActivity (once the application is firstly loaded)
-        mCoreViewModel.getUserLiveData().observe(this, Observer {
+        mCoreViewModel.getUserLiveData().observeFragment(this, Observer {
             onUserChanged(it)
         })
     }

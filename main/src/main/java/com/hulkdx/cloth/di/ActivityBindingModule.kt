@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import hulkdx.com.features.common.di.annotations.ActivityScoped
 import hulkdx.com.features.auth.di.AuthBindingModule
+import hulkdx.com.features.category.di.CategoryBindingModule
 import hulkdx.com.features.explore.di.ExploreBindingModule
 import hulkdx.com.features.profile.di.ProfileBindingModule
 
@@ -18,6 +19,7 @@ abstract class ActivityBindingModule {
         // fragments
         ExploreBindingModule::class,
         ProfileBindingModule::class,
+        CategoryBindingModule::class,
         AuthBindingModule::class
     ])
     internal abstract fun mainActivity(): MainActivity

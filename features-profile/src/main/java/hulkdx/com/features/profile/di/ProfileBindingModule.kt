@@ -13,12 +13,12 @@ abstract class ProfileBindingModule {
     @ContributesAndroidInjector(modules = [
         ProfileViewModelModule::class
     ])
-    internal abstract fun exploreListFragment(): ProfileFragment
+    internal abstract fun profileFragment(): ProfileFragment
 
     @FragmentScoped
     @ContributesAndroidInjector(modules = [
         ProfileViewModelModule::class
     ])
-    internal abstract fun exploreDetailFragment(): NewClothProfileFragment
+    internal abstract fun newClothProfileFragment(): NewClothProfileFragment
 
 }
