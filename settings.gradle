@@ -1,6 +1,7 @@
 include ':main',
         ':domain',
         ':features-common',
+        ':features-entertainment',
         ':features-category',
         ':features-profile',
         // ':features-explore',

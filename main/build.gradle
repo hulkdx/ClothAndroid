@@ -28,6 +28,7 @@ android {
 dependencies {
 
     implementation project(':features-category')
+    implementation project(':features-entertainment')
     implementation project(':features-common')
     // implementation project(':features-explore')
     implementation project(':features-auth')
