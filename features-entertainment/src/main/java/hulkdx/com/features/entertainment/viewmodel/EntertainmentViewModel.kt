@@ -3,6 +3,9 @@ package hulkdx.com.features.entertainment.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.interactor.UseCaseResult
+import hulkdx.com.domain.interactor.cloth.load.LoadClothUseCase
 import javax.inject.Inject
 
 /**
@@ -10,29 +13,32 @@ import javax.inject.Inject
  */
 
 class EntertainmentViewModel @Inject constructor(
-    // private val mWhatNameUseCase: WhatNameUseCase
+        private val mLoadClothUseCase: LoadClothUseCase
 ): ViewModel() {
 
-    // private val mWhatNameLiveData = MutableLiveData<WhatNameUseCase.Result>()
+    private val mClothLiveData = MutableLiveData<UseCaseResult<ClothEntity>>()
+
+    init {
+        loadSingleRandomClothAsync()
+    }
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-    // fun WhatNameLiveData(): LiveData<WhatNameUseCase.Result> = mWhatNameLiveData
+    fun clothLiveData(): LiveData<UseCaseResult<ClothEntity>> = mClothLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
-    // fun somefunction() {
-    //     mWhatNameUseCase.somefunction(
-    //             callback = {
-    //                 mWhatNameLiveData.value = it
-    //             })
-    // }
+    fun loadSingleRandomClothAsync() {
+        mLoadClothUseCase.loadSingleRandomClothAsync {
+            mClothLiveData.value = it
+        }
+    }
 
     // region Extra --------------------------------------------------------------------------------
 
     override fun onCleared() {
         super.onCleared()
-        // mWhatNameUseCase.dispose()
+        mLoadClothUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------

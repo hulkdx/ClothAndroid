@@ -4,5 +4,8 @@
     <string name="category">Category</string>
     <string name="profile">Profile</string>
     <string name="user_image">Profile Image</string>
+    <string name="image">Image</string>
+    <string name="like">Like</string>
+    <string name="reject">Reject</string>
 
 </resources>
