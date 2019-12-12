@@ -31,7 +31,6 @@ class MainActivity: AppCompatActivity(), HasAndroidInjector {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mNavigationManagerWrapper.setNavigationManager(mNavigationManager)
 
         mCoreViewModel = ViewModelProviders.of(this, mViewModelFactory).get(CoreViewModel::class.java)
         if (savedInstanceState == null) {
@@ -39,6 +38,16 @@ class MainActivity: AppCompatActivity(), HasAndroidInjector {
         }
 
         configureFragments(savedInstanceState == null)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mNavigationManagerWrapper.setNavigationManager(mNavigationManager)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mNavigationManagerWrapper.setNavigationManager(null)
     }
 
     // endregion Lifecycle -------------------------------------------------------------------------

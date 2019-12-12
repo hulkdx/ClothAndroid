@@ -19,12 +19,26 @@ internal open class ClothRealmObject(
 
     // empty constructor requires by RealmObject
     @Suppress("unused")
-    constructor(): this("", ImageRealmObject(0, ""), 0F, "", UserRealmObject())
+    constructor(): this(
+            "",
+            ImageRealmObject(),
+            0F,
+            "",
+            UserRealmObject()
+    )
 }
+
+// region mapper -----------------------------------------------------------------------------------
 
 internal fun mapClothEntity(clothEntity: ClothEntity): ClothRealmObject {
     return clothEntity.run {
-        ClothRealmObject(id, mapImageEntity(image), price, currency, UserRealmObject.map(user))
+        ClothRealmObject(
+                id,
+                mapImageEntity(image),
+                price,
+                currency,
+                UserRealmObject.map(user)
+        )
     }
 }
 
@@ -39,7 +53,13 @@ internal fun mapClothEntityList(clothEntity: List<ClothEntity>): RealmList<Cloth
 
 internal fun mapClothRealmObject(clothRealmObject: ClothRealmObject): ClothEntity {
     return clothRealmObject.run {
-        ClothEntity(id, mapImageRealmObject(image!!), price, currency, user!!.map())
+        ClothEntity(
+                id,
+                mapImageRealmObject(image!!),
+                price,
+                currency,
+                user!!.map()
+        )
     }
 }
 
@@ -48,3 +68,5 @@ internal fun mapClothRealmObjectList(clothRealmObjectList: List<ClothRealmObject
         mapClothRealmObject(it)
     }
 }
+
+// endregion mapper --------------------------------------------------------------------------------

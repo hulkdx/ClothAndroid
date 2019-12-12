@@ -9,7 +9,15 @@ import hulkdx.com.data.firebase.AsyncToSync
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 30/09/2019.
  */
-internal inline fun<T> DatabaseReference.convertToModel(mapper: (Map<String, Any>) -> (T)): T {
+internal fun<T> DatabaseReference.convertToModel(mapper: (Map<String, Any>) -> (T)): T {
+    return convert(mapper)
+}
+
+internal fun<T> DatabaseReference.convertListToModel(mapper: (List<Map<String, Any>>) -> (T)): T {
+    return convert(mapper)
+}
+
+private inline fun<T, V> DatabaseReference.convert(mapper: (V) -> (T)): T {
     val asyncToSync = AsyncToSync<ReadDatabaseResult>()
     addListenerForSingleValueEvent(object: ValueEventListener {
         override fun onCancelled(databaseError: DatabaseError) {
@@ -24,7 +32,7 @@ internal inline fun<T> DatabaseReference.convertToModel(mapper: (Map<String, Any
         is ReadDatabaseResult.Error -> throw result.databaseError.toException()
         is ReadDatabaseResult.Success -> {
             @Suppress("UNCHECKED_CAST")
-            val value = result.databaseSnapshot.value as Map<String, Any>
+            val value = result.databaseSnapshot.value as V
             return mapper(value)
         }
     }

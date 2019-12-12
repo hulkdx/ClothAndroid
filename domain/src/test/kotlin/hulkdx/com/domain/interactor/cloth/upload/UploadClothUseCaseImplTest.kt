@@ -5,6 +5,9 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import hulkdx.com.domain.CLOTH_IMAGE_1
 import hulkdx.com.domain.TEST_USER_1
+import hulkdx.com.domain.entities.CategoryEntity
+import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.entities.interactor.UseCaseResult
 import hulkdx.com.domain.repository.local.UserDatabase
 import hulkdx.com.domain.repository.remote.AddClothEndPoint
 import hulkdx.com.domain.repository.remote.FileUploader
@@ -26,7 +29,7 @@ class UploadClothUseCaseImplTest {
 
     // region constants ----------------------------------------------------------------------------
 
-    private val UPLOAD_PARAMS = UploadClothUseCase.Params(0F, "")
+    private val UPLOAD_PARAMS = UploadClothUseCase.Params(0F, CategoryEntity("", ""), "")
 
     // endregion constants -------------------------------------------------------------------------
 
@@ -70,13 +73,13 @@ class UploadClothUseCaseImplTest {
     fun upload_userNull_returnAuthError() {
         // Arrange
         userNull()
-        var result: UploadClothUseCase.Result? = null
+        var result: UseCaseResult<ClothEntity>? = null
         // Act
         SUT.upload(mParamsInputStream, UPLOAD_PARAMS) {
             result = it
         }
         // Assert
-        assertTrue(result is UploadClothUseCase.Result.AuthError)
+        assertTrue(result is UseCaseResult.AuthError)
     }
 
     @Test

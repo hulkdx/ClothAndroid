@@ -3,6 +3,9 @@ package hulkdx.com.features.category.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hulkdx.com.domain.entities.interactor.UseCaseResult
+import hulkdx.com.domain.interactor.cloth.load.LoadClothWithCategoryUseCase
+import hulkdx.com.domain.entities.Category
 import javax.inject.Inject
 
 /**
@@ -10,33 +13,30 @@ import javax.inject.Inject
  */
 
 class CategoryViewModel @Inject constructor(
-    // private val mWhatNameUseCase: WhatNameUseCase
+     private val mLoadClothWithCategoryUseCase: LoadClothWithCategoryUseCase
 ): ViewModel() {
 
-    // private val mWhatNameLiveData = MutableLiveData<WhatNameUseCase.Result>()
+     private val mCategoryLiveData = MutableLiveData<UseCaseResult<List<Category>>>()
 
     // region LiveData Setup -----------------------------------------------------------------------
 
-    // fun WhatNameLiveData(): LiveData<WhatNameUseCase.Result> = mWhatNameLiveData
+     fun categoryLiveData(): LiveData<UseCaseResult<List<Category>>> = mCategoryLiveData
 
     // endregion LiveData Setup --------------------------------------------------------------------
 
-    // fun somefunction() {
-    //     mWhatNameUseCase.somefunction(
-    //             callback = {
-    //                 mWhatNameLiveData.value = it
-    //             })
-    // }
+    fun loadCategory() {
+        mLoadClothWithCategoryUseCase.loadAsync { result ->
+            mCategoryLiveData.value = result
+        }
+    }
 
     // region Extra --------------------------------------------------------------------------------
 
     override fun onCleared() {
         super.onCleared()
-        // mWhatNameUseCase.dispose()
+        mLoadClothWithCategoryUseCase.dispose()
     }
 
     // endregion Extra -----------------------------------------------------------------------------
-    // region Results ------------------------------------------------------------------------------
-    // endregion Results ---------------------------------------------------------------------------
 
 }

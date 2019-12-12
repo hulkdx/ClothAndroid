@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.AndroidSupportInjection
+import hulkdx.com.domain.entities.interactor.UseCaseResult
 import hulkdx.com.features.common.R
 import hulkdx.com.features.common.model.FragmentType
 import hulkdx.com.features.common.navigation.NavigationManagerWrapper
 import hulkdx.com.features.common.util.ViewModelFactory
+import hulkdx.com.features.common.util.observeFragment
 import hulkdx.com.features.common.viewmodel.CoreViewModel
 import kotlinx.android.synthetic.main.layout_footer.*
 import javax.inject.Inject
@@ -115,6 +119,7 @@ abstract class BaseFragment: Fragment() {
     }
 
     private fun onCategoryButtonClicked() {
+        mNavigationManager.navigateToCategory()
     }
 
     // endregion Setup Footer / Header -------------------------------------------------------------
@@ -125,12 +130,42 @@ abstract class BaseFragment: Fragment() {
     }
 
     // endregion Extra -----------------------------------------------------------------------------
-    // region Authentication -----------------------------------------------------------------------
+    // region UseCase Common Error -----------------------------------------------------------------
 
-    protected fun authError() {
+    private fun authError() {
         mCoreViewModel.logout()
     }
 
-    // endregion Authentication --------------------------------------------------------------------
+    private fun networkError() {
+        TODO()
+    }
+
+    private fun generalError() {
+
+    }
+
+    protected fun <V: Any, T: UseCaseResult<V>> LiveData<T>.observeUseCase(
+            callback: (V) -> Unit
+    ) {
+        observeFragment(this@BaseFragment, Observer {
+            when (it) {
+                is UseCaseResult.Success<*> -> {
+                    @Suppress("UNCHECKED_CAST")
+                    callback(it.data as V)
+                }
+                is UseCaseResult.AuthError -> {
+                    authError()
+                }
+                is UseCaseResult.NetworkError -> {
+                    networkError()
+                }
+                is UseCaseResult.GeneralError -> {
+                    generalError()
+                }
+            }
+        })
+    }
+
+    // endregion UseCase Common Error --------------------------------------------------------------
 
 }

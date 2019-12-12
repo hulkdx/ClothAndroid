@@ -6,6 +6,7 @@ import hulkdx.com.features.common.navigation.*
 import hulkdx.com.features.common.navigation.NavigationManager
 import hulkdx.com.features.auth.view.login.LoginFragment
 import hulkdx.com.features.auth.view.register.RegisterFragment
+import hulkdx.com.features.category.view.CategoryFragment
 import hulkdx.com.features.explore.view.list.ExploreListFragment
 import hulkdx.com.features.profile.view.ProfileFragment
 import java.lang.RuntimeException
@@ -24,7 +25,7 @@ class NavigationManagerImpl @Inject constructor(
 
     fun startFirstFragment() {
         fragmentManager.beginTransaction()
-                .add(containerId, ExploreListFragment(), NAVIGATE_FEATURE_EXPLORE.toString())
+                .add(containerId, CategoryFragment(), NAVIGATE_FEATURE_CATEGORY.toString())
                 .commit()
     }
 
@@ -54,6 +55,9 @@ class NavigationManagerImpl @Inject constructor(
             }
             NAVIGATE_FEATURE_LOGIN -> {
                 LoginFragment()
+            }
+            NAVIGATE_FEATURE_CATEGORY -> {
+                CategoryFragment()
             }
             else -> {
                 throw RuntimeException("NavigationManagerImpl: cannot find the fragment")

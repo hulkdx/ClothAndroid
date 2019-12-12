@@ -20,4 +20,8 @@ annotation class UiScheduler
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationContext
 
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ActivityContext
+
 // endregion Qualifier

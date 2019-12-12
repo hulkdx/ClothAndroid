@@ -13,7 +13,6 @@ import hulkdx.com.data.firebase.database.UserDatabaseFirebase
 import hulkdx.com.data.firebase.mapper.ApiModelMapper
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
 import hulkdx.com.data.firebase.storage.upload.FileUploaderImpl
-import javax.inject.Named
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 2019-05-30.
@@ -33,18 +32,20 @@ object RemoteModule {
         return FirebaseDatabase.getInstance()
     }
 
-    @Provides
-    @Named("USER")
-    @JvmStatic
-    internal fun provideUserDatabaseReference(): DatabaseReference {
+    private fun provideUserDatabaseReference(): DatabaseReference {
         return provideFirebaseDatabase().getReference("users")
     }
 
-    @Provides
-    @Named("CLOTH")
-    @JvmStatic
-    internal fun provideClothDatabaseReference(): DatabaseReference {
+    private fun provideClothDatabaseReference(): DatabaseReference {
         return provideFirebaseDatabase().getReference("clothes")
+    }
+
+    private fun provideCategoryDatabaseReference(): DatabaseReference {
+        return provideFirebaseDatabase().getReference("category")
+    }
+
+    private fun provideClothCategoryDatabaseRefrence(): DatabaseReference {
+        return provideFirebaseDatabase().getReference("cloth_category")
     }
 
     @Provides
@@ -77,6 +78,8 @@ object RemoteModule {
     internal fun provideClothDatabaseFirebase(apiModelMapper: ApiModelMapper): ClothDatabaseFirebase {
         return ClothDatabaseFirebase(
                 provideClothDatabaseReference(),
+                provideCategoryDatabaseReference(),
+                provideClothCategoryDatabaseRefrence(),
                 apiModelMapper
         )
     }

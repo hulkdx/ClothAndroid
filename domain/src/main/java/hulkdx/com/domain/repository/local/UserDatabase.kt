@@ -11,6 +11,6 @@ interface UserDatabase {
 
     fun saveUser(user: UserEntity)
     fun getUser(): UserEntity?
-    fun getUserFlowable(): Flowable<GetUserUseCase.Result>
+    fun getUserFlowable(): Flowable<UserEntity>
 
 }

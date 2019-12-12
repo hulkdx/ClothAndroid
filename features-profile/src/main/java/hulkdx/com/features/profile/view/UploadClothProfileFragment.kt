@@ -4,12 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import hulkdx.com.domain.entities.CategoryEntity
 import hulkdx.com.features.common.util.observeFragment
 import hulkdx.com.features.common.view.fragments.BaseFragment
 import hulkdx.com.domain.entities.ClothEntity
+import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.features.profile.R
 import hulkdx.com.features.profile.viewmodel.ProfileViewModel
@@ -17,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_profile_upload_cloth.*
 
 /**
  * Created by Mohammad Jafarzadeh Rezvan on 24/08/2019.
+ *
+ * TODO: some callbacks is not well written.
  */
 
 private const val ACTIVITY_REQUEST_CODE_GALLERY = 0
@@ -52,8 +58,14 @@ class NewClothProfileFragment: BaseFragment(), View.OnClickListener {
             showError(R.string.upload_error_validation_price)
             return null
         }
+        val selectedCategories = mProfileViewModel.getCategoriesSelected()
+        if (selectedCategories.isEmpty() || selectedCategories.size > 1) {
+            showError("Select only one category")
+            return null
+        }
+        val selectedCategory = selectedCategories.iterator().next()
 
-        return UploadClothUseCase.Params(price, "EURO")
+        return UploadClothUseCase.Params(price, selectedCategory,"EURO")
     }
 
     private fun startGallery() {
@@ -93,11 +105,15 @@ class NewClothProfileFragment: BaseFragment(), View.OnClickListener {
     override fun setupViewModel() {
         super.setupViewModel()
         mProfileViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ProfileViewModel::class.java)
-        mProfileViewModel.uploadClothLiveData().observeFragment(this, Observer { result ->
-            when (result) {
-                is UploadClothUseCase.Result.Success -> uploadClothSuccess(result.cloth)
-                is UploadClothUseCase.Result.AuthError -> authError()
-                is UploadClothUseCase.Result.GeneralError -> uploadClothError(result.throwable)
+        mProfileViewModel.uploadClothLiveData().observeUseCase { result ->
+            uploadClothSuccess(result)
+        }
+
+        mCoreViewModel.getUserLiveData().observeFragment(this, Observer { result ->
+            when(result) {
+                is GetUserUseCase.Result.ValidUser   -> showCategories(result.categories)
+                is GetUserUseCase.Result.Loading     -> loadCategories()
+                is GetUserUseCase.Result.InvalidUser -> loadCategoryError()
             }
         })
     }
@@ -113,6 +129,34 @@ class NewClothProfileFragment: BaseFragment(), View.OnClickListener {
     }
 
     // endregion Upload Cloth Callback -------------------------------------------------------------
+    // region Categories Callback ------------------------------------------------------------------
+
+    private fun loadCategories() {
+        uploadClothButton.isEnabled = false
+        showError("loading")
+    }
+
+    private fun showCategories(categories: List<CategoryEntity>) {
+        val context = requireContext()
+        for (category in categories) {
+            val checkBox = CheckBox(context).apply {
+                text = category.title
+                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
+            checkBox.setOnClickListener {
+                mProfileViewModel.categorySelected(category)
+            }
+            categoryHolderLayout.addView(checkBox)
+        }
+        uploadClothButton.isEnabled = true
+    }
+
+    private fun loadCategoryError() {
+        uploadClothButton.isEnabled = false
+        showError("loadCategoryError")
+    }
+
+    // endregion Categories Callback ---------------------------------------------------------------
     // region Extra functions ----------------------------------------------------------------------
 
     override fun fragmentLayout(): Int {

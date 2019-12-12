@@ -30,6 +30,8 @@ internal open class UserRealmObject(
             null
     )
 
+    // region mapper -------------------------------------------------------------------------------
+
     companion object {
         fun map(userEntity: UserEntity): UserRealmObject {
             return userEntity.run {
@@ -56,4 +58,7 @@ internal open class UserRealmObject(
                 image = mapImageRealmObjectNull(image)
         )
     }
+
+    // endregion mapper ----------------------------------------------------------------------------
+
 }

@@ -28,4 +28,7 @@ abstract class RemoteBindsModule {
     @Binds
     internal abstract fun provideLoginEndPoint(impl: ApiManagerImpl): LoginEndPoint
 
+    @Binds
+    internal abstract fun provideCategoryEndPoint(impl: ApiManagerImpl): CategoryEndPoint
+
 }

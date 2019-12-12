@@ -3,17 +3,15 @@ package hulkdx.com.domain.interactor.cloth.upload
 import hulkdx.com.domain.repository.remote.FileUploader
 import hulkdx.com.domain.di.BackgroundScheduler
 import hulkdx.com.domain.di.UiScheduler
+import hulkdx.com.domain.entities.CategoryEntity
 import hulkdx.com.domain.entities.ClothEntity
-import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
-import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase.Params
-import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase.Result
+import hulkdx.com.domain.entities.interactor.UseCaseResult
 import hulkdx.com.domain.repository.local.UserDatabase
 import hulkdx.com.domain.repository.remote.AddClothEndPoint
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import java.io.InputStream
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 /**
@@ -33,32 +31,27 @@ class UploadClothUseCase @Inject constructor(
         mDisposable?.dispose()
     }
 
-    fun upload(inputStream: InputStream, params: Params, callback: (Result) -> Unit) {
+    fun upload(inputStream: InputStream, params: Params, callback: (UseCaseResult<ClothEntity>) -> Unit) {
         mDisposable = Single.fromCallable { uploadSync(inputStream, params) }
                 .subscribeOn(mBackgroundScheduler)
                 .observeOn(mUiScheduler)
                 .subscribe({ data ->
                     callback(data)
                 }, { throwable ->
-                    callback(Result.GeneralError(throwable))
+                    callback(UseCaseResult.GeneralError(throwable))
                 })
     }
 
-    private fun uploadSync(inputStream: InputStream, params: Params): Result {
-        val user = mUserDatabase.getUser() ?: return Result.AuthError
+    private fun uploadSync(inputStream: InputStream, params: Params): UseCaseResult<ClothEntity> {
+        val user = mUserDatabase.getUser() ?: return UseCaseResult.AuthError
         val image = mFileUploader.uploadImage(inputStream)
         return mAddClothEndPoint.addCloth(user, image, params)
     }
 
     data class Params (
             val price: Float,
+            val category: CategoryEntity,
             val currency: String
     )
-
-    sealed class Result {
-        data class Success(val cloth: ClothEntity): Result()
-        object AuthError: Result()
-        data class GeneralError(val throwable: Throwable): Result()
-    }
 
 }

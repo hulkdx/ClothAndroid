@@ -20,6 +20,8 @@ internal open class ImageRealmObject(
     )
 }
 
+// region mapper -----------------------------------------------------------------------------------
+
 internal fun mapImageEntityNull(imageEntity: ImageEntity?): ImageRealmObject? {
     if (imageEntity == null) return null
     return mapImageEntity(imageEntity)
@@ -41,3 +43,5 @@ internal fun mapImageRealmObject(imageRealmObject: ImageRealmObject): ImageEntit
         ImageEntity(size, url)
     }
 }
+
+// end region mapper -------------------------------------------------------------------------------

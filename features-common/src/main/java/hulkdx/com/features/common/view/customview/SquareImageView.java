@@ -23,7 +23,8 @@ public class SquareImageView extends AppCompatImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //noinspection SuspiciousNameCombination
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int spec = widthSize > 0 ? widthMeasureSpec : heightMeasureSpec;
+        super.onMeasure(spec, spec);
     }
 }

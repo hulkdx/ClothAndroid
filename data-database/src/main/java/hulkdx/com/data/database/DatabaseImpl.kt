@@ -7,12 +7,14 @@ import hulkdx.com.data.database.model.mapClothesEntity
 import hulkdx.com.data.database.model.mapClothesRealmObject
 import hulkdx.com.domain.entities.ClothesEntity
 import hulkdx.com.domain.entities.UserEntity
+import hulkdx.com.domain.exception.InvalidUserException
 import hulkdx.com.domain.interactor.auth.user.GetUserUseCase
 import hulkdx.com.domain.repository.local.ClothDatabase
 import hulkdx.com.domain.repository.local.UserDatabase
 import io.reactivex.Flowable
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import java.lang.RuntimeException
 import java.util.concurrent.locks.ReentrantLock
 import javax.inject.Inject
 
@@ -44,7 +46,7 @@ class DatabaseImpl @Inject constructor(
         return result
     }
 
-    override fun getUserFlowable(): Flowable<GetUserUseCase.Result> {
+    override fun getUserFlowable(): Flowable<UserEntity> {
         val realm = getRealm()
         val userRealmObject = realm.where(CurrentUserRealmObject::class.java).findAllAsync()
         return userRealmObject.asFlowable()
@@ -53,11 +55,7 @@ class DatabaseImpl @Inject constructor(
                 }
                 .map {
                     val firstObject = it.first(null)
-                    return@map if (firstObject == null) {
-                        GetUserUseCase.Result.InvalidUser
-                    } else {
-                        GetUserUseCase.Result.ValidUser(firstObject.map())
-                    }
+                    return@map firstObject?.map() ?: throw InvalidUserException()
                 }
     }
 

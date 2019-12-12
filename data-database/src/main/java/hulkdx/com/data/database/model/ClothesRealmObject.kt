@@ -26,6 +26,8 @@ internal open class ClothesRealmObject(
     )
 }
 
+// region mapper -----------------------------------------------------------------------------------
+
 internal fun mapClothesEntity(clothesEntity: ClothesEntity): ClothesRealmObject {
     return clothesEntity.run {
         ClothesRealmObject(mapClothEntityList(clothes), updatedAt)
@@ -37,3 +39,5 @@ internal fun mapClothesRealmObject(realmObject: ClothesRealmObject): ClothesEnti
         ClothesEntity(mapClothRealmObjectList(clothes), updatedAt)
     }
 }
+
+// endregion mapper --------------------------------------------------------------------------------

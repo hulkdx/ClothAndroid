@@ -2,6 +2,7 @@ package hulkdx.com.data.database.model
 
 import hulkdx.com.domain.entities.UserEntity
 import hulkdx.com.domain.entities.UserGender
+import hulkdx.com.domain.entities.UserType
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -15,6 +16,7 @@ internal open class CurrentUserRealmObject(
         var emailAddress:       String,
         var firstName:          String,
         var lastName:           String,
+        var type:               Int,
         var gender:             Int,
         var image:              ImageRealmObject?
 ): RealmObject() {
@@ -27,6 +29,7 @@ internal open class CurrentUserRealmObject(
             "",
             "",
             0,
+            0,
             null
     )
 
@@ -38,10 +41,13 @@ internal open class CurrentUserRealmObject(
                 firstName = firstName,
                 lastName = lastName,
                 gender = UserGender.values()[gender],
+                type = UserType.values()[type],
                 image = mapImageRealmObjectNull(image)
         )
     }
 }
+
+// region mapper -----------------------------------------------------------------------------------
 
 internal fun UserEntity.mapCurrentUserRealmObject(): CurrentUserRealmObject {
     return run {
@@ -50,8 +56,11 @@ internal fun UserEntity.mapCurrentUserRealmObject(): CurrentUserRealmObject {
                 emailAddress,
                 firstName,
                 lastName,
+                type.ordinal,
                 gender.ordinal,
                 mapImageEntityNull(image)
         )
     }
 }
+
+// endregion mapper --------------------------------------------------------------------------------

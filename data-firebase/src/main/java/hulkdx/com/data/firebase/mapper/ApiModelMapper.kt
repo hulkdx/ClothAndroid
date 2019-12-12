@@ -26,7 +26,30 @@ internal class ApiModelMapper @Inject constructor() {
         return map.toObject(UserEntity::class.java)
     }
 
+    fun mapCategoryHashToEntityList(list: List<Map<String, Any>>): List<CategoryEntity> {
+        val collectionType = object : TypeToken<List<CategoryEntity>>(){}.type
+        return list.toObject(collectionType)
+    }
+
+    fun mapClothCategoryHashToEntity(map: Map<String, Any>): List<ClothCategoryEntity> {
+        val list = mutableListOf<ClothCategoryEntity>()
+        for ((id, data) in map) {
+            list.add(data.toObject(ClothCategoryEntity::class.java))
+        }
+        return list
+    }
+
     private fun<T> Map<String, Any>.toObject(type: Type): T {
+        val tree = mGson.toJsonTree(this)
+        return mGson.fromJson(tree, type)
+    }
+
+    private fun<T> List<Map<String, Any>>.toObject(type: Type): T {
+        val tree = mGson.toJsonTree(this)
+        return mGson.fromJson(tree, type)
+    }
+
+    private fun<T> Any.toObject(type: Type): T {
         val tree = mGson.toJsonTree(this)
         return mGson.fromJson(tree, type)
     }

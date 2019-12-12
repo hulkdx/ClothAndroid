@@ -1,7 +1,6 @@
 package hulkdx.com.domain.repository.remote
 
-import hulkdx.com.domain.entities.Category
-import hulkdx.com.domain.entities.ClothWithCategoryEntity
+import hulkdx.com.domain.entities.CategoryEntity
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.entities.ClothesEntity
 import java.io.IOException
@@ -16,15 +15,9 @@ import java.lang.Exception
  *
  */
 
-interface GetClothesEndPoint {
+interface CategoryEndPoint {
 
     @Throws(Exception::class)
-    fun getClothes(): ClothesEntity
-
-    @Throws(Exception::class)
-    fun getClothesWithCategories(): List<ClothWithCategoryEntity>
-
-    @Throws(Exception::class)
-    fun getCategory(): List<Category>
+    fun getAllCategories(): List<CategoryEntity>
 
 }

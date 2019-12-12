@@ -8,18 +8,17 @@ import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
 import hulkdx.com.data.firebase.database.UserDatabaseFirebase
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
 import hulkdx.com.data.firebase.util.UserNullException
+import hulkdx.com.domain.entities.*
 import hulkdx.com.domain.repository.remote.GetClothesEndPoint
 import hulkdx.com.domain.repository.remote.RegisterEndPoint
-import hulkdx.com.domain.entities.ClothesEntity
-import hulkdx.com.domain.entities.ImageEntity
-import hulkdx.com.domain.entities.UserEntity
-import hulkdx.com.domain.entities.UserType
+import hulkdx.com.domain.entities.interactor.UseCaseResult
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.interactor.auth.login.LoginAuthUseCase
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
 import hulkdx.com.domain.repository.remote.AddClothEndPoint
 import hulkdx.com.domain.repository.remote.LoginEndPoint
+import hulkdx.com.domain.repository.remote.CategoryEndPoint
 import java.lang.RuntimeException
 
 
@@ -32,7 +31,7 @@ internal class ApiManagerImpl(
         private val mFirebaseToResultMapper: FirebaseToResultMapper,
         private val mClothDatabaseFirebase: ClothDatabaseFirebase,
         private val mUserDatabase: UserDatabaseFirebase
-): GetClothesEndPoint, RegisterEndPoint, AddClothEndPoint, LoginEndPoint {
+): GetClothesEndPoint, RegisterEndPoint, AddClothEndPoint, LoginEndPoint, CategoryEndPoint {
 
     override fun register(param: RegisterAuthUseCase.Params): RegisterAuthUseCase.Result {
 
@@ -84,13 +83,13 @@ internal class ApiManagerImpl(
     }
 
     override fun addCloth(user: UserEntity, image: ImageEntity,
-                          params: UploadClothUseCase.Params): UploadClothUseCase.Result {
+                          params: UploadClothUseCase.Params): UseCaseResult<ClothEntity> {
 
         mAuth.currentUser ?: throw AuthException()
 
         val asyncToSync = AsyncToSync<Boolean>()
 
-        val clothEntity = mClothDatabaseFirebase.add(image, user, params,
+        val clothEntity = mClothDatabaseFirebase.addCloth(image, user, params,
                 onComplete = DatabaseReference.CompletionListener { err, _ ->
                     val success = err == null
                     asyncToSync.signalAll(success)
@@ -99,9 +98,21 @@ internal class ApiManagerImpl(
         val result = asyncToSync.await()
 
         return if (result) {
-            UploadClothUseCase.Result.Success(clothEntity)
+            mClothDatabaseFirebase.addCategory(params.category.id, clothEntity.id,
+                    onComplete = DatabaseReference.CompletionListener { err, _ ->
+                        val success = err == null
+                        asyncToSync.signalAll(success)
+                    })
+
+            val resultCategory = asyncToSync.await()
+
+            if (resultCategory) {
+                UseCaseResult.Success(clothEntity)
+            } else {
+                UseCaseResult.GeneralError(RuntimeException("CategoryDatabase Error"))
+            }
         } else {
-            UploadClothUseCase.Result.GeneralError(RuntimeException("Database Error"))
+            UseCaseResult.GeneralError(RuntimeException("Database Error"))
         }
     }
 
@@ -119,6 +130,58 @@ internal class ApiManagerImpl(
             LoginAuthUseCase.Result.Success(user)
         } else {
             mFirebaseToResultMapper.mapErrorLogin(signInResult.exception)
+        }
+    }
+
+    override fun getAllCategories(): List<CategoryEntity> {
+        return mClothDatabaseFirebase.findAllCategories()
+    }
+
+    override fun getClothesWithCategories(): List<ClothWithCategoryEntity> {
+        val clothesEntity = mClothDatabaseFirebase.findAll()
+        val allClothes = clothesEntity.clothes
+        val allClothCategory = mClothDatabaseFirebase.findAllClothCategory()
+        val allCategory = mClothDatabaseFirebase.findAllCategories()
+
+        return allClothes.map { clothEntity ->
+            val category = allClothCategory.find {
+                it.clothId == clothEntity.id
+            }?.categoryId?.let { categoryId ->
+                allCategory.find { category ->
+                    category.id == categoryId
+                }
+            }
+
+            ClothWithCategoryEntity(clothEntity, category)
+        }
+    }
+
+    override fun getCategory(): List<Category> {
+        val clothesEntity = mClothDatabaseFirebase.findAll()
+        val allClothes = clothesEntity.clothes
+        val allClothCategory = mClothDatabaseFirebase.findAllClothCategory()
+        val allCategory = mClothDatabaseFirebase.findAllCategories()
+
+        return allCategory.map { category ->
+            val clothCategoryFilterList = allClothCategory.filter {
+                it.categoryId == category.id
+            }
+            val categoryBody = mutableListOf<CategoryBody>()
+            for (c in clothCategoryFilterList) {
+                val clothId = c.clothId
+
+                allClothes.find { searchCloth ->
+                    clothId == searchCloth.id
+                }?.let { found ->
+                    categoryBody.add(
+                            CategoryBody(
+                                    found.image.url
+                            )
+                    )
+                }
+            }
+
+            Category(category.title, categoryBody)
         }
     }
 

@@ -16,24 +16,25 @@ import com.nhaarman.mockitokotlin2.argumentCaptor
 import hulkdx.com.data.firebase.database.ClothDatabaseFirebase
 import hulkdx.com.data.firebase.database.UserDatabaseFirebase
 import hulkdx.com.data.firebase.mapper.FirebaseToResultMapper
-import hulkdx.com.domain.entities.ImageEntity
-import hulkdx.com.domain.entities.UserEntity
-import hulkdx.com.domain.entities.UserGender
+import hulkdx.com.domain.entities.*
 import hulkdx.com.domain.exception.AuthException
 import hulkdx.com.domain.interactor.auth.register.RegisterAuthUseCase
 import hulkdx.com.domain.interactor.cloth.upload.UploadClothUseCase
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.experimental.categories.Category
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 
 import org.mockito.Mockito.*
 import java.lang.Exception
 import java.lang.RuntimeException
+import java.util.*
 import java.util.concurrent.Executor
 
 /**
@@ -68,6 +69,12 @@ class ApiManagerImplTest {
             image = TEST_IMAGE_1
     )
 
+    private val ADD_CLOTH_PARAMS = UploadClothUseCase.Params(
+            price = 0f,
+            currency = "",
+            category = CategoryEntity("", "")
+    )
+
     // endregion constants -------------------------------------------------------------------------
 
     // region helper fields ------------------------------------------------------------------------
@@ -88,7 +95,7 @@ class ApiManagerImplTest {
         SUT = ApiManagerImpl(mAuth, mFirebaseToResultMapper, mClothDatabaseFirebase, mUserDatabaseFirebase)
     }
 
-    // endregion register --------------------------------------------------------------------------
+    // region register --------------------------------------------------------------------------
 
     @Test
     fun register_createUserSuccessANDSaveUserSuccess_callSaveUserInfoIntoFirebase() {
@@ -180,7 +187,7 @@ class ApiManagerImplTest {
         // Arrange
         userNull()
         // Act
-        SUT.addCloth(TEST_USER_1, TEST_IMAGE_1, UploadClothUseCase.Params(0f, ""))
+        SUT.addCloth(TEST_USER_1, TEST_IMAGE_1, ADD_CLOTH_PARAMS)
         // Assert
     }
 
@@ -197,6 +204,42 @@ class ApiManagerImplTest {
     }
 
     // endregion getClothes ------------------------------------------------------------------------
+    // region getClothesWithCategories -------------------------------------------------------------
+
+    // test1 =>
+    // Cloth = [1,2,3,4]
+    // Category = [1,2,3,4]
+    // ClothCategory = [(1,4),(2,3)]
+    //
+    // result = [(1,4),(2,3),(3,null),(4,null)]
+    @Test
+    fun `getClothesWithCategories test1`() {
+        // Arrange
+        val cloth = generateClothWithIds("1", "2", "3", "4")
+        val clothCategory = generateClothCategoryWithIds(
+                Pair("1", "4"), Pair("2", "3")
+        )
+        val category = generateCategoryWithIds("1", "2", "3", "4")
+        arrangeGetClothesWithCategories(cloth, clothCategory, category)
+        // Act
+        val result = SUT.getClothesWithCategories()
+        // Assert
+        assertThat(result.size, `is`(4))
+
+        assertThat(result[0].clothEntity.id,     `is`("1"))
+        assertThat(result[0].categoryEntity?.id, `is`("4"))
+
+        assertThat(result[1].clothEntity.id,     `is`("2"))
+        assertThat(result[1].categoryEntity?.id, `is`("3"))
+
+        assertThat(result[2].clothEntity.id,     `is`("3"))
+        assertTrue(result[2].categoryEntity?.id == null)
+
+        assertThat(result[3].clothEntity.id,     `is`("4"))
+        assertTrue(result[3].categoryEntity?.id == null)
+    }
+
+    // endregion getClothesWithCategories ----------------------------------------------------------
     // region helper methods -----------------------------------------------------------------------
 
     private fun createUserWithEmailAndPasswordSuccess() {
@@ -347,6 +390,48 @@ class ApiManagerImplTest {
 
     private fun userNull() {
         `when`(mAuth.currentUser).thenReturn(null)
+    }
+
+    private fun arrangeGetClothesWithCategories(
+            allCloth: List<ClothEntity>,
+            allClothCategory: List<ClothCategoryEntity>,
+            allCategory: List<CategoryEntity>
+    ) {
+        `when`(mClothDatabaseFirebase.findAll()).thenReturn(ClothesEntity(allCloth, Date()))
+        `when`(mClothDatabaseFirebase.findAllClothCategory()).thenReturn(allClothCategory)
+        `when`(mClothDatabaseFirebase.findAllCategories()).thenReturn(allCategory)
+    }
+
+    private fun generateClothWithIds(vararg ids: String): List<ClothEntity> {
+        val result = mutableListOf<ClothEntity>()
+        for (id in ids) {
+            result.add(
+                    ClothEntity(id, TEST_IMAGE_1, 0f, "", TEST_USER_1)
+            )
+        }
+        return result
+    }
+
+    private fun generateCategoryWithIds(vararg ids: String): List<CategoryEntity> {
+        val result = mutableListOf<CategoryEntity>()
+        for (id in ids) {
+            result.add(
+                    CategoryEntity(id, "")
+            )
+        }
+        return result
+    }
+
+    private fun generateClothCategoryWithIds(vararg ids: Pair<String, String>): List<ClothCategoryEntity> {
+        val result = mutableListOf<ClothCategoryEntity>()
+        var x = 0
+        for ((clothId, categoryId) in ids) {
+            result.add(
+                    ClothCategoryEntity(x.toString(), categoryId, clothId)
+            )
+            x++
+        }
+        return result
     }
 
     // endregion helper methods --------------------------------------------------------------------

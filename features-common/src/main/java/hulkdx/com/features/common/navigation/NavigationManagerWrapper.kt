@@ -22,9 +22,9 @@ import javax.inject.Singleton
 @Singleton
 class NavigationManagerWrapper @Inject constructor() {
 
-    private lateinit var mNavigationManager: NavigationManager
+    private var mNavigationManager: NavigationManager? = null
 
-    fun setNavigationManager(navigationManager: NavigationManager) {
+    fun setNavigationManager(navigationManager: NavigationManager?) {
         mNavigationManager = navigationManager
     }
 
@@ -44,17 +44,22 @@ class NavigationManagerWrapper @Inject constructor() {
         navigateTo(NAVIGATE_FEATURE_LOGIN)
     }
 
+    fun navigateToCategory() {
+        navigateTo(NAVIGATE_FEATURE_CATEGORY)
+    }
+
     fun getFragmentType(fragmentId: Int?): Int {
         return when (fragmentId) {
             NAVIGATE_FEATURE_EXPLORE  -> FragmentType.TYPE_EXPLORE
             NAVIGATE_FEATURE_REGISTER -> FragmentType.TYPE_PROFILE
             NAVIGATE_FEATURE_LOGIN    -> FragmentType.TYPE_PROFILE
             NAVIGATE_FEATURE_PROFILE  -> FragmentType.TYPE_PROFILE
+            NAVIGATE_FEATURE_CATEGORY -> FragmentType.TYPE_CATEGORY
             else -> FragmentType.TYPE_UNKNOWN
         }
     }
 
     private fun navigateTo(fragmentId: Int, addToBackStack: Boolean = false) {
-        mNavigationManager.navigateTo(fragmentId, addToBackStack)
+        mNavigationManager?.navigateTo(fragmentId, addToBackStack)
     }
 }

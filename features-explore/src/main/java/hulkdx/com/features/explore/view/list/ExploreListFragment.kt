@@ -1,6 +1,5 @@
 package hulkdx.com.features.explore.view.list
 
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -59,9 +58,9 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
         mExploreViewModel.getClothes().observeFragment(this, Observer {
             when (it) {
                 is Success      -> loadClothesSuccess(it.clothes)
-                is NetworkError -> loadClothesNetworkError()
-                is GeneralError -> loadClothesGeneralError()
-                is AuthError    -> authError()
+//                is NetworkError -> loadClothesNetworkError()
+//                is GeneralError -> loadClothesGeneralError()
+//                is AuthError    -> authError()
             }
         })
     }
@@ -71,14 +70,6 @@ class ExploreListFragment: BaseFragment(), ClothAdapter.ClickListener {
     private fun loadClothesSuccess(clothes: List<Cloth>) {
         mClothAdapter.updateClothes(clothes)
         mClothAdapter.notifyDataSetChanged()
-    }
-
-    private fun loadClothesNetworkError() {
-        Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun loadClothesGeneralError() {
-        Toast.makeText(context, "General Error", Toast.LENGTH_SHORT).show()
     }
 
     // endregion Load Clothes ----------------------------------------------------------------------
