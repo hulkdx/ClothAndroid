@@ -4,7 +4,7 @@ package hulkdx.com.features.common.navigation
  * Created by Mohammad Jafarzadeh Rezvan on 12/08/2019.
  */
 
-const val NAVIGATE_FEATURE_EXPLORE = 1
+const val NAVIGATE_FEATURE_ENTERTAINMENT = 1
 const val NAVIGATE_FEATURE_REGISTER = 2
 const val NAVIGATE_FEATURE_PROFILE = 3
 const val NAVIGATE_FEATURE_LOGIN = 4

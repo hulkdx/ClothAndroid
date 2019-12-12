@@ -29,7 +29,7 @@ class NavigationManagerWrapper @Inject constructor() {
     }
 
     fun navigateToExplore() {
-        navigateTo(NAVIGATE_FEATURE_EXPLORE)
+        navigateTo(NAVIGATE_FEATURE_ENTERTAINMENT)
     }
 
     fun navigateToRegister(addToBackStack: Boolean) {
@@ -50,7 +50,7 @@ class NavigationManagerWrapper @Inject constructor() {
 
     fun getFragmentType(fragmentId: Int?): Int {
         return when (fragmentId) {
-            NAVIGATE_FEATURE_EXPLORE  -> FragmentType.TYPE_EXPLORE
+            NAVIGATE_FEATURE_ENTERTAINMENT  -> FragmentType.TYPE_EXPLORE
             NAVIGATE_FEATURE_REGISTER -> FragmentType.TYPE_PROFILE
             NAVIGATE_FEATURE_LOGIN    -> FragmentType.TYPE_PROFILE
             NAVIGATE_FEATURE_PROFILE  -> FragmentType.TYPE_PROFILE
