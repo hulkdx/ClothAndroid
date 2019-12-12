@@ -29,7 +29,7 @@ dependencies {
 
     implementation project(':features-category')
     implementation project(':features-common')
-    implementation project(':features-explore')
+    // implementation project(':features-explore')
     implementation project(':features-auth')
     implementation project(':features-profile')
     implementation project(':data-firebase')

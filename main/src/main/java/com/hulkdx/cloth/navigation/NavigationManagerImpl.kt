@@ -7,7 +7,6 @@ import hulkdx.com.features.common.navigation.NavigationManager
 import hulkdx.com.features.auth.view.login.LoginFragment
 import hulkdx.com.features.auth.view.register.RegisterFragment
 import hulkdx.com.features.category.view.CategoryFragment
-import hulkdx.com.features.explore.view.list.ExploreListFragment
 import hulkdx.com.features.profile.view.ProfileFragment
 import java.lang.RuntimeException
 import javax.inject.Inject
@@ -45,7 +44,7 @@ class NavigationManagerImpl @Inject constructor(
     private fun getFragment(fragmentId: Int): Fragment {
         return when (fragmentId) {
             NAVIGATE_FEATURE_EXPLORE -> {
-                ExploreListFragment()
+                throw RuntimeException("NavigationManagerImpl: FEATURE_EXPLORE is removed")
             }
             NAVIGATE_FEATURE_REGISTER -> {
                 RegisterFragment()
